@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "andrestella-d7d47": {
+      "hosting": {
+        "AndreStella": [
+          "andrestella-d7d47"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "andrestella-d7d47"
+  }
+}

@@ -1,15 +1,11 @@
-.container{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 50px;
-  background-color: #e26000;
-  padding: 15px;
+.container-app-header{
+  background-color: blueviolet;
 }
-div{
-  padding: 15px;
-  background-color: #e26e;
-  margin: 20px;
-  font-weight: 600;
+
+.container-outlet{
+  position: absolute;
+  top: 64px;
+  width: 100%;
+  bottom: 0;
 }
 
