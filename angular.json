@@ -49,6 +49,12 @@
                   "maximumError": "4kb"
                 }
               ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environements/environement.ts",
+                  "with": "src/environements/environement.prod.ts"
+                }
+              ],
               "outputHashing": "all"
             },
             "development": {
@@ -98,6 +104,16 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "AndreStella:build:production",
+            "firebaseProject": "andrestella-d7d47",
+            "firebaseHostingSite": "andrestella-d7d47"
           }
         }
       }

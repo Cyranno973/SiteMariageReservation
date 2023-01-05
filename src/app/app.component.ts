@@ -9,8 +9,8 @@ export class AppComponent {
   title = 'AndreStella';
   idUi: number[] = [];
   generatorIdentifiant(): void{
-     const id = Math.floor(Math.random() * (99999 - 11111) + 11111);
-     if(id !== 9999 && id !== 11111 && !this.idUi.includes(id)) this.idUi.push(id);
+     const id = Math.floor(Math.random() * (999999 - 111111) + 111111);
+     if(id !== 99999 && id !== 111111 && !this.idUi.includes(id)) this.idUi.push(id);
      else this.generatorIdentifiant();
   }
 }
