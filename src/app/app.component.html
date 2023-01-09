@@ -1,8 +1,10 @@
 <div class="container-app-header">
-<app-header></app-header>
+  <app-header></app-header>
 </div>
 <div class="container-outlet">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+  <input style="margin-top: 300px" type="file" (change)="readFile($event)" #myInput >
+  <p>{{textInFile}}</p>
 </div>
 <!--<div class="container">-->
 <!--  <h3 (click)="generatorIdentifiant()">generate Id </h3>-->

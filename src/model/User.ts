@@ -1,9 +1,9 @@
 enum status{ 'present', 'absent', 'incomplet'}
 export interface User{
-  id: number,
-  username: string,
-  name: string,
-  mail: string,
-  tel: number,
-  statusUser: status
+  id?: number,
+  username?: string,
+  name?: string,
+  mail?: string,
+  tel?: string,
+  statusUser?: status
 }
