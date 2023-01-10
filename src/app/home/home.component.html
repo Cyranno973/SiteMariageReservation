@@ -1,1 +1,18 @@
-<p>home works!</p>
+<div class="container-home">
+  <div class="welcome">Bienvenu sur le site de </div>
+  <h1 class="titulaire" >Andre & Stella</h1>
+  <p>Veuillez insérez votre numéro</p>
+  <div class="container-form">
+    <form class="registration" (submit)="submit()" [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label>Confirmation</mat-label>
+        <input matInput type="text" placeholder="Entrer votre numero" formControlName="numero" required>
+        <mat-error>
+          <span *ngIf="form.controls"> numero de réservation invalide</span>
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button type="submit">Valider</button>
+    </form>
+  </div>
+</div>
+
