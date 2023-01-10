@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {map} from "rxjs";
 import {UserService} from "../services/user.service";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,7 @@ import {UserService} from "../services/user.service";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit{
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private dialogUser: MatDialog) {
   }
   userList?: any[];
   form: FormGroup = new FormGroup({
