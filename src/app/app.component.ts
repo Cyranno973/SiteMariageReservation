@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   myCollection: Subscription | undefined;
   // tutorial: AngularFirestoreDocument<any>;
   title = 'AndreStella';
+  numberOk: boolean = false;
   idUi: number[] = [];
   textInFile: string = '';
   tab: string[] = [];
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit {
   createUSer(listUser: User[]){
     listUser.map(user => {
       user.id = this.generatorIdentifiant();
-      // this.userService.create(user).then(() => console.log('user creer'))
+      this.userService.create(user).then(() => console.log('user creer'))
     })
   }
   retrieveUsers() {
@@ -36,7 +37,7 @@ export class AppComponent implements OnInit {
       map(changes => changes.map(c => ({id: c.payload.doc.id, ...c.payload.doc.data()}))))
         .subscribe(data => {
         this.userList = data
-        // console.log('list in firebase ',this.userList)
+        console.log('list in firebase ',this.userList)
     });
   }
 
@@ -68,10 +69,8 @@ export class AppComponent implements OnInit {
       .map(ligne => ligne.split(',').map(colonne => colonne.trim()))
       .map(x => ({name: x[0]? x[0]: '', username: x[1]? x[1]: '', tel: x[2]? x[2]: '' , mail: x[3]? x[3]: ''}));
 
-    // const re = tabUSer.map(user => {
-    //   const userString = JSON.stringify(user, (key, value) => value === undefined ? null : value);
-    //   return JSON.parse(userString);
-    // })
+
   }
+
 }
 

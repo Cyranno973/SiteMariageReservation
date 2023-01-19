@@ -19,13 +19,16 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireModule} from "@angular/fire/compat";
 import {MatDialogModule} from "@angular/material/dialog";
+import {UserProfileComponent} from "./user-profile/user-profile.component";
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     HeaderComponent,
     InfoComponent,
-    CoiffeurComponent
+    CoiffeurComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

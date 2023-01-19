@@ -1,11 +1,23 @@
-.container-app-header{
-  background-color: blueviolet;
-}
-
-.container-outlet{
+.container-app-header {
   position: absolute;
-  top: 64px;
-  width: 100%;
   bottom: 0;
+  left: 0;
+  right: 0;
 }
 
+.container-all {
+  position: relative;
+  height: calc(100vh);
+  background-color: #fff;
+
+}
+
+.container-outlet {
+  //height: 100%;
+  position: relative;
+  height: calc(100vh - 4em);
+  min-height: calc(100vh - 4em);
+  z-index: 2;
+  padding-bottom: 4em;
+
+}

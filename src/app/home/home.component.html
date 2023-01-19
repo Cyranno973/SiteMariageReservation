@@ -1,18 +1,36 @@
 <div class="container-home">
-  <div class="welcome">Bienvenu sur le site de </div>
-  <h1 class="titulaire" >Andre & Stella</h1>
-  <p>Veuillez insérez votre numéro</p>
-  <div class="container-form">
-    <form class="registration" (submit)="submit()" [formGroup]="form">
-      <mat-form-field appearance="outline">
-        <mat-label>Confirmation</mat-label>
-        <input matInput type="text" placeholder="Entrer votre numero" formControlName="numero" required>
+  <div class="bienvenu ">
+    <div class="titulaire">
+      <div class="name">Andre</div>
+      <div class="name">&</div>
+      <div class="name">Stella</div>
+    </div>
+    <p class="welcome">se marient </p>
+  </div>
+  <!--  <p>Veuillez insérez votre numéro</p>-->
+  <div class="container-form ">
+    <form class="registration error1" [formGroup]="form" >
+      <div class="error2">
+
+      <mat-form-field appearance="outline" class="error1">
+        <mat-label class="error1">Numéro</mat-label>
+        <input  matInput (input)="submit($event)" type="text" placeholder="Entrer votre numero" formControlName="numero" >
         <mat-error>
-          <span *ngIf="form.controls"> numero de réservation invalide</span>
+          <span class="error1" *ngIf="form.controls"> numero de billet invalide</span>
         </mat-error>
       </mat-form-field>
-      <button mat-raised-button type="submit">Valider</button>
+      </div>
+
+<!--      <span class="error1" *ngIf="form.controls"> numero de réservation invalide</span>-->
+      <!--      <div class="formGroupButton" >-->
+      <!--        <button class="buttonSub"  type="submit">Valider</button>-->
+      <!--      </div>-->
     </form>
+  </div>
+
+  <div *ngIf="participation" [@inOutAnimation] class="formGroupButton participe">
+    <button class="btnParticipe btn btn-primary" type="button" (click)="showBtn()" mat-button >Je serais présent</button>
+    <button class="btnAbsent" type="button" mat-button >Je serais absent</button>
   </div>
 </div>
 

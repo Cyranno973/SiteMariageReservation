@@ -1,4 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+*, ::before, ::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html {
+  height: 100%;
+}
+
+body {
+  position: relative;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  min-height: 100%;
+  //background-image: url('../src/assets/img/bg2p.jpg') ; //TODO change l'image selon la taille d'ecran
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
