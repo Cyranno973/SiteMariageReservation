@@ -26,8 +26,10 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.retrieveUsers();
   }
-  createUSer(listUser: User[]){
+
+  createUSer(listUser: Partial<User>[]){
     listUser.map(user => {
+      if (!user) return
       user.id = this.generatorIdentifiant();
       this.userService.create(user).then(() => console.log('user creer'))
     })

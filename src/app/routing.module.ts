@@ -3,10 +3,11 @@ import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./home/home.component";
 import {CoiffeurComponent} from "./coiffeur/coiffeur.component";
 import {InfoComponent} from "./info/info.component";
+import {AuthGard} from "./auth.gard";
 
 const routes: Routes =
   [
-    {path:'home', component: HomeComponent},
+    {path:'home',  canActivate: [AuthGard], component: HomeComponent},
     {path:'info', component: InfoComponent},
     {path:'coiffeur', component: CoiffeurComponent},
     {path:'**', redirectTo: '/home'},

@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {map} from "rxjs";
+import {map, Subscription, take} from "rxjs";
 import {UserService} from "../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {UserProfileComponent} from "../user-profile/user-profile.component";
 import {trigger, keyframes, animate, transition, style} from "@angular/animations";
+import {StoreUserService} from "../services/store-user.service";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -37,12 +38,13 @@ import {trigger, keyframes, animate, transition, style} from "@angular/animation
 
 
 export class HomeComponent implements OnInit{
-  constructor(private userService: UserService, private dialogUser: MatDialog, private fb: FormBuilder) {
+  constructor(private userService: UserService, private dialogUser: MatDialog, private fb: FormBuilder, private storeUserService: StoreUserService) {
   }
   userList?: any[];
   inputBillet: string = '';
   participation: boolean = false;
   errorFormulaire: boolean = false;
+  subscription: Subscription = new Subscription();
   // form: FormGroup = new FormGroup({
   //   numero: new FormControl('', [Validators.required])
   // });
@@ -50,7 +52,14 @@ export class HomeComponent implements OnInit{
     numero: ['']
   })
   ngOnInit() {
-   this.retrieveUsers();
+    this.subscription.add(this.userService.getAll1().pipe(take(1)).subscribe(users => console.log(users)))
+
+    // this.storeUserService.saveUserLsit();
+    // this.storeUserService.observeUserList().pipe(take(2)).subscribe(users => {
+    //   console.log(users)
+    //   this.userList = users
+    // })
+   // this.retrieveUsers();
   }
   retrieveUsers() {
     this.userService.getAll().snapshotChanges().pipe(

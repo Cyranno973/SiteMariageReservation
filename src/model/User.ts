@@ -5,5 +5,8 @@ export interface User{
   name?: string,
   mail?: string,
   tel?: string,
-  statusUser?: status
+  statusUser?: status,
+  menu?: string,
+  famille: User[]
+
 }
