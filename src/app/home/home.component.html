@@ -10,15 +10,14 @@
   <!--  <p>Veuillez insérez votre numéro</p>-->
   <div class="container-form ">
     <form class="registration error1" [formGroup]="form" >
-      <div class="error2">
+      <div *ngIf="!absent" class="error2">
 
       <mat-form-field appearance="outline" class="error1">
-        <mat-label class="error1">Numéro</mat-label>
+        <mat-label  [ngClass]="{'error1': errorFormulaire && form.touched}">Numéro</mat-label>
         <input  matInput (input)="submit($event)" type="text" placeholder="Entrer votre numero" formControlName="numero" >
-        <mat-error>
-          <span class="error1" *ngIf="form.controls"> numero de billet invalide</span>
-        </mat-error>
       </mat-form-field>
+        <p #span [ngClass]="{'error1': errorFormulaire && form.touched}" *ngIf="errorFormulaire && form.touched"> Numero de billet invalide</p>
+
       </div>
 
 <!--      <span class="error1" *ngIf="form.controls"> numero de réservation invalide</span>-->
@@ -27,10 +26,13 @@
       <!--      </div>-->
     </form>
   </div>
-
-  <div *ngIf="participation" [@inOutAnimation] class="formGroupButton participe">
-    <button class="btnParticipe btn btn-primary" type="button" (click)="showBtn()" mat-button >Je serais présent</button>
-    <button class="btnAbsent" type="button" mat-button >Je serais absent</button>
+  <div *ngIf="absent">
+    <p>Au revoir</p>
+  </div>
+  <div *ngIf="isLoggedIn" [@inOutAnimation] class="formGroupButton participe">
+    <button color="primary" *ngIf="!absent" class="btnParticipe btn btn-primary" type="button" (click)="presentBtn()" mat-raised-button >Je serais présent</button>
+    <button color="accent" *ngIf="!absent" class="btnAbsent" type="button" mat-raised-button (click)="absBtn()">Je serais absent</button>
+    <button color="warn" *ngIf="absent" class="btnAbsent" type="button" mat-raised-button (click)="modifBtn()">Modifier mon choix</button>
   </div>
 </div>
 

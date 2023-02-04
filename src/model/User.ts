@@ -1,12 +1,17 @@
-enum status{ 'present', 'absent', 'incomplet'}
+
+export enum Status {
+  Present = 'present',
+  Absent = 'absent',
+  Incomplet = 'incomplet',
+}
 export interface User{
-  id?: number,
+  id: string,
   username?: string,
   name?: string,
   mail?: string,
   tel?: string,
-  statusUser?: status,
+  statusUser?: Status,
   menu?: string,
-  famille: User[]
-
+  famille?: User[]
 }
+

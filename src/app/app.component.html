@@ -1,16 +1,16 @@
 <div class="container-all">
   <div class="container-outlet">
       <router-outlet></router-outlet>
-<!--    <input style="margin-top: 300px" type="file" (change)="readFile($event)" #myInput >-->
-<!--    <p>{{textInFile}}</p>-->
+    <input style="margin-top: 300px" type="file" (change)="readFile($event)" #myInput >
+    <p>{{textInFile}}</p>
   </div>
-  <!--<button mat-raised-button (click)="createUSer()"> creer user</button>-->
+<!--  <button mat-raised-button (click)="createUSer()"> creer user</button>-->
   <!--<div class="container">-->
   <!--  <h3 (click)="generatorIdentifiant()">generate Id </h3>-->
   <!--  <h2>dd</h2>-->
   <!--</div>-->
   <!--<div *ngFor="let id of idUi">{{id}} longueur du nombre {{id.toString().length}}</div>-->
-  <div *ngIf="numberOk" class="container-app-header">
+  <div *ngIf="participe" class="container-app-header">
     <app-header></app-header>
   </div>
 </div>

@@ -1,31 +1,27 @@
-import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { environment } from '../environments/environment';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {environment} from '../environments/environment';
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
+import {getFirestore, provideFirestore} from '@angular/fire/firestore';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './header/header.component';
-import { InfoComponent } from './info/info.component';
-import { CoiffeurComponent } from './coiffeur/coiffeur.component';
+import {AppComponent} from './app.component';
+import {HomeComponent} from './home/home.component';
+import {InfoComponent} from './info/info.component';
+import {CoiffeurComponent} from './coiffeur/coiffeur.component';
 import {RoutingModule} from "./routing.module";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatButtonModule} from "@angular/material/button";
-import {MatInputModule} from "@angular/material/input";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {ReactiveFormsModule} from "@angular/forms";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireModule} from "@angular/fire/compat";
-import {MatDialogModule} from "@angular/material/dialog";
 import {UserProfileComponent} from "./user-profile/user-profile.component";
+import {MaterialModule} from "./shared/modules/material/material.module";
+import {HeaderComponent} from "./header/header.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     HeaderComponent,
+    HomeComponent,
     InfoComponent,
     CoiffeurComponent,
     UserProfileComponent
@@ -38,14 +34,11 @@ import {UserProfileComponent} from "./user-profile/user-profile.component";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     RoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatDialogModule
+    MaterialModule
   ],
   providers: [],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

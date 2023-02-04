@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../model/User";
-import {AngularFirestore} from "@angular/fire/compat/firestore";
-import {map, Subscription} from "rxjs";
 import {UserService} from "./services/user.service";
+import {StoreUserService} from "./services/store-user.service";
 
 @Component({
   selector: 'app-root',
@@ -10,44 +9,40 @@ import {UserService} from "./services/user.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private afs: AngularFirestore, private userService: UserService) {
+  constructor(private userService: UserService, private storeUserService: StoreUserService) {
   }
 
-  myCollection: Subscription | undefined;
-  // tutorial: AngularFirestoreDocument<any>;
-  title = 'AndreStella';
-  numberOk: boolean = false;
-  idUi: number[] = [];
+  participe: boolean = false;
   textInFile: string = '';
-  tab: string[] = [];
   userList?: any[];
 
 
   ngOnInit() {
     this.retrieveUsers();
+    this.storeUserService.storeParticipe.asObservable().subscribe(participe => this.participe = participe)
   }
 
-  createUSer(listUser: Partial<User>[]){
+  createUSer(listUser: Partial<User>[]) {
     listUser.map(user => {
       if (!user) return
       user.id = this.generatorIdentifiant();
-      this.userService.create(user).then(() => console.log('user creer'))
+      this.userService.createOrUpdate(user).then(() => console.log('user creer'))
     })
   }
-  retrieveUsers() {
-    this.userService.getAll().snapshotChanges().pipe(
-      map(changes => changes.map(c => ({id: c.payload.doc.id, ...c.payload.doc.data()}))))
-        .subscribe(data => {
-        this.userList = data
-        console.log('list in firebase ',this.userList)
-    });
+
+  generatorIdentifiant(): string {
+    const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
+    if (id === '99999' || id === '111111') this.generatorIdentifiant()
+    this.userService.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
+    return id
   }
 
-  generatorIdentifiant(): number {
-    const id = Math.floor(Math.random() * (999999 - 111111) + 111111);
-    if (id !== 99999 && id !== 111111 && !this.idUi.includes(id)) this.idUi.push(id)
-    else this.generatorIdentifiant();
-    return id
+  retrieveUsers() {
+    this.userService.getAll1().subscribe(data => {
+      this.userList = data;
+      console.table(data)
+      this.storeUserService.saveUserList(data)
+    });
   }
 
   readFile($event: Event) {
@@ -63,16 +58,14 @@ export class AppComponent implements OnInit {
       fileReader.readAsText(fileList[0])
     }
   }
+
   formatText(text: string): Partial<User>[] {
-      return text
+    return text
       .split('\n')
       .filter(ligne => ligne)
       .map(ligne => ligne.toLowerCase())
       .map(ligne => ligne.split(',').map(colonne => colonne.trim()))
-      .map(x => ({name: x[0]? x[0]: '', username: x[1]? x[1]: '', tel: x[2]? x[2]: '' , mail: x[3]? x[3]: ''}));
-
-
+      .map(x => ({name: x[0] ? x[0] : '', username: x[1] ? x[1] : '', tel: x[2] ? x[2] : '', mail: x[3] ? x[3] : ''}));
   }
-
 }
 
