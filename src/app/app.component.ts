@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../model/User";
+import {Choice, Status, User} from "../model/User";
 import {UserService} from "./services/user.service";
 import {StoreUserService} from "./services/store-user.service";
 
@@ -12,22 +12,24 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService, private storeUserService: StoreUserService) {
   }
 
-  participe: boolean = false;
   textInFile: string = '';
   userList?: any[];
-
+  user: User;
 
   ngOnInit() {
     this.retrieveUsers();
-    this.storeUserService.storeParticipe.asObservable().subscribe(participe => this.participe = participe)
+    this.storeUserService.observeUser().subscribe(user => this.user = user);
   }
 
   createUSer(listUser: Partial<User>[]) {
     listUser.map(user => {
       if (!user) return
       user.id = this.generatorIdentifiant();
-      this.userService.createOrUpdate(user).then(() => console.log('user creer'))
+      user.statusUser = Status.First;
+      user.choice = Choice.All;
+      return this.userService.createOrUpdate(user, true);
     })
+    return false
   }
 
   generatorIdentifiant(): string {
@@ -38,9 +40,9 @@ export class AppComponent implements OnInit {
   }
 
   retrieveUsers() {
-    this.userService.getAll1().subscribe(data => {
+    this.userService.getAll().subscribe(data => {
       this.userList = data;
-      console.table(data)
+      console.log(this.userList)
       this.storeUserService.saveUserList(data)
     });
   }

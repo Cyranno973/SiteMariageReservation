@@ -11,6 +11,16 @@
   background-color: #fff;
 
 }
+.containerInputCreate{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  input{
+    position: absolute;
+    padding: 20px;
+    z-index: 20;
+  }
+}
 
 .container-outlet {
   //height: 100%;
