@@ -7,16 +7,13 @@
     </div>
     <p class="welcome">se marient </p>
   </div>
-  <!--  <p>Veuillez insérez votre numéro</p>-->
   <div class="container-form">
     <form class="registration error1" [formGroup]="form">
-      <div class="error2">
-        <mat-form-field appearance="outline" class="error1">
-          <mat-label [ngClass]="{'error1': errorFormulaire && form.touched}">Numéro</mat-label>
-          <input matInput (input)="submit($event)" type="text"  placeholder="Entrer votre numero" formControlName="numero">
+        <mat-form-field appearance="outline" >
+          <mat-label [ngClass]="{'error1': errorFormulaire && form.touched}">Entrer votre numéro</mat-label>
+          <input matInput (input)="submit($event)" type="text"  placeholder="Numero" formControlName="numero">
+          <mat-error>Numero de billet invalide</mat-error>
         </mat-form-field>
-        <p class="error1" *ngIf="errorFormulaire && form.touched">Numero de billet invalide</p>
-      </div>
     </form>
   </div>
   <div *ngIf="user">

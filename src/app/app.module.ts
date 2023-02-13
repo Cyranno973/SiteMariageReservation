@@ -15,7 +15,9 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {UserProfileComponent} from "./user-profile/user-profile.component";
 import {MaterialModule} from "./shared/modules/material/material.module";
 import {HeaderComponent} from "./header/header.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ListUserComponent} from "./admin/list-user/list-user.component";
+import {UserFormComponent} from "./user-form/user-form.component";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import {ReactiveFormsModule} from "@angular/forms";
     HomeComponent,
     InfoComponent,
     CoiffeurComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ListUserComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     AngularFireDatabaseModule,
     RoutingModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ],
   providers: [],
 

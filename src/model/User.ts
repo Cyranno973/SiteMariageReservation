@@ -13,16 +13,22 @@ export enum Choice {
   A = 'a',
   All = 'all'
 }
-
-export interface User {
-  id: string,
+export interface Personne {
   username?: string,
   name?: string,
+  allergie?: string,
+  menu?: Menu ,
+}
+
+export interface User extends Personne{
+  id: string,
+
   mail?: string,
   tel?: string,
-  statusUser?: Status,
-  menu?: Menu,
+  statusUser?: Status ,
+
   choice: Choice,
-  famille?: User[]
+
+  accompaniement?: Personne[]
 }
 
