@@ -3,11 +3,12 @@
     <app-user-form [form]="userForm"></app-user-form>
     <div formArrayName="accompagnement">
       <div *ngFor="let acc of formGroupeFake(); let i=index" [formGroupName]="i">
+    <h3 *ngIf="accompaniement.length">Invité N° {{i+1}}</h3>
         <app-user-form [form]="acc"></app-user-form>
-        <button (click)="removeGroupe(i)" type="button"> supprimer </button>
+        <button mat-raised-button color="warn" (click)="removeGroupe(i)" type="button"> supprimer </button>
       </div>
     </div>
-    <button [disabled]="!userForm.valid" (click)="addAccompaniement()" type="button"> ajouter une personne</button>
+    <button mat-raised-button color="warn" [disabled]="!userForm.valid" (click)="addAccompaniement()" type="button"> ajouter une personne</button>
 <!--    <h1>{{userForm.valid}}</h1>-->
   </div>
 </div>

@@ -107,13 +107,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.storeUserService.saveUser(this.user);
       // console.log(this.user)
 
-      // this.router.navigate(['/userForm']);
     } else {
       this.user.statusUser = Status.Complete;
       this.user.choice = Choice.A;
       delete this.user.menu;
       delete this.user.allergie;
-      delete this.user.accompaniement;
+       this.user.accompaniement = [];
       // console.log(this.user)
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);

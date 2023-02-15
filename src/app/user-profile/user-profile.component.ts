@@ -19,12 +19,13 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.storeUserService.observeUser().subscribe(user => {
-      //  console.log(user)
+    //TODO mettre a jours  this.oldForm pour empecher la premier sauvefarde inutile
+        console.log(user)
       this.user = user;
       this.userForm = this.fb.group({
         name: [this.user.name, [Validators.minLength(3)]],
         username: [this.user.username, [Validators.minLength(3)]],
-        menu: [this.user.menu, Validators.required],
+        menu: [this.user.menu || '', Validators.required],
         allergie: [this.user.allergie, ''],
         accompagnement: this.fb.array([]),
       });
@@ -63,12 +64,12 @@ export class UserProfileComponent implements OnInit {
 
   removeGroupe(i: number) {
     this.accompaniement.removeAt(i);
-    const newAcc = this.user.accompaniement?.filter((x, index) => index !== i)
-    const newUser = {...this.user}
-    newAcc?.length ? newUser.accompaniement = newAcc : [];
+    this.user.accompaniement = this.user.accompaniement?.filter((x, index) => index !== i);
+    console.log(this.user)
+    console.log(JSON.stringify(this.userForm.value) === this.oldForm);
     if (JSON.stringify(this.userForm.value) === this.oldForm) return
     this.oldForm = JSON.stringify(this.userForm.value);
-    this.userService.createOrUpdate(newUser);
+    this.userService.createOrUpdate(this.user);
   }
 
   formGroupeFake(): FormGroup[] {
