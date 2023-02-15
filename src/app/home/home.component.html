@@ -9,27 +9,40 @@
   </div>
   <div class="container-form">
     <form class="registration error1" [formGroup]="form">
-        <mat-form-field appearance="outline" >
-          <mat-label [ngClass]="{'error1': errorFormulaire && form.touched}">Entrer votre numéro</mat-label>
-          <input matInput (input)="submit($event)" type="text"  placeholder="Numero" formControlName="numero">
-          <mat-error>Numero de billet invalide</mat-error>
-        </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label [ngClass]="{'error1': errorFormulaire && form.touched}">Entrer votre numéro</mat-label>
+        <input matInput (input)="submit($event)" type="text" placeholder="Numero" formControlName="numero">
+        <mat-error>Numero de billet invalide</mat-error>
+      </mat-form-field>
     </form>
   </div>
   <div *ngIf="user">
+    <ng-container [ngSwitch]="user.choice">
+      <div *ngSwitchCase="'all'">
+        <button color="primary" class="btnParticipe btn btn-primary" type="button" (click)="btnChoice('p')" mat-raised-button>Je serais présent</button>
+        <button color="accent" class="btnAbsent" type="button" mat-raised-button (click)="btnChoice('a')">Je serais absent</button>
+      </div>
+      <div *ngSwitchDefault>
+        <div>
+          <button *ngIf="user.choice !== 'all';"
+                  mat-button (click)="showModifChoice = true"
+                  color="warn" class="btnAbsent" type="button">Modifier mon choix ?
+          </button>
+        </div>
+        <div *ngIf="showModifChoice">
+          <app-button
+            [btnSetting]="user"
+            (btnEvent)="btnChoice($event)"
+            mat-raised-button color="primary">
 
-    <div class="update-choice">
-          <button color="warn" *ngIf="user.choice === 'p' || user.choice === 'a'" class="btnAbsent" type="button" mat-button (click)="modifBtn()">Modifier mon choix</button>
-<!--      <button color="warn"  class="btnAbsent" type="button" mat-button (click)="modifBtn()">Modifier mon choix ?</button>-->
-    </div>
-        <div *ngIf="user.statusUser === 'absent'">
-<!--    <div >-->
-      <p class="textAbsent">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum illo libero minima nam necessitatibus non provident quia rem repellendus tenetur?</p>
-    </div>
-    <div [@inOutAnimation] class="formGroupButton participe">
-      <button color="primary" *ngIf="user.choice === 'all' || user.choice === 'p' " class="btnParticipe btn btn-primary" type="button" (click)="presentBtn()" mat-raised-button>Je serais présent</button>
-      <button color="accent" *ngIf="user.choice === 'all' || user.choice === 'a' " class="btnAbsent" type="button" mat-raised-button (click)="absBtn()">Je serais absent</button>
-    </div>
+          </app-button>
+        </div>
+        <p *ngIf="user.choice === 'a'" class="textAbsent">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum illo libero minima nam necessitatibus non provident quia rem repellendus tenetur?</p>
+        <div *ngIf="user.choice === 'p'">
+          <app-user-profile></app-user-profile>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>
 

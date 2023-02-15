@@ -18,6 +18,7 @@ import {HeaderComponent} from "./header/header.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ListUserComponent} from "./admin/list-user/list-user.component";
 import {UserFormComponent} from "./user-form/user-form.component";
+import {ButtonComponent} from "./button/button.component";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {UserFormComponent} from "./user-form/user-form.component";
     CoiffeurComponent,
     UserProfileComponent,
     ListUserComponent,
-    UserFormComponent
+    UserFormComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,

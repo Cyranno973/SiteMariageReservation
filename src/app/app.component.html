@@ -6,7 +6,7 @@
       <router-outlet></router-outlet>
   </div>
 <!--  <div *ngIf="user && user.choice === 'p'" class="container-app-header">-->
-  <div  class="container-app-header">
+  <div *ngIf="user" class="container-app-header">
     <app-header></app-header>
   </div>
 </div>

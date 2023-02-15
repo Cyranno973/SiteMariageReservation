@@ -3,11 +3,12 @@
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 40;
 }
 
 .container-all {
   position: relative;
-  height: calc(100vh);
+  min-height: calc(100vh);
   background-color: #fff;
 
 }
@@ -16,7 +17,7 @@
   justify-content: center;
   width: 100%;
   input{
-    position: absolute;
+    //position: absolute;
     padding: 20px;
     z-index: 20;
   }
@@ -25,7 +26,6 @@
 .container-outlet {
   //height: 100%;
   position: relative;
-  height: calc(100vh - 4em);
   min-height: calc(100vh - 4em);
   z-index: 2;
   padding-bottom: 4em;

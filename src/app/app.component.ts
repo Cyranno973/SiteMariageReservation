@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
       user.id = this.generatorIdentifiant();
       user.statusUser = Status.First;
       user.choice = Choice.All;
+      user.accompaniement = [];
       return this.userService.createOrUpdate(user, true);
     })
     return false
@@ -42,7 +43,7 @@ export class AppComponent implements OnInit {
   retrieveUsers() {
     this.userService.getAll().subscribe(data => {
       this.userList = data;
-      console.log(this.userList)
+      // console.log(this.userList)
       this.storeUserService.saveUserList(data)
     });
   }
@@ -67,7 +68,7 @@ export class AppComponent implements OnInit {
       .filter(ligne => ligne)
       .map(ligne => ligne.toLowerCase())
       .map(ligne => ligne.split(',').map(colonne => colonne.trim()))
-      .map(x => ({name: x[0] ? x[0] : '', username: x[1] ? x[1] : '', tel: x[2] ? x[2] : '', mail: x[3] ? x[3] : ''}));
+      .map(x => ({name: x[0] ? x[0] : '', username: x[1] ? x[1] : '', tel: x[2] ? x[2] : ''}));
   }
 }
 
