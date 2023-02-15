@@ -1,0 +1,41 @@
+.demo-table {
+  width: 100%;
+  //border: darkred solid 3px ;
+}
+
+.mat-column-id{
+  width: 100px;
+  //border-right: 1px solid currentColor;
+  //border: darkred solid 3px ;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.mat-column-name {
+  width: 100px;
+  //border: green solid 3px ;
+  padding-left: 16px;
+  color: darkred;
+  font-size: 20px;
+}
+
+.mat-column-username {
+  width: 100px;
+  //color: red !important;
+  font-style: italic;
+}
+
+.mat-column-choice {
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+}
+//.mat-mdc-row .mat-mdc-cell {
+//  border-bottom: 5px solid red;
+//  border-top: 1px solid transparent;
+//  cursor: pointer;
+//}
+//
+//.mat-mdc-row:hover .mat-mdc-cell {
+//  border-color: blue;
+//}

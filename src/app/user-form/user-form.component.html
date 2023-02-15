@@ -1,0 +1,34 @@
+<div class="container-form">
+  <div class="form">
+    <form [formGroup]="form">
+      <div>
+        <input matInput type="text" placeholder="Entrer votre nom" formControlName="name">
+        <span *ngIf="form.controls['name'] && form.controls['name'].errors && form.controls['name'].errors['minlength']">
+          Name must be at least 3 characters long.
+        </span>
+      </div>
+
+      <div>
+        <input matInput type="text" placeholder="Entrer votre prenom" formControlName="username">
+        <span *ngIf="form.controls['name'] && form.controls['name'].errors && form.controls['name'].errors['minlength']">
+          Name must be at least 3 characters long.
+        </span>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-select formControlName="menu">
+            <mat-option disabled value="">Choisissez un plat</mat-option>
+            <mat-option *ngFor="let dish of menu ;" [value]="dish">{{dish}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span *ngIf="form.controls['menu'] && form.controls['menu'].errors && form.controls['menu'].errors['required'] && form.touched">
+          selectionnez un plat .
+        </span>
+      </div>
+      <div>
+        <textarea formControlName="allergie" placeholder="rentrez vos allergie"></textarea>
+      </div>
+    </form>
+  </div>
+</div>
+

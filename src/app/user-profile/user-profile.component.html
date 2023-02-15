@@ -1,0 +1,14 @@
+<div class="container-form">
+  <div class="form" (focusin)="save()"  (keyup)="save()"  [formGroup]="userForm">
+    <app-user-form [form]="userForm"></app-user-form>
+    <div formArrayName="accompagnement">
+      <div *ngFor="let acc of formGroupeFake(); let i=index" [formGroupName]="i">
+        <app-user-form [form]="acc"></app-user-form>
+        <button (click)="removeGroupe(i)" type="button"> supprimer </button>
+      </div>
+    </div>
+    <button [disabled]="!userForm.valid" (click)="addAccompaniement()" type="button"> ajouter une personne</button>
+<!--    <h1>{{userForm.valid}}</h1>-->
+  </div>
+</div>
+

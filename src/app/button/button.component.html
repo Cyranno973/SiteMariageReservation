@@ -1,0 +1,10 @@
+<ng-container *ngIf="btnSetting.choice === 'p'">
+  <button mat-raised-button color="primary" (click)="myBtn('a')">
+    je serais absent
+  </button>
+</ng-container>
+<ng-container *ngIf="btnSetting.choice === 'a'">
+  <button mat-raised-button color="primary" (click)="myBtn('p')">
+    je serais present
+  </button>
+</ng-container>
