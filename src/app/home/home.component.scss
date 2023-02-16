@@ -33,7 +33,15 @@
   //padding-bottom: 20px;
   font-family: 'Wedding', sans-serif;
 }
-
+.all{
+  display: flex;
+  justify-content: space-around;
+}
+.container-modif,.updateBtn{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
 .welcome {
   text-align: center;
   font-size: 20px;

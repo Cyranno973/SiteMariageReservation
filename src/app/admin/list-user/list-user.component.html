@@ -1,5 +1,8 @@
-<div>
-  <input (keyup)="updateFilter($event)" type="text" name="" id="">
+<div class="container-input">
+  <mat-form-field appearance="outline">
+    <mat-label>Filtre</mat-label>
+  <input matInput (keyup)="updateFilter($event)" type="text" name="" id="">
+  </mat-form-field>
 </div>
 <table matSort class="demo-table" mat-table [dataSource]="dataSource" >
   <ng-container matColumnDef="id">

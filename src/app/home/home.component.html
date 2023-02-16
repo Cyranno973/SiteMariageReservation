@@ -18,18 +18,18 @@
   </div>
   <div *ngIf="user">
     <ng-container [ngSwitch]="user.choice">
-      <div *ngSwitchCase="'all'">
+      <div class="all" *ngSwitchCase="'all'">
         <button color="primary" class="btnParticipe btn btn-primary" type="button" (click)="btnChoice('p')" mat-raised-button>Je serais présent</button>
         <button color="accent" class="btnAbsent" type="button" mat-raised-button (click)="btnChoice('a')">Je serais absent</button>
       </div>
       <div *ngSwitchDefault>
-        <div>
+        <div class="container-modif">
           <button *ngIf="user.choice !== 'all';"
                   mat-button (click)="showModifChoice = true"
                   color="warn" class="btnAbsent" type="button">Modifier mon choix ?
           </button>
         </div>
-        <div *ngIf="showModifChoice">
+        <div class="updateBtn" *ngIf="showModifChoice">
           <app-button
             [btnSetting]="user"
             (btnEvent)="btnChoice($event)"

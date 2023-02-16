@@ -7,7 +7,7 @@ import {User} from "../../model/User";
   providedIn: 'root'
 })
 export class StoreUserService {
-  private storeUserList: Subject<User[]> = new Subject<User[]>();
+  private storeUserList: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private storeUser: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private storeIsLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 

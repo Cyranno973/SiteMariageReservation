@@ -9,6 +9,7 @@ import {Menu} from "../../model/User";
 })
 export class UserFormComponent {
   @Input() form: FormGroup;
+  @Input() i: number;
   @Output() selectedDish = new EventEmitter<string>();
   menu = Object.values(Menu);
 }

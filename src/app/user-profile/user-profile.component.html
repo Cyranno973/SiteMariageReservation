@@ -4,7 +4,7 @@
     <div formArrayName="accompagnement">
       <div *ngFor="let acc of formGroupeFake(); let i=index" [formGroupName]="i">
     <h3 *ngIf="accompaniement.length">Invité N° {{i+1}}</h3>
-        <app-user-form [form]="acc"></app-user-form>
+        <app-user-form [i]="i" [form]="acc"></app-user-form>
         <button mat-raised-button color="warn" (click)="removeGroupe(i)" type="button"> supprimer </button>
       </div>
     </div>

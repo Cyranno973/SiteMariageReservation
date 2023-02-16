@@ -19,32 +19,40 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.storeUserService.observeUser().subscribe(user => {
-    //TODO mettre a jours  this.oldForm pour empecher la premier sauvefarde inutile
-        console.log(user)
       this.user = user;
+      const t = { menu: this.user.menu,  allergie: this.user.allergie || '', accompagnement: this.user.accompaniement}
+      this.oldForm = JSON.stringify(t)
+
       this.userForm = this.fb.group({
         name: [this.user.name, [Validators.minLength(3)]],
         username: [this.user.username, [Validators.minLength(3)]],
+        tel: [this.user.tel],
         menu: [this.user.menu || '', Validators.required],
-        allergie: [this.user.allergie, ''],
+        allergie: [this.user.allergie || '',],
         accompagnement: this.fb.array([]),
       });
       if (this.user.accompaniement?.length) this.user.accompaniement.map(x => this.addAccompaniement(x))
       this.userForm.controls['name'].disable()
       this.userForm.controls['username'].disable();
+      this.userForm.controls['tel'].disable();
     })
   }
 
   save() {
     if (this.userForm.valid) {
+      console.log(JSON.stringify(this.userForm.value))
+      console.log(this.oldForm)
+      console.log(JSON.stringify(this.userForm.value) === this.oldForm);
       if (JSON.stringify(this.userForm.value) === this.oldForm) return
+
       this.oldForm = JSON.stringify(this.userForm.value)
       const newUser = {...this.user}
       newUser.menu = this.userForm.value.menu === Menu.Meat ? Menu.Meat : Menu.Fish;
-      newUser.allergie = this.userForm.value.allergie?.length ? this.userForm.value.allergie : '';
+      newUser.allergie = this.userForm.value.allergie?.length ? this.userForm.value.allergie: '';
       newUser.statusUser = Status.Complete;
       newUser.accompaniement = this.userForm.value.accompagnement as Personne[];
       this.userService.createOrUpdate(newUser)
+      this.storeUserService.saveUser(newUser)
     }
   }
 
@@ -58,6 +66,7 @@ export class UserProfileComponent implements OnInit {
       username: [user?.username, [Validators.minLength(3), Validators.required]],
       allergie: [user?.allergie || ''],
       menu: [user?.menu || '', Validators.required],
+      tel: [],
     });
     this.accompaniement.push(invite);
   }
@@ -65,11 +74,11 @@ export class UserProfileComponent implements OnInit {
   removeGroupe(i: number) {
     this.accompaniement.removeAt(i);
     this.user.accompaniement = this.user.accompaniement?.filter((x, index) => index !== i);
-    console.log(this.user)
-    console.log(JSON.stringify(this.userForm.value) === this.oldForm);
     if (JSON.stringify(this.userForm.value) === this.oldForm) return
     this.oldForm = JSON.stringify(this.userForm.value);
     this.userService.createOrUpdate(this.user);
+    this.storeUserService.saveUser(this.user)
+
   }
 
   formGroupeFake(): FormGroup[] {

@@ -4,20 +4,22 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Nom</mat-label>
-          <input matInput type="text" placeholder="Entrer votre nom" formControlName="name">
-          <span *ngIf="form.controls['name'] && form.controls['name'].errors && form.controls['name'].errors['minlength']">
-          Name must be at least 3 characters long.
-        </span>
+          <input matInput type="text" placeholder="Entrez votre nom" formControlName="name">
+          <mat-error>Au moins 3 caractere</mat-error>
         </mat-form-field>
       </div>
 
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Prenom</mat-label>
-          <input matInput type="text" placeholder="Entrer votre prenom" formControlName="username">
-          <span *ngIf="form.controls['name'] && form.controls['name'].errors && form.controls['name'].errors['minlength']">
-          Name must be at least 3 characters long.
-        </span>
+          <input matInput type="text" placeholder="Entrez votre prenom" formControlName="username">
+          <mat-error>Au moins 3 caractere</mat-error>
+        </mat-form-field>
+      </div>
+      <div *ngIf="i === undefined">
+        <mat-form-field appearance="outline">
+          <mat-label>Tel</mat-label>
+          <input matInput type="text" placeholder="Entrez votre numero" formControlName="tel">
         </mat-form-field>
       </div>
       <div>
@@ -26,13 +28,11 @@
             <mat-option disabled value="">Choisissez un plat</mat-option>
             <mat-option *ngFor="let dish of menu ;" [value]="dish">{{dish}}</mat-option>
           </mat-select>
-          <span *ngIf="form.controls['menu'] && form.controls['menu'].errors && form.controls['menu'].errors['required'] && form.touched">
-          selectionnez un plat .
-        </span>
+          <mat-error> Selectionnez un plat.</mat-error>
         </mat-form-field>
       </div>
       <div>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
           <mat-label>Allergie</mat-label>
           <textarea matInput formControlName="allergie" placeholder="rentrez vos allergie"></textarea>
         </mat-form-field>
