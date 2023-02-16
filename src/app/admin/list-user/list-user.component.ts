@@ -12,7 +12,7 @@ import {MatSort} from "@angular/material/sort";
 export class ListUserComponent implements OnInit{
   users: User[];
   displayedColumns: string[] = [
-    'id', 'name', 'username', 'statusUser', 'menu', 'choice', 'accompaniement', 'tel', 'mail'  ];
+    'id', 'name', 'username', 'statusUser', 'menu', 'choice', 'accompaniement', 'tel'];
   dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
   @ViewChild(MatSort) sort: MatSort;
   empty: boolean;
@@ -21,7 +21,6 @@ constructor(private storeUserService: StoreUserService) {
 ngOnInit() {
   this.storeUserService.observeUserList().subscribe(users => {
     this.users = users;
-    console.log(users)
     this.dataSource.data = this.users;
     this.dataSource.sort = this.sort;
   })
@@ -30,6 +29,7 @@ ngOnInit() {
 
   onRowClicked(row: string) {
     console.log(row);
+    //TODO mettre en place un CRUD user
   }
   updateFilter(filter: Event):void {
     const inputEl = filter.target as HTMLInputElement;
