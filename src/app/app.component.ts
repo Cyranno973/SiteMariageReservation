@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Choice, Status, User} from "../model/User";
 import {UserService} from "./services/user.service";
 import {StoreUserService} from "./services/store-user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,24 @@ import {StoreUserService} from "./services/store-user.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private userService: UserService, private storeUserService: StoreUserService) {
+  constructor(private userService: UserService, private storeUserService: StoreUserService, private router: Router) {
   }
 
+@HostListener('window:keyup',['$event']) onKeyUp(e: KeyboardEvent ){
+  this.pressedKeys.push(e.code)
+  if(this.pressedKeys.length === 8){
+    if(this.pressedKeys.join('') === this.secretCode){
+      this.admin =true;
+      this.storeUserService.saveIsAdmin(true);
+      // this.router.navigate(['/admin']);
+      console.log('mode admin')
+    }else this.pressedKeys.splice(0, 1);
+
+  }
+}
+  pressedKeys: string[] = [];
+  secretCode: string = "ArrowLeftArrowLeftArrowRightArrowRightArrowUpArrowUpArrowDownArrowDown"
+  admin: boolean;
   textInFile: string = '';
   userList?: any[];
   user: User;

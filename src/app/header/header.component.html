@@ -4,7 +4,7 @@
       <a mat-button routerLinkActive="active" routerLink="/home">Accueil</a>
       <a mat-button routerLinkActive="active" routerLink="/info">Information</a>
       <a mat-button routerLinkActive="active" routerLink="/coiffeur">Coiffeur</a>
-      <a mat-button routerLinkActive="active" routerLink="/admin">Admin</a>
+      <a *ngIf="admin" mat-button routerLinkActive="active" routerLink="/admin">Admin</a>
     </div>
   </mat-toolbar>
 </div>
