@@ -19,6 +19,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ListUserComponent} from "./admin/list-user/list-user.component";
 import {UserFormComponent} from "./user-form/user-form.component";
 import {ButtonComponent} from "./button/button.component";
+import {AdministratorComponent} from "./admin/administrator/administrator.component";
+import {UserComponent} from "./admin/user/user.component";
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import {ButtonComponent} from "./button/button.component";
     UserProfileComponent,
     ListUserComponent,
     UserFormComponent,
-    ButtonComponent
+    ButtonComponent,
+    AdministratorComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

@@ -33,63 +33,20 @@ export class AppComponent implements OnInit {
   pressedKeys: string[] = [];
   secretCode: string = "ArrowLeftArrowLeftArrowRightArrowRightArrowUpArrowUpArrowDownArrowDown"
   admin: boolean = false;
-  textInFile: string = '';
-  userList?: any[];
+  // userList?: any[];
   user: User;
 
   ngOnInit() {
-    this.retrieveUsers();
+    this.router.navigate(['/admin']);
+    // this.retrieveUsers();
     this.storeUserService.observeUser().subscribe(user => this.user = user);
   }
+  // retrieveUsers() {
+  //   this.userService.getAll().subscribe(data => {
+  //     this.userList = data;
+  //     this.storeUserService.saveUserList(data)
+  //   });
+  // }
 
-  createUSer(listUser: Partial<User>[]) {
-    listUser.map(user => {
-      if (!user) return
-      user.id = this.generatorIdentifiant();
-      user.statusUser = Status.First;
-      user.choice = Choice.All;
-      user.accompaniement = [];
-      return this.userService.createOrUpdate(user, true);
-    })
-    return false
-  }
-
-  generatorIdentifiant(): string {
-    const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
-    if (id === '99999' || id === '111111') this.generatorIdentifiant()
-    this.userService.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
-    return id
-  }
-
-  retrieveUsers() {
-    this.userService.getAll().subscribe(data => {
-      this.userList = data;
-      // console.log(this.userList)
-      this.storeUserService.saveUserList(data)
-    });
-  }
-
-  readFile($event: Event) {
-    const inputEl = $event.currentTarget as HTMLInputElement;
-    let fileList: FileList | null = inputEl.files;
-    if (fileList?.length) {
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        const text = fileReader.result as string;
-        const tabUser = this.formatText(text);
-        this.createUSer(tabUser);
-      }
-      fileReader.readAsText(fileList[0])
-    }
-  }
-
-  formatText(text: string): Partial<User>[] {
-    return text
-      .split('\n')
-      .filter(ligne => ligne)
-      .map(ligne => ligne.toLowerCase())
-      .map(ligne => ligne.split(',').map(colonne => colonne.trim()))
-      .map(x => ({name: x[0] ? x[0] : '', username: x[1] ? x[1] : '', tel: x[2] ? x[2] : ''}));
-  }
 }
 

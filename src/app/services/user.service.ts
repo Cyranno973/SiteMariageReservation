@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import {User} from "../../model/User";
+import {Choice, Status, User} from "../../model/User";
 import {map, Observable} from "rxjs";
 
 @Injectable({
@@ -23,7 +23,24 @@ export class UserService {
   getById(id: string): Observable<any> {
     return this.usersRef.doc(id).get();
   }
-
+  createUSerPartial(listUser?: Partial<User>[], user?: Partial<User>) {
+    if(listUser?.length) listUser.map(user => this.creationUser(user))
+    else if(user) this.creationUser(user)
+  }
+  private creationUser(user: Partial<User>) {
+    user.id = this.generatorIdentifiant();
+    user.statusUser = Status.First;
+    user.choice = Choice.All;
+    user.accompaniement = [];
+    console.log(user)
+    return this.createOrUpdate(user, true);
+  }
+  private generatorIdentifiant(): string {
+    const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
+    if (id === '99999' || id === '111111') this.generatorIdentifiant()
+    this.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
+    return id
+  }
 
   /**avec firebase si on veut creer une collection avec un od personalisé il faut utiliser update
    *

@@ -1,11 +1,7 @@
 <div class="container-all">
-<!--  <div class="containerInputCreate">-->
-<!--    <input type="file" (change)="readFile($event)">-->
-<!--  </div>-->
   <div class="container-outlet">
       <router-outlet></router-outlet>
   </div>
-<!--  <div *ngIf="user && user.choice === 'p'" class="container-app-header">-->
   <div *ngIf="user || admin" class="container-app-header">
     <app-header [admin]="admin" ></app-header>
   </div>

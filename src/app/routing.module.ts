@@ -5,13 +5,15 @@ import {CoiffeurComponent} from "./coiffeur/coiffeur.component";
 import {InfoComponent} from "./info/info.component";
 import {AuthGard} from "./auth.gard";
 import {ListUserComponent} from "./admin/list-user/list-user.component";
+import {AdministratorComponent} from "./admin/administrator/administrator.component";
 
 const routes: Routes =
   [
     {path: 'home', component: HomeComponent},
     {path: 'info', canActivate: [AuthGard],data: {route: 'info'}, component: InfoComponent},
     {path: 'coiffeur', canActivate: [AuthGard], component: CoiffeurComponent},
-    {path: 'admin', canActivate: [AuthGard], component: ListUserComponent},
+    // {path: 'admin', canActivate: [AuthGard], component: ListUserComponent},
+    {path: 'admin', component: AdministratorComponent},
     {path: '**', redirectTo: '/home'},
   ]
 @NgModule({
