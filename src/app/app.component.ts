@@ -15,19 +15,24 @@ export class AppComponent implements OnInit {
 
 @HostListener('window:keyup',['$event']) onKeyUp(e: KeyboardEvent ){
   this.pressedKeys.push(e.code)
+  // console.log(this.pressedKeys)
   if(this.pressedKeys.length === 8){
     if(this.pressedKeys.join('') === this.secretCode){
-      this.admin =true;
-      this.storeUserService.saveIsAdmin(true);
-      // this.router.navigate(['/admin']);
-      console.log('mode admin')
-    }else this.pressedKeys.splice(0, 1);
+      this.admin = !this.admin;
+      this.storeUserService.saveIsAdmin(this.admin);
+      if(this.admin) console.log('mode admin')
+      else {
+        console.log('mode user')
+       this.router.navigate(['/']);
+      }
 
+    }
+    this.pressedKeys.splice(0, 1);
   }
 }
   pressedKeys: string[] = [];
   secretCode: string = "ArrowLeftArrowLeftArrowRightArrowRightArrowUpArrowUpArrowDownArrowDown"
-  admin: boolean;
+  admin: boolean = false;
   textInFile: string = '';
   userList?: any[];
   user: User;

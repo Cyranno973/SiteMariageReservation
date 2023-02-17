@@ -9,7 +9,7 @@ import {ListUserComponent} from "./admin/list-user/list-user.component";
 const routes: Routes =
   [
     {path: 'home', component: HomeComponent},
-    {path: 'info', canActivate: [AuthGard], component: InfoComponent},
+    {path: 'info', canActivate: [AuthGard],data: {route: 'info'}, component: InfoComponent},
     {path: 'coiffeur', canActivate: [AuthGard], component: CoiffeurComponent},
     {path: 'admin', canActivate: [AuthGard], component: ListUserComponent},
     {path: '**', redirectTo: '/home'},
