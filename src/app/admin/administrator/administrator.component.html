@@ -1,0 +1,31 @@
+<ul>
+  <li class="containerInputCreate">
+    <input #fileInput hidden="hidden" type="file" (change)="readFile($event)">
+    <button color="primary" mat-raised-button (click)="fileInput.click()"> Importer la liste d'invité</button>
+  </li>
+  <li>
+    <div>
+      <button (click)="toggleForm()" mat-fab color="primary">
+        <mat-icon>
+          <span class="material-symbols-outlined">add</span>
+        </mat-icon>
+      </button>
+    </div>
+  </li>
+  <li>
+    <a style="cursor: pointer" (click)="exportexcel()">
+      <mat-icon> cloud_download</mat-icon>
+    </a>
+  </li>
+
+</ul>
+<div *ngIf="showForm"  [formGroup]="userForm" class="container-userForm">
+  <app-user (userToUpdate)="updateSave($event)"  (userToSave)="saveForm($event)" [userForm]="userForm" [updateBtn]="updateBtn" ></app-user>
+</div>
+<br>
+<br>
+<hr>
+<div class="container-list-user">
+  <app-list-user (idUser)="updateForm($event)"></app-list-user>
+</div>
+
