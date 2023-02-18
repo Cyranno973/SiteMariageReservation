@@ -3,16 +3,23 @@
   text-align: center;
 }
 .demo-table {
-  width: 100%;
+
   //border: darkred solid 3px ;
 }
+table{
 
-.mat-column-id{
-  width: 100px;
+
+}
+.mat-column-id,.mat-column-accompaniement,.mat-column-menu,.mat-column-action,.mat-column-tel,.mat-column-choice{
+  width: 10%;
   //border-right: 1px solid currentColor;
   //border: darkred solid 3px ;
-  padding-right: 24px;
+  //padding-right: 24px;
+  //background-color: red;
   text-align: center;
+}
+span .mat-header-cell{
+  font-weight: bold;
 }
 
 .mat-column-name {
@@ -28,12 +35,17 @@
   //color: red !important;
   font-style: italic;
 }
-
-.mat-column-choice {
-  width: 100px;
-  text-align: center;
-  font-weight: bold;
+.mat-column-action{
+  width: 100%;
+  button:first-child{
+    margin-right: 10px;
+  }
 }
+//.mat-column-choice {
+//  width: 100px;
+//  text-align: center;
+//  font-weight: bold;
+//}
 //.mat-mdc-row .mat-mdc-cell {
 //  border-bottom: 5px solid red;
 //  border-top: 1px solid transparent;

@@ -33,10 +33,9 @@
     <mat-header-cell   *matHeaderCellDef mat-sort-header >Menu</mat-header-cell>
     <mat-cell *matCellDef="let user">{{user.menu}}</mat-cell>
   </ng-container>
-
   <ng-container matColumnDef="accompaniement">
 <!--    <mat-header-cell *matHeaderCellDef> Accompaniement </mat-header-cell>-->
-    <mat-header-cell   *matHeaderCellDef mat-sort-header >Accompaniement</mat-header-cell>
+    <mat-header-cell   *matHeaderCellDef mat-sort-header >Inviter</mat-header-cell>
     <mat-cell *matCellDef="let user">
       <ng-container *ngFor="let user of user.accompaniement">
       <span> {{user.name}}  {{user.username}} </span>
@@ -46,8 +45,16 @@
       </ng-container>
     </mat-cell>
   </ng-container>
+  <ng-container matColumnDef="action">
+    <mat-header-cell   *matHeaderCellDef mat-sort-header >Action</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <button mat-raised-button color="primary" (click)="onRowClicked(user)">Modifier</button>
+      <button mat-raised-button color="warn" (click)="onRowClicked(user.id)">Supprimer </button>
+    </mat-cell>
+  </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked(row)"></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+<!--  <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked(row)"></mat-row>-->
 </table>
 <div *ngIf="!dataSource.filteredData.length"> Aucun résultat ne corespond à votre recherche</div>

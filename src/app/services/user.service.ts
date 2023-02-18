@@ -32,7 +32,6 @@ export class UserService {
     user.statusUser = Status.First;
     user.choice = Choice.All;
     user.accompaniement = [];
-    console.log(user)
     return this.createOrUpdate(user, true);
   }
   private generatorIdentifiant(): string {
@@ -51,6 +50,12 @@ export class UserService {
     const userClean = this.removeEmptyProperties(user);
     return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user creer'))
   }
+  update(user: Partial<User>): any {
+    console.log(user)
+    const userClean = this.removeEmptyProperties(user);
+    return this.usersRef.doc(userClean.id).update(userClean).then(user => console.log('user creer'))
+  }
+
 
   delete(id: string): Promise<void> {
     return this.usersRef.doc(id).delete()
