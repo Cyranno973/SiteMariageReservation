@@ -4,57 +4,80 @@
     <input matInput (keyup)="updateFilter($event)" type="text" name="" id="">
   </mat-form-field>
 </div>
-<table matSort class="demo-table" mat-table [dataSource]="dataSource">
+<mat-table matSort [dataSource]="dataSource">
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Id</mat-header-cell>
-    <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>
+    <mat-cell *matCellDef="let user">
+      <span class="mobile-label">Id</span>
+      {{user.id}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="username">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-    <mat-cell *matCellDef="let user">{{user.username}}</mat-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <span class="mobile-label">Prénom</span>
+      {{user.username | titlecase}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-    <mat-cell *matCellDef="let user">{{user.name}}</mat-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Nom</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <span class="mobile-label">Nom</span>
+      {{user.name | titlecase}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="statusUser">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>statusUser</mat-header-cell>
-    <mat-cell *matCellDef="let user">{{user.statusUser}}</mat-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Statut</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <span class="mobile-label">Statut</span>
+      {{user.statusUser | titlecase}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="choice">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Choice</mat-header-cell>
-    <mat-cell *matCellDef="let user">{{user.choice}}</mat-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Participe</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <span class="mobile-label">Choice</span>
+      {{user.choice | titlecase}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="tel">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Tel</mat-header-cell>
-    <mat-cell *matCellDef="let user">{{user.tel}}</mat-cell>
+    <mat-cell *matCellDef="let user">
+      <span class="mobile-label">Tel</span>
+      {{user.tel}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="menu">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Menu</mat-header-cell>
-    <mat-cell *matCellDef="let user">{{user.menu}}</mat-cell>
+    <mat-cell *matCellDef="let user">
+      <span class="mobile-label">Menu</span>
+      {{user.menu}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="accompaniement">
-    <!--    <mat-header-cell *matHeaderCellDef> Accompaniement </mat-header-cell>-->
     <mat-header-cell *matHeaderCellDef mat-sort-header>Inviter</mat-header-cell>
     <mat-cell *matCellDef="let user">
+      <span class="mobile-label">Inviter</span>
+    <div class="container-invite">
       <ng-container *ngFor="let user of user.accompaniement">
-        <span> {{user.name}}  {{user.username}} </span>
-        <br/>
-        <span>{{user.menu}} {{user.allergie}}</span>
+        <div>
+          <span> {{user.name | titlecase}}  {{user.username | titlecase}} </span>
+          <br/>
+          <span>{{user.menu}} <br/> {{user.allergie}}</span>
+        </div>
         <br/> <!-- Use br if you want to display the roles vertically -->
       </ng-container>
+    </div>
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      <button mat-raised-button color="primary" (click)="onRowClicked(user)">Modifier</button>
-      <button mat-raised-button color="warn" (click)="onRowClicked(user.id)">Supprimer</button>
+      <div class="action">
+        <span class="mobile-label">Action</span>
+        <div class="container-btn">
+          <button mat-raised-button color="primary" (click)="onRowClicked(user)">Modifier</button>
+          <button mat-raised-button color="warn" (click)="onRowClicked(user.id)">Supprimer</button>
+        </div>
+      </div>
     </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   <!--  <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked(row)"></mat-row>-->
-</table>
+</mat-table>
 <div *ngIf="!dataSource.filteredData.length"> Aucun résultat ne corespond à votre recherche</div>

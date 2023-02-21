@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   })
 
   ngOnInit() {
+    // this.router.navigate(['/admin']); //TODO a supprimer
     console.log('%c salut', 'font-size:50px;')
     this.subscribe.add(this.storeUserService.observeUser().subscribe(user => this.user = user))
     this.storeUserService.observeUserList().subscribe(users => this.userList = users)

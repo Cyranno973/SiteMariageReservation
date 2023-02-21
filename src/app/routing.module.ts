@@ -12,6 +12,7 @@ const routes: Routes =
     {path: 'info', canActivate: [AuthGard], data: {route: 'info'}, component: InfoComponent},
     {path: 'coiffeur', canActivate: [AuthGard], component: CoiffeurComponent},
     {path: 'admin', canActivate: [AuthGard], component: AdministratorComponent},
+    // {path: 'admin', component: AdministratorComponent},
     {path: '**', redirectTo: '/home'},
   ]
 

@@ -1,57 +1,71 @@
-.container-input{
+.container-input {
   padding-top: 50px;
   text-align: center;
 }
-.demo-table {
 
-  //border: darkred solid 3px ;
-}
-table{
-
-
-}
-.mat-column-id,.mat-column-accompaniement,.mat-column-menu,.mat-column-action,.mat-column-tel,.mat-column-choice{
-  width: 10%;
-  //border-right: 1px solid currentColor;
-  //border: darkred solid 3px ;
-  //padding-right: 24px;
+mat-table {
   //background-color: red;
-  text-align: center;
-}
-span .mat-header-cell{
-  font-weight: bold;
-}
-
-.mat-column-name {
-  width: 100px;
-  //border: green solid 3px ;
-  padding-left: 16px;
-  color: darkred;
-  font-size: 20px;
-}
-
-.mat-column-username {
-  width: 100px;
-  //color: red !important;
-  font-style: italic;
-}
-.mat-column-action{
-  width: 100%;
-  button:first-child{
-    margin-right: 10px;
+  mat-header-cell {
+    //display: none;
   }
+
+  mat-row, mat-header-row, mat-footer-row {
+    //display: block;
+  }
+
+  mat-header-row {
+    display: none;
+  }
+
+  mat-row {
+    display: block;
+  }
+
+  mat-cell {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+
+    &:last-child {
+      //background-color: red;
+      margin-bottom: 10%;
+
+    }
+
+    > span {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .action {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      span {
+        font-weight: 500;
+        font-size: 16px;
+      }
+
+      .container-btn {
+        display: flex;
+        justify-content: space-between;
+
+        button:first-child {
+          margin-right: 15px;
+        }
+      }
+    }
+    .container-invite{
+      padding: 15px;
+    }
+  }
+
+  //.mobile-label{
+  //  display: flex;
+  //  //flex-direction: row;
+  //  font-size: 30px;
+  //  color: darkred;
+  //}
 }
-//.mat-column-choice {
-//  width: 100px;
-//  text-align: center;
-//  font-weight: bold;
-//}
-//.mat-mdc-row .mat-mdc-cell {
-//  border-bottom: 5px solid red;
-//  border-top: 1px solid transparent;
-//  cursor: pointer;
-//}
-//
-//.mat-mdc-row:hover .mat-mdc-cell {
-//  border-color: blue;
-//}
