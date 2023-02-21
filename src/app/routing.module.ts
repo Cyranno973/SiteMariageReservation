@@ -10,6 +10,7 @@ const routes: Routes =
   [
     {path: 'home', component: HomeComponent},
     {path: 'info', canActivate: [AuthGard], data: {route: 'info'}, component: InfoComponent},
+    // {path: 'info', data: {route: 'info'}, component: InfoComponent},
     {path: 'coiffeur', canActivate: [AuthGard], component: CoiffeurComponent},
     {path: 'admin', canActivate: [AuthGard], component: AdministratorComponent},
     // {path: 'admin', component: AdministratorComponent},

@@ -1,0 +1,11 @@
+.container-card{
+  margin: 10%;
+  max-width: 350px;
+
+  mat-card{
+    cursor: pointer;
+  }
+  img{
+    width: 100%;
+  }
+}
