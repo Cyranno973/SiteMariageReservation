@@ -14,7 +14,7 @@ export class AuthGard implements CanActivate {
     const subAdmin = this.storeUserService.observeIsAdmin()
     const subUser = this.storeUserService.observeUser()
     return combineLatest([subAdmin, subUser]).pipe(map(x => {
-      console.log(x)
+      // console.log(x)
       if (x[0]) {
         console.log('admin activé')
         return true

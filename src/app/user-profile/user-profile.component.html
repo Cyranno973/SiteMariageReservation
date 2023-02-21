@@ -1,15 +1,21 @@
 <div class="container-form">
-  <div class="form" (focusin)="save()"  (keyup)="save()"  [formGroup]="userForm">
+  <div class="form" (focusin)="save()" (keyup)="save()" [formGroup]="userForm">
     <app-user-form [form]="userForm"></app-user-form>
     <div formArrayName="accompagnement">
       <div *ngFor="let acc of formGroupeFake(); let i=index" [formGroupName]="i">
-    <h3 *ngIf="accompaniement.length">Invité N° {{i+1}}</h3>
-        <app-user-form [i]="i" [form]="acc"></app-user-form>
-        <button mat-raised-button color="warn" (click)="removeGroupe(i)" type="button"> supprimer </button>
+        <h3 *ngIf="accompaniement.length">Invité N° {{i + 1}}</h3>
+        <div class="container-app-form">
+          <app-user-form [i]="i" [form]="acc"></app-user-form>
+        </div>
+        <div class="container-btn-supprimer">
+          <button mat-raised-button color="warn" (click)="removeGroupe(i)" type="button"> supprimer</button>
+        </div>
       </div>
+
+      <div class="container-add-inviter">
+        <button mat-raised-button color="warn" [disabled]="!userForm.valid" (click)="addAccompaniement()" type="button"> ajouter une personne</button>
+      </div>
+      <!--    <h1>{{userForm.valid}}</h1>-->
     </div>
-    <button mat-raised-button color="warn" [disabled]="!userForm.valid" (click)="addAccompaniement()" type="button"> ajouter une personne</button>
-<!--    <h1>{{userForm.valid}}</h1>-->
   </div>
-</div>
 
