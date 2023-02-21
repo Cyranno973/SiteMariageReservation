@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {User} from "../../model/User";
 
 
@@ -35,7 +35,8 @@ export class StoreUserService {
   saveIsLoggedIn(bool: boolean) {
     this.storeIsLoggedIn.next(bool)
   }
-  observeIsAdmin(): Observable<boolean>{
+
+  observeIsAdmin(): Observable<boolean> {
     return this.storeIsAdmin.asObservable();
   }
 

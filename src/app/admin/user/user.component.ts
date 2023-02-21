@@ -1,7 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {StoreUserService} from "../../services/store-user.service";
-import {UserService} from "../../services/user.service";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormGroup} from "@angular/forms";
 import {User} from "../../../model/User";
 
 @Component({
@@ -10,8 +8,9 @@ import {User} from "../../../model/User";
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent {
-  constructor(private fb: FormBuilder, private storeUserService: StoreUserService, private userService: UserService) {
+  constructor() {
   }
+
   @Input() userForm: FormGroup;
   user: User;
   @Input() UserToUpdate: User;

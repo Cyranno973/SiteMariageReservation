@@ -23,10 +23,12 @@ export class UserService {
   getById(id: string): Observable<any> {
     return this.usersRef.doc(id).get();
   }
+
   createUSerPartial(listUser?: Partial<User>[], user?: Partial<User>) {
-    if(listUser?.length) listUser.map(user => this.creationUser(user))
-    else if(user) this.creationUser(user)
+    if (listUser?.length) listUser.map(user => this.creationUser(user))
+    else if (user) this.creationUser(user)
   }
+
   private creationUser(user: Partial<User>) {
     user.id = this.generatorIdentifiant();
     user.statusUser = Status.First;
@@ -34,6 +36,7 @@ export class UserService {
     user.accompaniement = [];
     return this.createOrUpdate(user, true);
   }
+
   private generatorIdentifiant(): string {
     const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
     if (id === '99999' || id === '111111') this.generatorIdentifiant()
@@ -50,12 +53,11 @@ export class UserService {
     const userClean = this.removeEmptyProperties(user);
     return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user creer'))
   }
+
   update(user: Partial<User>): any {
-    console.log(user)
     const userClean = this.removeEmptyProperties(user);
     return this.usersRef.doc(userClean.id).update(userClean).then(user => console.log('user creer'))
   }
-
 
   delete(id: string): Promise<void> {
     return this.usersRef.doc(id).delete()

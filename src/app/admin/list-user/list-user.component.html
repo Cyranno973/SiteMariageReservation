@@ -1,16 +1,16 @@
 <div class="container-input">
   <mat-form-field appearance="outline">
     <mat-label>Filtre</mat-label>
-  <input matInput (keyup)="updateFilter($event)" type="text" name="" id="">
+    <input matInput (keyup)="updateFilter($event)" type="text" name="" id="">
   </mat-form-field>
 </div>
-<table matSort class="demo-table" mat-table [dataSource]="dataSource" >
+<table matSort class="demo-table" mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Id</mat-header-cell>
     <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="username">
-    <mat-header-cell  *matHeaderCellDef mat-sort-header >Username</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
     <mat-cell *matCellDef="let user">{{user.username}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="name">
@@ -18,43 +18,43 @@
     <mat-cell *matCellDef="let user">{{user.name}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="statusUser">
-    <mat-header-cell   *matHeaderCellDef mat-sort-header >statusUser</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>statusUser</mat-header-cell>
     <mat-cell *matCellDef="let user">{{user.statusUser}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="choice">
-    <mat-header-cell   *matHeaderCellDef mat-sort-header >Choice</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Choice</mat-header-cell>
     <mat-cell *matCellDef="let user">{{user.choice}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="tel">
-    <mat-header-cell   *matHeaderCellDef mat-sort-header >Tel</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Tel</mat-header-cell>
     <mat-cell *matCellDef="let user">{{user.tel}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="menu">
-    <mat-header-cell   *matHeaderCellDef mat-sort-header >Menu</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Menu</mat-header-cell>
     <mat-cell *matCellDef="let user">{{user.menu}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="accompaniement">
-<!--    <mat-header-cell *matHeaderCellDef> Accompaniement </mat-header-cell>-->
-    <mat-header-cell   *matHeaderCellDef mat-sort-header >Inviter</mat-header-cell>
+    <!--    <mat-header-cell *matHeaderCellDef> Accompaniement </mat-header-cell>-->
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Inviter</mat-header-cell>
     <mat-cell *matCellDef="let user">
       <ng-container *ngFor="let user of user.accompaniement">
-      <span> {{user.name}}  {{user.username}} </span>
-        <br />
+        <span> {{user.name}}  {{user.username}} </span>
+        <br/>
         <span>{{user.menu}} {{user.allergie}}</span>
-        <br /> <!-- Use br if you want to display the roles vertically -->
+        <br/> <!-- Use br if you want to display the roles vertically -->
       </ng-container>
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="action">
-    <mat-header-cell   *matHeaderCellDef mat-sort-header >Action</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
     <mat-cell *matCellDef="let user">
       <button mat-raised-button color="primary" (click)="onRowClicked(user)">Modifier</button>
-      <button mat-raised-button color="warn" (click)="onRowClicked(user.id)">Supprimer </button>
+      <button mat-raised-button color="warn" (click)="onRowClicked(user.id)">Supprimer</button>
     </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-<!--  <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked(row)"></mat-row>-->
+  <!--  <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked(row)"></mat-row>-->
 </table>
 <div *ngIf="!dataSource.filteredData.length"> Aucun résultat ne corespond à votre recherche</div>

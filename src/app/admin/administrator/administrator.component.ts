@@ -1,9 +1,10 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StoreUserService} from "../../services/store-user.service";
-import {Choice, Status, User} from "../../../model/User";
+import {User} from "../../../model/User";
 import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {read, utils, WorkBook, WorkSheet, writeFile, writeFileXLSX} from 'xlsx';
+import {utils, WorkBook, WorkSheet, writeFile} from 'xlsx';
+
 @Component({
   selector: 'app-admin',
   templateUrl: './administrator.component.html',
@@ -67,8 +68,8 @@ export class AdministratorComponent implements OnInit, OnDestroy {
     // if(this.user){
     // }
 
-      // console.log('form ',this.userForm.value.name);
-      // console.log('user ',this.user.name);
+    // console.log('form ',this.userForm.value.name);
+    // console.log('user ',this.user.name);
     this.userService.createUSerPartial([], this.userForm.value);
     this.userForm.reset()
     this.showForm = !this.showForm
@@ -76,25 +77,24 @@ export class AdministratorComponent implements OnInit, OnDestroy {
   }
 
   updateForm(e: User | string) {
-    if(typeof e === "string") {
+    if (typeof e === "string") {
       this.updateBtn = false;
       this.userService.delete(e);
-    }
-    else{
-      console.log('false')
+    } else {
       this.updateBtn = true;
       this.user = e;
-    this.userForm.setValue({name: e.name, username: e.username, tel: e.tel || ''})
+      this.userForm.setValue({name: e.name, username: e.username, tel: e.tel || ''})
       this.showForm = true;
     }
 
   }
-updateSave(user: User){
-  console.log('update', user.id = this.user.id);
-  this.userService.update(user);
-}
+
+  updateSave(user: User) {
+    user.id = this.user.id;
+    this.userService.update(user);
+  }
+
   toggleForm() {
-    // this.user.id = '';
     this.userForm.reset();
     this.showForm = !this.showForm;
     this.updateBtn = false;
