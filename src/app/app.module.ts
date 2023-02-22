@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, isDevMode} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../environments/environment';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
@@ -21,6 +21,7 @@ import {UserFormComponent} from "./user-form/user-form.component";
 import {ButtonComponent} from "./button/button.component";
 import {AdministratorComponent} from "./admin/administrator/administrator.component";
 import {UserComponent} from "./admin/user/user.component";
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,13 @@ import {UserComponent} from "./admin/user/user.component";
     RoutingModule,
     ReactiveFormsModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [],
 
