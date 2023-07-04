@@ -40,9 +40,7 @@ export class UserProfileComponent implements OnInit {
 
   save() {
     if (this.userForm.valid) {
-      // console.log(JSON.stringify(this.userForm.value))
-      // console.log(this.oldForm)
-      // console.log(JSON.stringify(this.userForm.value) === this.oldForm);
+
       if (JSON.stringify(this.userForm.value) === this.oldForm) return
 
       this.oldForm = JSON.stringify(this.userForm.value)

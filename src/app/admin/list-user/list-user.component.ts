@@ -16,6 +16,7 @@ export class ListUserComponent implements OnInit {
   dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
   @ViewChild(MatSort) sort: MatSort;
   empty: boolean;
+  nbrInvite: number;
   @Output() idUser: EventEmitter<User | string> = new EventEmitter<User | string>();
 
   constructor(private storeUserService: StoreUserService) {
@@ -24,8 +25,10 @@ export class ListUserComponent implements OnInit {
   ngOnInit() {
     this.storeUserService.observeUserList().subscribe(users => {
       this.users = users;
+      console.log(users)
       this.dataSource.data = this.users;
       this.dataSource.sort = this.sort;
+       this.users?.length;
     })
 
   }

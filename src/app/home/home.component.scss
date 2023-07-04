@@ -1,4 +1,13 @@
+@font-face {
+  font-family: kingham;
+  src: url("../../assets/fonts/Kingham.otf") format("opentype");
+}
 
+//@font-face {
+//  font-family: GraublauWeb;
+//  font-weight: bold;
+//  src: url("path/GraublauWebBold.otf") format("opentype");
+//}
 .container-home {
   width: 100%;
   //height: 100%;
@@ -13,6 +22,7 @@
 
   height: auto;
   animation: fadeInDown 2s ease ;
+  color: #FCFFF5;
 
 }
 
@@ -29,9 +39,12 @@
   width: 100%;
   height: auto;
   font-weight: 600;
-  font-size: 40px;
+  font-size: 50px;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px black;
+
   //padding-bottom: 20px;
-  font-family: 'Wedding', sans-serif;
+  font-family: kingham, sans-serif;
 }
 .all{
   display: flex;
@@ -53,17 +66,38 @@
   visibility: hidden;
   .registration{
     flex-direction: column;
+    color: #FCFFF5;
   }
   .error2{
     //border: solid 1px  var(--mdc-theme-error, #f44336);
   }
   mat-form-field{
+    color: #FCFFF5;
+    .mdc-text-field--outlined{
+      border-color: #e4e8eb !important;
+      color: white;
+    }
+
+    mat-label{
+    color: #FCFFF5;
+    }
+    mat-form-field.mat-form-field {
+      color:white !important;
+    }
+
   //outline: none;
     mat-error{
       color: red;
     }
 
   }
+  mat-form-field-outline {
+    border-width: 10px;
+  }
+  mat-form-field-outline-thicker {
+    border-width: 2px;
+  }
+
   form .error1{
     text-align: center;
     color: darkred;

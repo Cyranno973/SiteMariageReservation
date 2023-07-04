@@ -2,7 +2,6 @@
   <div class="container-outlet">
       <router-outlet></router-outlet>
   </div>
-  <div *ngIf="user || admin" class="container-app-header">
-    <app-header [admin]="admin" ></app-header>
-  </div>
+<!--  TODO verifier la condition-->
+    <app-header  *ngIf="!user || admin" [admin]="admin" ></app-header>
 </div>

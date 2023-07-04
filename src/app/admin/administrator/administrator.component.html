@@ -3,7 +3,7 @@
     <input #fileInput hidden="hidden" type="file" (change)="readFile($event)">
     <button color="primary" mat-raised-button (click)="fileInput.click()"> Importer la liste d'invité</button>
   </li>
-  <li>
+  <li >
     <div>
       <button (click)="toggleForm()" mat-fab color="primary">
         <mat-icon>
@@ -12,9 +12,9 @@
       </button>
     </div>
   </li>
-  <li>
-    <a style="cursor: pointer" (click)="exportexcel()">
-      <mat-icon> cloud_download</mat-icon>
+  <li class="excel">
+    <a class="excel--link" style="cursor: pointer" (click)="exportexcel()">
+      <mat-icon color="primary" class="excel--icon"> cloud_download</mat-icon>
     </a>
   </li>
 

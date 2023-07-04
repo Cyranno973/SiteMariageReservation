@@ -8,7 +8,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {InfoComponent} from './info/info.component';
-import {CoiffeurComponent} from './coiffeur/coiffeur.component';
+import {ActivityComponent} from './activity/activity.component';
 import {RoutingModule} from "./routing.module";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireModule} from "@angular/fire/compat";
@@ -29,7 +29,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     HeaderComponent,
     HomeComponent,
     InfoComponent,
-    CoiffeurComponent,
+    ActivityComponent,
     UserProfileComponent,
     ListUserComponent,
     UserFormComponent,

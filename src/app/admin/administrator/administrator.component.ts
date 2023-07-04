@@ -45,6 +45,7 @@ export class AdministratorComponent implements OnInit, OnDestroy {
       fileReader.onload = () => {
         const text = fileReader.result as string;
         const tabUser = this.formatText(text);
+        console.log(tabUser);
         this.userService.createUSerPartial(tabUser);
       }
       fileReader.readAsText(fileList[0])
@@ -55,9 +56,9 @@ export class AdministratorComponent implements OnInit, OnDestroy {
     return text
       .split('\n')
       .filter(ligne => ligne)
-      .map(ligne => ligne.toLowerCase())
+      .map(ligne => ligne.toLocaleLowerCase())
       .map(ligne => ligne.split(',').map(colonne => colonne.trim()))
-      .map(x => ({name: x[0] ? x[0] : '', username: x[1] ? x[1] : '', tel: x[2] ? x[2] : ''}));
+      .map(x => ({id: x[0] ? x[0] : '', name: x[1] ? x[1] : '', username: x[2] ? x[2] : '', tel: x[3] ? x[3] : ''}));
   }
 
 

@@ -1,10 +1,10 @@
 <div class="container-header">
   <mat-toolbar color="primary">
     <div class="wrap-mat-button">
-      <a mat-button routerLinkActive="active" routerLink="/home">Accueil</a>
-      <a mat-button routerLinkActive="active" routerLink="/info">Information</a>
-      <a mat-button routerLinkActive="active" routerLink="/coiffeur">Coiffeur</a>
-      <a *ngIf="admin" mat-button routerLinkActive="active" routerLink="/admin">Admin</a>
+      <a mat-button routerLinkActive="active" routerLink="/home"><mat-icon fontIcon="home"></mat-icon></a>
+      <a mat-button routerLinkActive="active" routerLink="/activity"><mat-icon fontIcon="rowing"></mat-icon></a>
+      <a mat-button routerLinkActive="active" routerLink="/info"><mat-icon fontIcon="info"></mat-icon></a>
+      <a *ngIf="admin" mat-button routerLinkActive="active" routerLink="/admin"><mat-icon fontIcon="admin_panel_settings"></mat-icon></a>
     </div>
   </mat-toolbar>
 </div>

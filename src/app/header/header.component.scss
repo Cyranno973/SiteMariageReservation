@@ -2,6 +2,7 @@ mat-toolbar {
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
+  height: 70px;
 }
 .active{
   background-color: cornflowerblue;

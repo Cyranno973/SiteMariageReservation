@@ -4,53 +4,48 @@
     <input matInput (keyup)="updateFilter($event)" type="text" name="" id="">
   </mat-form-field>
 </div>
+<div>
+  <p class="invite"><span> {{users?.length }}</span> invités avec un numero</p>
+</div>
 <mat-table matSort [dataSource]="dataSource">
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Id</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      <span class="mobile-label">Id</span>
       {{user.id}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="username">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      <span class="mobile-label">Prénom</span>
       {{user.username | titlecase}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Nom</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      <span class="mobile-label">Nom</span>
       {{user.name | titlecase}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="statusUser">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Statut</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      <span class="mobile-label">Statut</span>
       {{user.statusUser | titlecase}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="choice">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Participe</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      <span class="mobile-label">Choice</span>
       {{user.choice | titlecase}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="tel">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Tel</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      <span class="mobile-label">Tel</span>
       {{user.tel}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="menu">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Menu</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      <span class="mobile-label">Menu</span>
       {{user.menu}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="accompaniement">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Inviter</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      <span class="mobile-label">Inviter</span>
     <div class="container-invite">
       <ng-container *ngFor="let user of user.accompaniement">
         <div>
@@ -67,10 +62,9 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
     <mat-cell *matCellDef="let user">
       <div class="action">
-        <span class="mobile-label">Action</span>
         <div class="container-btn">
-          <button mat-raised-button color="primary" (click)="onRowClicked(user)">Modifier</button>
-          <button mat-raised-button color="warn" (click)="onRowClicked(user.id)">Supprimer</button>
+          <button mat-raised-button color="primary" (click)="onRowClicked(user)"><mat-icon fontIcon="edit"></mat-icon></button>
+          <button mat-raised-button color="warn" (click)="onRowClicked(user.id)"><mat-icon fontIcon="delete"></mat-icon></button>
         </div>
       </div>
     </mat-cell>
