@@ -1,7 +1,7 @@
 @use "@angular/material" as mat;
 
 @include  mat.core();
-$primary: mat.define-palette(mat.$pink-palette, 500, A100, A400);
+$primary: mat.define-palette(mat.$lime-palette, 900, A400, A700);
 $segond: mat.define-palette(mat.$red-palette);
 $accent: mat.define-palette(mat.$deep-purple-palette);
 $warn: mat.define-palette(mat.$blue-grey-palette);

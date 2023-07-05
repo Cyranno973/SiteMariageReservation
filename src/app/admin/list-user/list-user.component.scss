@@ -68,9 +68,14 @@ span .mat-header-cell{
   }
 }
 .invite{
-  color: #f2ff45;
+  color: white;
+  background-color: #827717;
+  display: flex;
+  width: 40%;
  span {
-   font-weight: bold;
+   margin-right: 2%;
+   font-size: 20px;
+   font-weight: 400;
  }
 }
 //.mat-column-choice {

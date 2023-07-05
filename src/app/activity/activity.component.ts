@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {  AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-activity',
@@ -8,8 +10,39 @@ import { Component } from '@angular/core';
 export class ActivityComponent {
   image: string;
   description: string;
+  public file: any = {};
 
-  onSave() {
-    // Logic to handle saving the image and description
+  constructor(private storage: AngularFireStorage) {}
+
+  chooseFile(event: any) {
+    if (event?.target?.files && event.target.files.length > 0) {
+      this.file = event.target.files[0];
+      console.log('Image:', this.image);
+      console.log('Description:', this.description);
+    }
+  }
+
+  addData() {
+    const filePath = `images/${this.file.name}`;
+    const storageRef = this.storage.ref(filePath);
+    const uploadTask: AngularFireUploadTask = storageRef.put(this.file);
+
+    uploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        storageRef.getDownloadURL().subscribe((downloadUrl) => {
+          console.log('File available at', downloadUrl);
+        });
+      })
+    ).subscribe(
+      (snapshot) => {
+        if (snapshot) {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        }
+      },
+      (error) => {
+        console.log('Upload error:', error);
+      }
+    );
   }
 }

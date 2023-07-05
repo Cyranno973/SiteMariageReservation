@@ -1,13 +1,11 @@
-<form (ngSubmit)="onSave()" #infoForm="ngForm">
-  <div>
-    <label for="image">Image:</label>
-    <input type="file" id="image" [(ngModel)]="image" name="image" accept="image/*">
-  </div>
+<div>
+  <label for="image">Image:</label>
+  <input type="file" id="image" (change)="chooseFile($event)">
+</div>
 
-  <div>
-    <label for="description">Description:</label>
-    <textarea id="description" [(ngModel)]="description" name="description"></textarea>
-  </div>
+<div>
+  <label for="description">Description:</label>
+  <textarea id="description" [(ngModel)]="description" name="description"></textarea>
+</div>
 
-  <button type="submit">Save</button>
-</form>
+<button (click)="addData()">Save</button>

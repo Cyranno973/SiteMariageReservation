@@ -2,12 +2,6 @@
   font-family: kingham;
   src: url("../../assets/fonts/Kingham.otf") format("opentype");
 }
-
-//@font-face {
-//  font-family: GraublauWeb;
-//  font-weight: bold;
-//  src: url("path/GraublauWebBold.otf") format("opentype");
-//}
 .container-home {
   width: 100%;
   //height: 100%;
@@ -19,16 +13,13 @@
   align-items: center;
   flex-direction: column;
   padding-top: 50%;
-
   height: auto;
   animation: fadeInDown 2s ease ;
   color: #FCFFF5;
-
 }
 
 .name {
   margin: 5%;
-
 }
 
 .titulaire {
@@ -42,8 +33,6 @@
   font-size: 50px;
   letter-spacing: 2px;
   text-shadow: 2px 2px black;
-
-  //padding-bottom: 20px;
   font-family: kingham, sans-serif;
 }
 .all{
@@ -61,7 +50,6 @@
 }
 .container-form{
   margin-top: 3rem;
-
   animation: fadeInDown 2s ease 500ms forwards;
   visibility: hidden;
   .registration{
@@ -71,18 +59,40 @@
   .error2{
     //border: solid 1px  var(--mdc-theme-error, #f44336);
   }
+  mat.mat-mdc-text-field-wrapper{
+    border: 10px blue solid !important;
+    outline: 10px solid;
+
+  }
   mat-form-field{
-    color: #FCFFF5;
-    .mdc-text-field--outlined{
-      border-color: #e4e8eb !important;
-      color: white;
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      background-color: #a10c0c;
+      outline: 10px solid;
+
+    }
+    .mdc-text-field{
+      border: 10px solid blue !important;
+      outline: 10px solid;
+
+    }
+    //color: #FCFFF5;
+
+    //mat-mdc-text-field-wrapper mdc-text-field ng-tns-c106-1 mdc-text-field--filled
+
+
+    input{
+      color: red;
+      &::placeholder{
+        color: #7b8500;
+      }
     }
 
     mat-label{
-    color: #FCFFF5;
+    color: red;
+    //color: #FCFFF5;
     }
     mat-form-field.mat-form-field {
-      color:white !important;
+      //color:white !important;
     }
 
   //outline: none;
@@ -92,10 +102,10 @@
 
   }
   mat-form-field-outline {
-    border-width: 10px;
   }
   mat-form-field-outline-thicker {
-    border-width: 2px;
+      border-color: darkred;
+      border: 10px solid;
   }
 
   form .error1{
@@ -107,6 +117,7 @@
    //caret-color: var(--mdc-theme-error, #f44336)!important;
    //border-color: var(--mdc-theme-error, #f44336) !important;
  }
+
 }
 .registration {
   display: flex;
@@ -143,7 +154,7 @@
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translate3d(0, -100%, 0);
+    //transform: translate3d(0, -100%, 0);
   }
 
   to {

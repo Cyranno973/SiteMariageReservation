@@ -22,6 +22,8 @@ import {ButtonComponent} from "./button/button.component";
 import {AdministratorComponent} from "./admin/administrator/administrator.component";
 import {UserComponent} from "./admin/user/user.component";
 import { ServiceWorkerModule } from '@angular/service-worker';
+import {getStorage, provideStorage} from "@angular/fire/storage";
+import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule,
     AngularFireDatabaseModule,
     RoutingModule,
     ReactiveFormsModule,
