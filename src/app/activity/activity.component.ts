@@ -8,22 +8,24 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./activity.component.scss']
 })
 export class ActivityComponent {
-  image: string;
   description: string;
   public file: any = {};
 
   constructor(private storage: AngularFireStorage) {}
 
   chooseFile(event: any) {
+    console.log(event,'aaa')
     if (event?.target?.files && event.target.files.length > 0) {
       this.file = event.target.files[0];
-      console.log('Image:', this.image);
-      console.log('Description:', this.description);
     }
   }
 
   addData() {
+    console.log('Description:', this.description);
+    console.log('file :', this.file.name);
+
     const filePath = `images/${this.file.name}`;
+    if(!this.file.name) return;
     const storageRef = this.storage.ref(filePath);
     const uploadTask: AngularFireUploadTask = storageRef.put(this.file);
 
