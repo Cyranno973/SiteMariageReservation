@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AngularFireStorage, AngularFireUploadTask} from '@angular/fire/compat/storage';
 import {finalize} from 'rxjs/operators';
 import {AssetsDataService} from "../services/assets-data.service";
@@ -11,13 +11,13 @@ import {Media} from "../../model/media";
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss']
 })
-export class ActivityComponent {
+
+export class ActivityComponent implements OnInit{
   description: string;
   url: string;
   public file: any = {};
-  activityList: Media[];
+  activityList: Media[] = [];
   constructor(private storage: AngularFireStorage, private assetsData: AssetsDataService) {
-    this.getActivityData();
   }
   getActivityData() {
     this.assetsData.getAll().subscribe(activityList => {
@@ -28,7 +28,8 @@ export class ActivityComponent {
     //   this.activityList = data;
     // });
   }
-  drop(event: CdkDragDrop<any>) {
+  drop(event: CdkDragDrop<Media[]>) {
+    console.log(event)
     moveItemInArray(this.activityList, event.previousIndex, event.currentIndex);
   }
   chooseFile(event: any) {
@@ -66,5 +67,10 @@ export class ActivityComponent {
         console.log('Upload error:', error);
       }
     );
+  }
+
+  ngOnInit(): void {
+    this.getActivityData();
+
   }
 }

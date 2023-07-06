@@ -9,14 +9,14 @@ import {AdministratorComponent} from "./admin/administrator/administrator.compon
 const routes: Routes =
   [
     {path: 'home', component: HomeComponent},
-    {path: 'info', canActivate: [AuthGard], data: {route: 'info'}, component: InfoComponent},
-    // {path: 'info', data: {route: 'info'}, component: InfoComponent},
+    // {path: 'info', canActivate: [AuthGard], data: {route: 'info'}, component: InfoComponent},
+    {path: 'info', data: {route: 'info'}, component: InfoComponent},
     {path: 'activity', component: ActivityComponent},
     // {path: 'activity', canActivate: [AuthGard], component: ActivityComponent},
     // {path: 'admin', canActivate: [AuthGard], component: AdministratorComponent},
     {path: 'admin', component: AdministratorComponent},
-    {path: '**', redirectTo: '/activity'},
-    // {path: '**', redirectTo: '/home'},
+    // {path: '**', redirectTo: '/info'},
+    {path: '**', redirectTo: '/home'},
   ]
 
 @NgModule({

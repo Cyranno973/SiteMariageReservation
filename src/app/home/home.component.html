@@ -9,7 +9,7 @@
   </div>
   <div class="container-form">
     <form class="registration error1" [formGroup]="form">
-      <mat-form-field  appearance="fill">
+      <mat-form-field  appearance="outline">
         <mat-label [ngClass]="{'error1': errorFormulaire && form.touched}">Entrer votre numéro</mat-label>
         <input matInput (input)="submit($event)" type="text" placeholder="Numero" formControlName="numero">
         <mat-error>Numero de billet invalide</mat-error>

@@ -27,7 +27,7 @@ import {MatCardModule} from "@angular/material/card";
     MatSelectModule,
     MatOptionModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
   ],
   exports: [
     MatToolbarModule, MatInputModule, MatButtonModule, MatDialogModule, MatFormFieldModule,MatSelectModule,MatOptionModule,
