@@ -1,5 +1,6 @@
-interface Media {
+export interface Media {
 id: string;
-image: string;
+imageUrl: string;
 description: string;
+urlExterne: any
 }
