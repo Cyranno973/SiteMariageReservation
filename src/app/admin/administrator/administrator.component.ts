@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StoreUserService} from "../../services/store-user.service";
-import {User} from "../../../model/User";
+import {User} from "../../../model/user";
 import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {utils, WorkBook, WorkSheet, writeFile} from 'xlsx';

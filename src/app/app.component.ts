@@ -1,5 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {User} from "../model/User";
+import {User} from "../model/user";
 import {UserService} from "./services/user.service";
 import {StoreUserService} from "./services/store-user.service";
 import {Router} from "@angular/router";

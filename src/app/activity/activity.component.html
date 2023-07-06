@@ -1,10 +1,12 @@
 <div class="container-activity">
 
-  <div cdkDropList (cdkDropListDropped)="drop($event)">
-    <div *ngFor="let item of activityList" cdkDrag >
+  <div class="container-all-cards" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="all-cards" *ngFor="let item of activityList" cdkDrag>
       <div class="card">
         <a [href]="item.urlExterne" target="_blank">
-          <img [src]="item.imageUrl" alt="Image">
+          <div class="container-img">
+            <img [src]="item.imageUrl" alt="Image">
+          </div>
         </a>
         <div class="card-body">
           <p>{{ item.description }}</p>
@@ -13,16 +15,17 @@
     </div>
   </div>
 
-  <div>
-    <label for="image">Image:</label>
-    <input type="file" id="image" (change)="chooseFile($event)">
-  </div>
 
   <div>
+    <div>
+      <input type="file" id="image" (change)="chooseFile($event)">
+    </div>
+
     <label for="description">Description:</label>
     <textarea id="description" [(ngModel)]="description" name="description"></textarea>
-    <textarea id="url" [(ngModel)]="url" name="description"></textarea>
+    <label for="description">URL:</label>
+    <input type="text" id="url" [(ngModel)]="url" name="description">
+  <button (click)="addData()">Save</button>
   </div>
 
-  <button (click)="addData()">Save</button>
 </div>

@@ -4,7 +4,7 @@ import {UserService} from "../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {StoreUserService} from "../services/store-user.service";
-import {Choice, Status, User} from "../../model/User";
+import {Choice, Status, User} from "../../model/user";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 

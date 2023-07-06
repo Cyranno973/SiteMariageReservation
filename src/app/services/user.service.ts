@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import {Choice, Status, User} from "../../model/User";
+import {Choice, Status, User} from "../../model/user";
 import {map, Observable} from "rxjs";
 
 @Injectable({

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {User} from "../../../model/User";
+import {User} from "../../../model/user";
 
 @Component({
   selector: 'app-user',

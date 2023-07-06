@@ -17,21 +17,28 @@ export class ActivityComponent implements OnInit{
   url: string;
   public file: any = {};
   activityList: Media[] = [];
+  index: number;
   constructor(private storage: AngularFireStorage, private assetsData: AssetsDataService) {
   }
+  ngOnInit(): void {
+    this.getActivityData();
+  }
   getActivityData() {
-    this.assetsData.getAll().subscribe(activityList => {
-      console.log(activityList);
-      this.activityList = activityList;
+    this.assetsData.getAll().subscribe((activityList:Media[]) => {
+      this.activityList = activityList.sort( (a,b) => a.order - b.order );
+      this.index = this.activityList.length;
     })
-    // this.firestore.collection('activity').valueChanges().subscribe((data: any[]) => {
-    //   this.activityList = data;
-    // });
   }
   drop(event: CdkDragDrop<Media[]>) {
-    console.log(event)
     moveItemInArray(this.activityList, event.previousIndex, event.currentIndex);
+    console.log('Activity List:', this.activityList[0]);
+    this.assetsData.updateOrderInFirestore(this.activityList).then(() => {
+      console.log('Order updated in Firestore!');
+    }).catch((error) => {
+      console.error('Error updating order:', error);
+    });
   }
+
   chooseFile(event: any) {
     console.log(event, 'aaa')
     if (event?.target?.files && event.target.files.length > 0) {
@@ -52,8 +59,9 @@ export class ActivityComponent implements OnInit{
     uploadTask.snapshotChanges().pipe(
       finalize(() => {
         storageRef.getDownloadURL().subscribe((downloadUrl) => {
-          console.log('File available at', downloadUrl);
-          this.assetsData.createOrUpdate({id: Date.now().toString(), description: this.description, imageUrl: downloadUrl, urlExterne: this.url})
+          // console.log('File available at', downloadUrl);
+          this.assetsData.createOrUpdate({id: Date.now().toString(),
+            description: this.description, imageUrl: downloadUrl, urlExterne: this.url, order: this.index})
         });
       })
     ).subscribe(
@@ -67,10 +75,5 @@ export class ActivityComponent implements OnInit{
         console.log('Upload error:', error);
       }
     );
-  }
-
-  ngOnInit(): void {
-    this.getActivityData();
-
   }
 }

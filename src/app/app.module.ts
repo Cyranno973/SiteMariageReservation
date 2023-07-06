@@ -24,6 +24,8 @@ import {UserComponent} from "./admin/user/user.component";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {getStorage, provideStorage} from "@angular/fire/storage";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
+import {TestComponent} from "./test/test.component";
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import {AngularFireStorageModule} from "@angular/fire/compat/storage";
     UserFormComponent,
     ButtonComponent,
     AdministratorComponent,
-    UserComponent
+    UserComponent,
+    TestComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -52,6 +56,7 @@ import {AngularFireStorageModule} from "@angular/fire/compat/storage";
     ReactiveFormsModule,
     MaterialModule,
     FormsModule,
+    DragDropModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

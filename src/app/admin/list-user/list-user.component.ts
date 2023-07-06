@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {StoreUserService} from "../../services/store-user.service";
-import {User} from "../../../model/User";
+import {User} from "../../../model/user";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 

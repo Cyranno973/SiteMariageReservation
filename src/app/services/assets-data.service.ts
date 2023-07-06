@@ -17,22 +17,21 @@ export class AssetsDataService {
     return this.mediaRef.snapshotChanges().pipe(
       map(changes => changes.map(c => ({...c.payload.doc.data(), id: c.payload.doc.id}))));
   }
-
-  getById(id: string): Observable<any> {
-    return this.mediaRef.doc(id).get();
-  }
   createOrUpdate(media: Media, creation: boolean = false): any {
-    return this.mediaRef.doc(media.id).set(media).then(asset => console.log('asset creer'));    const userClean = this.removeEmptyProperties(media);
-    // const userClean = this.removeEmptyProperties(media);
-    // return this.mediaRef.doc(userClean.id).set(userClean).then(asset => console.log('asset creer'));
+    return this.mediaRef.doc(media.id).set(media).then(asset => console.log('asset creer'));
   }
-  removeEmptyProperties(obj: any) {
-    Object.keys(obj).forEach(key => {
-      if (obj[key] === "" || obj[key] === null || obj[key] === '') {
-        delete obj[key];
-        return obj
-      }
+  updateOrderInFirestore(activityList: Media[]): Promise<void> {
+    const batch = this.db.firestore.batch();
+
+    activityList.forEach((item, index) => {
+      const docRef = this.db.collection(this.dbPath).doc(item.id).ref;
+      batch.update(docRef, { order: index });
     });
-    return obj
+
+    return batch.commit().then(() => {
+      console.log('Order updated in Firestore!');
+    }).catch((error) => {
+      console.error('Error updating order:', error);
+    });
   }
 }

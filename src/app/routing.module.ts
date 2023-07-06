@@ -15,8 +15,8 @@ const routes: Routes =
     // {path: 'activity', canActivate: [AuthGard], component: ActivityComponent},
     // {path: 'admin', canActivate: [AuthGard], component: AdministratorComponent},
     {path: 'admin', component: AdministratorComponent},
-    // {path: '**', redirectTo: '/info'},
-    {path: '**', redirectTo: '/home'},
+    {path: '**', redirectTo: '/activity'},
+    // {path: '**', redirectTo: '/home'},
   ]
 
 @NgModule({

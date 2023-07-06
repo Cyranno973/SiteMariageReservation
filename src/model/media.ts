@@ -2,5 +2,6 @@ export interface Media {
 id: string;
 imageUrl: string;
 description: string;
-urlExterne: string
+urlExterne: string;
+order: number;
 }

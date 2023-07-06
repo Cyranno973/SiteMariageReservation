@@ -1,20 +1,36 @@
 .container-activity {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   gap: 20px;
 }
-
+.container-all-cards {
+  background-color: #ee26;
+  padding: 5rem 2rem;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.all-cards {
+  width: 50%;
+}
 .card {
   width: 200px;
+  height: 200px;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
+  overflow: hidden;
   background-color: #f8f8f8;
 }
-
+container-img{
+  display: flex;
+  width: 100%;
+}
 .card img {
   width: 100%;
-  height: auto;
   border-radius: 5px;
 }
 

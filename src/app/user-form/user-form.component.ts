@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {Menu} from "../../model/User";
+import {Menu} from "../../model/user";
 
 @Component({
   selector: 'app-user-form',

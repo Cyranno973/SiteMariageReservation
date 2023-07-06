@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Menu, Personne, Status, User} from "../../model/User";
+import {Menu, Personne, Status, User} from "../../model/user";
 import {StoreUserService} from "../services/store-user.service";
 import {UserService} from "../services/user.service";
 

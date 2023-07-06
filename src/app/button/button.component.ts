@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {User} from "../../model/User";
+import {User} from "../../model/user";
 
 @Component({
   selector: 'app-button',
