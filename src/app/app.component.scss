@@ -14,11 +14,13 @@ $marronGold: #93753f;
   //filter: brightness(50%);
   //background-image: url('../assets/img/bgc1.jpg');
   background-image: linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url("../assets/img/bgc1.jpg");
+  background-blend-mode: overlay;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
   min-height: calc(100vh - 70px);
+  //height: calc(100vh - 70px);
   z-index: 2;
   padding-bottom: 70px;
 

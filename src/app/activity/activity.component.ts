@@ -31,7 +31,6 @@ export class ActivityComponent implements OnInit{
   }
   drop(event: CdkDragDrop<Media[]>) {
     moveItemInArray(this.activityList, event.previousIndex, event.currentIndex);
-    console.log('Activity List:', this.activityList[0]);
     this.assetsData.updateOrderInFirestore(this.activityList).then(() => {
       console.log('Order updated in Firestore!');
     }).catch((error) => {
@@ -40,7 +39,6 @@ export class ActivityComponent implements OnInit{
   }
 
   chooseFile(event: any) {
-    console.log(event, 'aaa')
     if (event?.target?.files && event.target.files.length > 0) {
       this.file = event.target.files[0];
     }
@@ -73,6 +71,21 @@ export class ActivityComponent implements OnInit{
       },
       (error) => {
         console.log('Upload error:', error);
+      }
+    );
+  }
+
+  deleteCard(media: Media) {
+    console.log(media);
+    const imagePath = media.imageUrl;
+    const imageRef = this.storage.refFromURL(imagePath);
+    imageRef.delete().subscribe(
+      () => {
+        console.log('Image deleted successfully');
+        this.assetsData.delete(media.id)
+      },
+      (error) => {
+        console.error('Error deleting image:', error);
       }
     );
   }

@@ -1,65 +1,58 @@
-.container-activity {
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
+
+.container-activity  {
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  gap: 20px;
-}
-.container-all-cards {
-  background-color: #ee26;
-  padding: 5rem 2rem;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-}
-.all-cards {
-  width: 50%;
-}
-.card {
-  width: 200px;
-  height: 200px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  overflow: hidden;
-  background-color: #f8f8f8;
-}
-container-img{
-  display: flex;
+  padding-top: 5rem;
   width: 100%;
+  .container-dropList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
-.card img {
+
+.container-glass {
+  position: relative;
+  padding: 2rem 1.5rem;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 7px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  box-shadow: 0px 0px 22px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+}
+
+.container-glass .img {
   width: 100%;
+  border-radius: 7px;
+}
+
+.container-glass .text {
+  font-size: 1.5rem;
+  color: #65601f;
+  margin: 2rem 0;
+  text-align: justify;
+}
+
+.container-glass .btn {
+  display: block;
+  margin: auto;
+  font-family: "PT Sans", sans-serif;
+  font-size: 1.5rem;
+  width: 80%;
+  max-width: 200px;
+  padding: 0.6rem 1rem;
+  background-color: transparent;
+  border: 1px solid #7f6e00;
   border-radius: 5px;
-}
-
-.card-body {
-  margin-top: 10px;
-}
-
-label {
-  font-weight: bold;
-}
-
-input[type="file"],
-textarea {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-button {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  color: #7f6e00;
   cursor: pointer;
+  transition: all 0.2s linear;
 }
 
-button:hover {
-  background-color: #45a049;
+.container-glass .btn:hover {
+  background-color: #ffdd00;
+  color: #333;
 }

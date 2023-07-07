@@ -1,31 +1,47 @@
 <div class="container-activity">
-
-  <div class="container-all-cards" cdkDropList (cdkDropListDropped)="drop($event)">
-    <div class="all-cards" *ngFor="let item of activityList" cdkDrag>
-      <div class="card">
-        <a [href]="item.urlExterne" target="_blank">
-          <div class="container-img">
-            <img [src]="item.imageUrl" alt="Image">
-          </div>
-        </a>
-        <div class="card-body">
-          <p>{{ item.description }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div>
-    <div>
-      <input type="file" id="image" (change)="chooseFile($event)">
+  <div class="container-dropList" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="container-glass" *ngFor="let item of activityList" >
+      <mat-icon (click)="deleteCard(item)" fontIcon="delete"></mat-icon>
+      <mat-icon fontIcon="edit"></mat-icon>
+        <img class="img" [src]="item.imageUrl" alt="">
+      <p class="text">{{item.description}}</p>
+      <a [href]="item.urlExterne" target="_blank">
+        <button class="btn">Découvrir</button>
+      </a>
     </div>
 
-    <label for="description">Description:</label>
-    <textarea id="description" [(ngModel)]="description" name="description"></textarea>
-    <label for="description">URL:</label>
-    <input type="text" id="url" [(ngModel)]="url" name="description">
-  <button (click)="addData()">Save</button>
   </div>
-
 </div>
+
+
+<!--<div class="container-activity">-->
+
+<!--  <div class="container-all-cards" cdkDropList (cdkDropListDropped)="drop($event)">-->
+<!--    <div class="all-cards" *ngFor="let item of activityList" cdkDrag>-->
+<!--      <div class="card">-->
+<!--        <a [href]="item.urlExterne" target="_blank">-->
+<!--          <div class="container-img">-->
+<!--            <img [src]="item.imageUrl" alt="Image">-->
+<!--          </div>-->
+<!--        </a>-->
+<!--        <div class="card-body">-->
+<!--          <p>{{ item.description }}</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+<!--  <div>-->
+<!--    <div>-->
+<!--      <input type="file" id="image" (change)="chooseFile($event)">-->
+<!--    </div>-->
+
+<!--    <label for="description">Description:</label>-->
+<!--    <textarea id="description" [(ngModel)]="description" name="description"></textarea>-->
+<!--    <label for="description">URL:</label>-->
+<!--    <input type="text" id="url" [(ngModel)]="url" name="description">-->
+<!--  <button (click)="addData()">Save</button>-->
+<!--  </div>-->
+
+<!--</div>-->

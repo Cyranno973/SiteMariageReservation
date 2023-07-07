@@ -34,4 +34,7 @@ export class AssetsDataService {
       console.error('Error updating order:', error);
     });
   }
+  delete(id: string): Promise<void> {
+    return this.mediaRef.doc(id).delete()
+  }
 }
