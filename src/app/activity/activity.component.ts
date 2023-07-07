@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {AngularFireStorage, AngularFireUploadTask} from '@angular/fire/compat/storage';
 import {finalize} from 'rxjs/operators';
 import {AssetsDataService} from "../services/assets-data.service";
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {Media} from "../../model/media";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
@@ -13,15 +14,26 @@ import {Media} from "../../model/media";
 })
 
 export class ActivityComponent implements OnInit{
+  title: string;
+  lien: string;
   description: string;
-  url: string;
   public file: any = {};
   activityList: Media[] = [];
   index: number;
-  constructor(private storage: AngularFireStorage, private assetsData: AssetsDataService) {
+  mediaForm: FormGroup;
+  updateBtn = false;
+  media: Media;
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  private showForm: false;
+  constructor(private fb: FormBuilder, private storage: AngularFireStorage, private assetsData: AssetsDataService) {
   }
   ngOnInit(): void {
     this.getActivityData();
+    this.mediaForm = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.required, Validators.minLength(3)]],
+      lien: [''],
+    });
   }
   getActivityData() {
     this.assetsData.getAll().subscribe((activityList:Media[]) => {
@@ -39,14 +51,16 @@ export class ActivityComponent implements OnInit{
   }
 
   chooseFile(event: any) {
+    console.log(event)
     if (event?.target?.files && event.target.files.length > 0) {
       this.file = event.target.files[0];
     }
   }
 
-  addData() {
+  saveMedia() {
+    if(this.updateBtn) return this.assetsData.createOrUpdate(this.media);
     console.log('Description:', this.description);
-    console.log('Url:', this.url);
+    console.log('lien:', this.lien);
     console.log('file :', this.file.name);
 
     const filePath = `images/${this.file.name}`;
@@ -58,8 +72,8 @@ export class ActivityComponent implements OnInit{
       finalize(() => {
         storageRef.getDownloadURL().subscribe((downloadUrl) => {
           // console.log('File available at', downloadUrl);
-          this.assetsData.createOrUpdate({id: Date.now().toString(),
-            description: this.description, imageUrl: downloadUrl, urlExterne: this.url, order: this.index})
+          this.assetsData.createOrUpdate({id: Date.now().toString(), title:this.title,
+            description: this.description, imageUrl: downloadUrl, urlExterne: this.lien, order: this.index})
         });
       })
     ).subscribe(
@@ -88,5 +102,17 @@ export class ActivityComponent implements OnInit{
         console.error('Error deleting image:', error);
       }
     );
+  }
+
+  openFileInput() {
+    this.fileInput.nativeElement.click();
+  }
+  updateMedia(media: Media){
+    console.log(media)
+    this.media = media
+    this.updateBtn = true;
+      this.mediaForm.setValue({title: media.title, description: media.description, lien: media.urlExterne})
+      // this.showForm = true;
+  // this.assetsData.update({...media})
   }
 }

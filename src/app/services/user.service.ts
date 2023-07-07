@@ -53,12 +53,11 @@ export class UserService {
     this.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
     return id
   }
-
   /**avec firebase si on veut creer une collection avec un od personalisé il faut utiliser update
-   *
-   * @param user
+-*+   * @param user
    * @param creation
    */
+
   createOrUpdate(user: Partial<User>, creation: boolean = false): any {
     const userClean = this.removeEmptyProperties(user);
     return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user creer'));

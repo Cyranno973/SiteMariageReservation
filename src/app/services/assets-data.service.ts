@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import {map, Observable} from "rxjs";
 import { Media } from "../../model/media"
+import {User} from "../../model/user";
 @Injectable({
   providedIn: 'root'
 })
@@ -36,5 +37,8 @@ export class AssetsDataService {
   }
   delete(id: string): Promise<void> {
     return this.mediaRef.doc(id).delete()
+  }
+  update(media: Partial<Media>): any {
+    return this.mediaRef.doc(media.id).update(media).then(media => console.log('media modifier'))
   }
 }

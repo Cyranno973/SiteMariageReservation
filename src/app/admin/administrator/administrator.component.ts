@@ -23,10 +23,10 @@ export class AdministratorComponent implements OnInit, OnDestroy {
   userForm: FormGroup;
 
   ngOnInit() {
-    this.userForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      tel: [''],
+      this.userForm = this.fb.group({
+        name: ['', [Validators.required, Validators.minLength(3)]],
+        username: ['', [Validators.required, Validators.minLength(3)]],
+        tel: [''],
     })
     this.storeUserService.observeUserList().subscribe(users => {
       this.userList = users;
@@ -87,7 +87,6 @@ export class AdministratorComponent implements OnInit, OnDestroy {
       this.userForm.setValue({name: e.name, username: e.username, tel: e.tel || ''})
       this.showForm = true;
     }
-
   }
 
   updateSave(user: User) {
