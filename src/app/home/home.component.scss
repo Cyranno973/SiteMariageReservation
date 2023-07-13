@@ -1,41 +1,213 @@
-@font-face {
-  font-family: kingham;
-  src: url("../../assets/fonts/Kingham.otf") format("opentype");
-}
+@use '../../sass/utils/_mixins';
+@use '../../sass/utils/variables';
+@use '../../sass/base/typography';
+@use '../../sass/vendors/animate.css';
 
 .container-home {
-  width: 100%;
-  //height: 100%;
+  height: 100%;
+  @include mixins.center-flex;
+
 }
 
-.bienvenu {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 50%;
-  height: auto;
-  animation: fadeInDown 2s ease;
-  color: #FCFFF5;
-}
-
-.name {
-  margin: 5%;
-}
-
-.titulaire {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: auto;
+.hero {
   font-weight: 600;
   font-size: 50px;
   letter-spacing: 2px;
-  text-shadow: 2px 2px black;
-  font-family: kingham, sans-serif;
+  color: variables.$white;
+  text-shadow: 2px 0 #43a047, -2px 0 #43a047, 0 2px #43a047, 0 -2px #43a047,
+  1px 1px #43a047, -1px -1px #43a047, 1px -1px #43a047, -1px 1px #43a047;
+
+  &__name {
+    animation: fadeInDownPerso 2s ease;
+
+    margin: 5% 0;
+    font-family: typography.$kingham, sans-serif;
+  }
+
+  &__title {
+    @include mixins.center-flex;
+  }
+
+  &__subtitle {
+    animation: fadeInDownPerso 2s ease 500ms forwards;
+    text-align: center;
+    font-size: 30px;
+    font-family: typography.$greenlight, sans-serif;
+  }
 }
+
+.form {
+  @include mixins.center-flex;
+  margin-top: 3rem;
+  animation: fadeInDownPerso 2s ease 500ms forwards;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  position: relative;
+
+  &__input {
+    padding: 15px 10px;
+    font-size: 1.2rem;
+    font-family: Roboto;
+    border: 0;
+    color: #211f1f;
+    background-color: rgba(255, 255, 255, 0.4);
+    outline: 0;
+    text-align: center;
+    font-weight: 500;
+
+    &:placeholder-shown ~ .form__label {
+      transition: all 0.5s ease;
+    }
+
+    &:focus {
+      box-shadow: 0 0 5pt 1pt #3c4f09;
+
+      ~ .form__label {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+    }
+    &:not(:placeholder-shown) ~ .form__label {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+
+  &__label {
+    position: absolute;
+    padding: 1px 5px;
+    color: #211f1f;
+    width: 100%;
+    height: 100%;
+    font-size: 1.2rem;
+    @include mixins.center-flex;
+    text-align: center;
+    font-weight: 500;
+  }
+  &__error {
+    opacity: 0;
+    color: #870d0d;
+    font-weight: 500;
+  }
+  &__error--error{
+    opacity: 1;
+  }
+}
+
+//  .form {
+//    @include mixins.center-flex;
+//    margin-top: 3rem;
+//    animation: fadeInDownPerso 2s ease 500ms forwards;
+//  }
+//
+//  .form-field {
+//
+//    __label {
+//      color: #49a4ff;
+//      text-align: center;
+//      position: relative;
+//      z-index: -5;
+//    }
+//
+//    __input {
+//
+//    }
+//
+//    __error {
+//
+//    }
+//  }
+//
+//  .mdc-text-field .mat-mdc-input-element {
+//    color: #144617;
+//    letter-spacing: 2px;
+//    font-size: 18px;
+//    text-align: center;
+//    font-weight: 500;
+//  }
+//
+//.mat-form-field-appearance-legacy .mat-form-field-underline {
+//  height: 0 !important;
+//}
+//
+//
+// .mat-form-field-appearance-outline.mat-form-field-disabled, .mat-form-field-outline {
+//  opacity: 0;
+//}
+//
+//.read-only-true .mat-form-field-outline-start {
+//  border-color: white;
+//}
+//
+//.read-only-true .mat-form-field-outline-gap {
+//  border-color: white;
+//}
+//
+//.read-only-true .mat-form-field-outline-end {
+//  border-color: white;
+//}
+//
+//.mat-form-field-appearance-outline .mat-form-field-outline {
+//  display: none !important;
+//}
+//.mdc-text-field--focused,.mdc-text-field--outlined,.mat-form-field-appearance-outline,
+//.mat-primary,.mat-focused,.mat-mdc-text-field-wrapper,.mdp-text-field--{
+// color: red;
+//  border: red 1px solid;
+//  outline: red 1px solid;
+//  outline: none;
+//  border: none;
+//}
+//
+//.mat-form-field-appearance-outline .mat-form-field-outline {
+//  color: white !important;
+//}
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//  .container-form mat-form-field .mdc-text-field { //TDODO permet d'assombrir le fond des input
+//    //background: rgb(0, 0, 0, 0.5) !important;
+//  }
+//
+//  mat-form-field {
+//
+//    .mdc-text-field .mdc-text-field__input {
+//      color: #144617;
+//      letter-spacing: 2px;
+//      font-size: 20px;
+//      text-align: center;
+//      font-weight: 500;
+//    }
+//
+//    .mdc-text-field {
+//      //border: 1px solid white;
+//      //border-top: none;
+//    }
+//
+//    input {
+//
+//      &::placeholder {
+//        color: #7b8500;
+//      }
+//    }
+//
+//
+//    mat-error {
+//      color: red;
+//    }
+//  }
+//
+//  form .error1 {
+//    text-align: center;
+//    color: darkred;
+//    margin: auto;
+//  }
 
 .all {
   display: flex;
@@ -48,65 +220,6 @@
   justify-content: center;
 }
 
-.welcome {
-  text-align: center;
-  font-size: 20px;
-}
-
-.container-form {
-  margin-top: 3rem;
-  animation: fadeInDown 2s ease 500ms forwards;
-  visibility: hidden;
-
-  .registration {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: #FCFFF5;
-  }
-
-  mat-form-field {
-    .mdc-text-field .mdc-text-field__input {
-    color: #FCFFF5;
-      letter-spacing: 2px;
-      font-size: 20px;
-      text-align: center;
-      font-weight: 500;
-    }
-    .mdc-text-field {
-      border: 1px solid white;
-      border-top: none;
-    }
-
-    input {
-      color: #FCFFF5;
-
-      &::placeholder {
-        color: #7b8500;
-      }
-    }
-
-    mat-label {
-      color: #FCFFF5;
-    }
-
-    mat-error {
-      color: red;
-    }
-  }
-
-  form .error1 {
-    text-align: center;
-    color: darkred;
-    margin: auto;
-  }
-
-}
-
-.btnParticipe {
-
-}
 
 .textAbsent {
   padding: 10px 40px;
@@ -136,10 +249,10 @@
   }
 }
 
-@keyframes fadeInDown {
+@keyframes fadeInDownPerso {
   from {
     opacity: 0;
-    //transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
   }
 
   to {
@@ -149,7 +262,8 @@
   }
 }
 
-.fadeInDown {
-  animation-name: fadeInDown;
+.fadeInDownPerso {
+  animation-name: fadeInDownPerso;
   animation-duration: 3s;
 }
+

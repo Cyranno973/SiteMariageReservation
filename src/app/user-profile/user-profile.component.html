@@ -3,7 +3,7 @@
     <app-user-form [form]="userForm"></app-user-form>
     <div formArrayName="accompagnement">
       <div *ngFor="let acc of formGroupeFake(); let i=index" [formGroupName]="i">
-        <h3 *ngIf="accompaniement.length">Invité N° {{i + 1}}</h3>
+        <h3 *ngIf="accompaniement.length">Invité n ° <span>{{i + 1}}</span></h3>
         <div class="container-app-form">
           <app-user-form [i]="i" [form]="acc"></app-user-form>
         </div>
@@ -18,4 +18,4 @@
       <!--    <h1>{{userForm.valid}}</h1>-->
     </div>
   </div>
-
+</div>

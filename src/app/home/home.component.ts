@@ -1,10 +1,10 @@
 import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {StoreUserService} from "../services/store-user.service";
-import {Choice, Status, User} from "../../model/user";
+import {Choice, Menu, Status, User} from "../../model/user";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 
@@ -12,7 +12,7 @@ import {Subscription} from "rxjs";
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
 
   animations: [
     trigger(
@@ -51,13 +51,34 @@ export class HomeComponent implements OnInit, OnDestroy {
   errorFormulaire: boolean = false; //TODO faire un validator personnalisé et supprimer cette variable
   showModifChoice: boolean = false;
   isLoggedIn: boolean = false;
+  // userTest: User = { //TODO A SUPPRIMMER
+  //   menu: Menu.Fish,
+  //   username: "steve",
+  //   statusUser: Status.First,
+  //   choice: Choice.P,
+  //   name: "gouin",
+  //   id: "568347",
+  //   "accompaniement": [
+  //     {
+  //       allergie: "",
+  //       name: "zeze",
+  //       menu: Menu.Fish,
+  //       username: "zezez"
+  //     },
+  //     {
+  //       allergie: "",
+  //       name: "zeze",
+  //       menu: Menu.Fish,
+  //       username: "zezez"
+  //     }
+  //   ]
+  // }
   @Input() user: User;
   form: FormGroup = this.fb.group({
     numero: ['', [Validators.required, Validators.minLength(6)]]
   })
 
   ngOnInit() {
-    // this.router.navigate(['/info']); //TODO a supprimer
     console.log('%c salut', 'font-size:50px;')
     this.subscribe.add(this.storeUserService.observeUser().subscribe(user => this.user = user))
     this.storeUserService.observeUserList().subscribe(users => this.userList = users)
@@ -97,14 +118,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   updateData() {
-    // console.log('il exist', this.user)
-    this.form.disable();
+    console.log('il exist', this.user)
+    // this.form.disable();
     this.errorFormulaire = false;
-    if (this.user.statusUser === Status.First) {
-      this.user.statusUser = Status.Incomplete;
-      this.userService.createOrUpdate(this.user);
-    }
-    this.storeUserService.saveUser(this.user);
+    // if (this.user.statusUser === Status.First) {
+    //   this.user.statusUser = Status.Incomplete;
+      // this.userService.createOrUpdate(this.user);
+    // }
+    // this.storeUserService.saveUser(this.user);
   }
 
   btnChoice(choice: string) {

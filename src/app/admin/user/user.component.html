@@ -2,7 +2,7 @@
   <div class="form">
     <form [formGroup]="userForm" >
       <div>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="fill">
           <mat-label>Nom</mat-label>
           <input matInput type="text" placeholder="Entrez votre nom" formControlName="name">
           <mat-error>Au moins 3 caractere</mat-error>
@@ -10,20 +10,20 @@
       </div>
 
       <div>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="fill">
           <mat-label>Prenom</mat-label>
           <input matInput type="text" placeholder="Entrez votre prenom" formControlName="username">
           <mat-error>Au moins 3 caractere</mat-error>
         </mat-form-field>
       </div>
       <div>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="fill">
           <mat-label>Tel</mat-label>
           <input matInput type="text" placeholder="Entrez votre numero" formControlName="tel">
         </mat-form-field>
       </div>
 <!--      <div>-->
-<!--        <mat-form-field appearance="outline">-->
+<!--        <mat-form-field appearance="fill">-->
 <!--          <mat-select formControlName="menu">-->
 <!--            <mat-option disabled value="">Choisissez un plat</mat-option>-->
 <!--            <mat-option *ngFor="let dish of menu ;" [value]="dish">{{dish}}</mat-option>-->
@@ -32,7 +32,7 @@
 <!--        </mat-form-field>-->
 <!--      </div>-->
 <!--      <div>-->
-<!--        <mat-form-field appearance="outline">-->
+<!--        <mat-form-field appearance="fill">-->
 <!--          <mat-label>Allergie</mat-label>-->
 <!--          <textarea matInput formControlName="allergie" placeholder="rentrez vos allergie"></textarea>-->
 <!--        </mat-form-field>-->

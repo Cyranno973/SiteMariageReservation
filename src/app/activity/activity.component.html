@@ -15,9 +15,9 @@
       <textarea [(ngModel)]="description" name="description" matInput class="textarea" formControlName="description"></textarea>
     </mat-form-field>
 
-    <button type="button" mat-raised-button (click)="openFileInput()">Sélectionner une image</button>
+    <button class="select-img" type="button" mat-raised-button (click)="openFileInput()">Sélectionner une image</button>
     <input hidden #fileInput (change)="chooseFile($event)" type="file" id="file">
-
+    <img [src]="previewUrl" *ngIf="previewUrl" class="image-preview" />
     <button type="button" mat-raised-button (click)="saveMedia()">Enregistrer</button>
   </form>
 

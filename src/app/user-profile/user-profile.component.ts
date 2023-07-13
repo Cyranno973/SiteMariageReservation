@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Menu, Personne, Status, User} from "../../model/user";
+import {Choice, Menu, Personne, Status, User} from "../../model/user";
 import {StoreUserService} from "../services/store-user.service";
 import {UserService} from "../services/user.service";
 
@@ -13,13 +13,34 @@ export class UserProfileComponent implements OnInit {
   userForm: FormGroup;
   oldForm: string = '';
   user: User;
-
+  userTest: User = { //TODO A SUPPRIMMER
+    menu: Menu.Fish,
+    username: "steve",
+    statusUser: Status.First,
+    choice: Choice.P,
+    name: "gouin",
+    id: "568347",
+    "accompaniement": [
+      {
+        allergie: "",
+        name: "zeze",
+        menu: Menu.Fish,
+        username: "zezez"
+      },
+      {
+        allergie: "",
+        name: "zeze",
+        menu: Menu.Fish,
+        username: "zezez"
+      }
+    ]
+  }
   constructor(private fb: FormBuilder, private storeUserService: StoreUserService, private userService: UserService) {
   }
 
   ngOnInit() {
     this.storeUserService.observeUser().subscribe(user => {
-      this.user = user;
+      this.user = this.userTest; //TODO this.user = user
       const t = { menu: this.user.menu,  allergie: this.user.allergie || '', accompagnement: this.user.accompaniement}
       this.oldForm = JSON.stringify(t)
 

@@ -1,46 +1,39 @@
-<div class="container-form">
-  <div class="form">
-    <form [formGroup]="form">
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>Nom</mat-label>
-          <input matInput type="text" placeholder="Entrez votre nom" formControlName="name">
-          <mat-error>Au moins 3 caractere</mat-error>
-        </mat-form-field>
-      </div>
+<div class="container-userForm">
+  <div class="container-form">
+    <form class="form" [formGroup]="form">
+      <mat-form-field class="form__form-field" appearance="fill">
+        <mat-label class="form__form-label">Nom</mat-label>
+        <input class="form__form-input" matInput type="text" placeholder="Entrez votre nom" formControlName="name">
+        <mat-error class="form__form-error">Au moins 3 caractere</mat-error>
+      </mat-form-field>
 
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>Prenom</mat-label>
-          <input matInput type="text" placeholder="Entrez votre prenom" formControlName="username">
-          <mat-error>Au moins 3 caractere</mat-error>
-        </mat-form-field>
-      </div>
-      <div *ngIf="i === undefined">
-        <mat-form-field appearance="outline">
+      <mat-form-field appearance="fill">
+        <mat-label>Prenom</mat-label>
+        <input matInput type="text" placeholder="Entrez votre prenom" formControlName="username">
+        <mat-error>Au moins 3 caractere</mat-error>
+      </mat-form-field>
+
+      <ng-container *ngIf="i === undefined">
+        <mat-form-field appearance="fill">
           <mat-label>Tel</mat-label>
           <input matInput type="text" placeholder="Entrez votre numero" formControlName="tel">
         </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-select formControlName="menu">
-            <mat-option disabled value="">Choisissez un plat</mat-option>
-            <mat-optgroup disabled>Menu Adulte</mat-optgroup>
-            <mat-option *ngFor="let dish of menu ;" [value]="dish">{{dish}}</mat-option>
-            <mat-optgroup disabled>Menu Enfant</mat-optgroup>
-            <mat-option  value="enfant">enfant</mat-option>
-          </mat-select>
-          <mat-error> Selectionnez un plat.</mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label>Allergie</mat-label>
-          <textarea matInput formControlName="allergie" placeholder="rentrez vos allergie"></textarea>
-        </mat-form-field>
-      </div>
+      </ng-container>
+
+      <mat-form-field appearance="fill">
+        <mat-select formControlName="menu">
+          <mat-optgroup disabled>Menu Adulte</mat-optgroup>
+          <mat-option *ngFor="let dish of menu ;" [value]="dish">{{dish}}</mat-option>
+          <mat-optgroup disabled>Menu Enfant</mat-optgroup>
+          <mat-option value="enfant">enfant</mat-option>
+        </mat-select>
+        <mat-error> Selectionnez un plat.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Allergie</mat-label>
+        <textarea matInput formControlName="allergie" placeholder="rentrez vos allergie"></textarea>
+      </mat-form-field>
     </form>
   </div>
 </div>
-

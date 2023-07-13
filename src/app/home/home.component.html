@@ -1,22 +1,25 @@
 <div class="container-home">
-  <div class="bienvenu ">
-    <div class="titulaire">
-      <div class="name">Andre</div>
-      <div class="name">&</div>
-      <div class="name">Stella</div>
+  <div class="hero">
+    <div class="hero__title">
+      <div class="hero__name">Andre</div>
+      <div class="hero__name">&</div>
+      <div class="hero__name">Stella</div>
     </div>
-    <p class="welcome">se marient </p>
+    <p class="hero__subtitle">Se marient</p>
   </div>
-  <div class="container-form">
-    <form class="registration error1" [formGroup]="form">
-      <mat-form-field  appearance="outline">
-        <mat-label [ngClass]="{'error1': errorFormulaire && form.touched}">Entrer votre numéro</mat-label>
-        <input matInput (input)="submit($event)" type="text" placeholder="Numero" formControlName="numero">
-        <mat-error>Numero de billet invalide</mat-error>
-      </mat-form-field>
-    </form>
-  </div>
-  <div *ngIf="user">
+  <form class="form " [formGroup]="form">
+    <input (input)="submit($event)" formControlName="numero" id="myInput" class="form__input" placeholder=" " type="text"/>
+    <label for="myInput" class="form__label" >Entrer votre numéro</label>
+    <span class="form__error"  [ngClass]="{'form__error--error': errorFormulaire && form.touched}">Numéro Invalide</span>
+  </form>
+<!--    <form class="form form&#45;&#45;error" [formGroup]="form">-->
+<!--      <mat-form-field class="form-field" appearance="outline">-->
+<!--        <mat-label  class="form__label" [ngClass]="{'error1': errorFormulaire && form.touched}">Entrer votre numéro</mat-label>-->
+<!--        <input style="border: transparent" class="form__input" matInput (input)="submit($event)" type="text" placeholder="" formControlName="numero">-->
+<!--        <mat-error class="form__error">Numero de billet invalide</mat-error>-->
+<!--      </mat-form-field>-->
+<!--    </form>-->
+  <ng-container *ngIf="user">
     <ng-container [ngSwitch]="user.choice">
       <div class="all" *ngSwitchCase="'all'">
         <button color="primary" class="btnParticipe btn btn-primary" type="button" (click)="btnChoice('p')" mat-raised-button>Je serais présent</button>
@@ -43,6 +46,7 @@
         </div>
       </div>
     </ng-container>
-  </div>
+  </ng-container>
 </div>
+
 

@@ -1,24 +1,62 @@
-.form{
+.container-form__form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  input{
+  color: white;
+
+  input {
     width: 400px;
   }
 }
-.container-app-form{
+
+mat-optgroup, mat-option {
+  color: white;
+}
+
+.container-app-form {
   margin-bottom: 10%;
-app-user-form{
-  width: 100%;
+
+  app-user-form {
+    width: 100%;
+  }
 }
-}
-.container-btn-supprimer{
+
+.container-btn-supprimer {
   margin: 10% 0;
   text-align: center;
+  button {
+    color: #fff;
+  }
 }
-.container-add-inviter{
+
+.container-add-inviter {
   text-align: center;
   margin-bottom: 10%;
+  button {
+    color: #fff;
+  }
+}
+
+h3 {
+  background: linear-gradient(75deg, #0a0a09, #2bcbcbc2, #2e5d43);
+  background-clip: text;
+  color: transparent;
+
+  span {
+    background: linear-gradient(75deg, #0a0a09, #2bcbcbc2, #2e5d43);
+    background-clip: text;
+    color: transparent;
+    font-family: "a Black Lives";
+    font-size: 45px;
+  }
+
+  text-align: center;
+  //color: #43a047;
+  //font-weight: 100;
+  font-family: "bird";
+  font-size: 40px;
+  //background-color: #fff;
+
 }

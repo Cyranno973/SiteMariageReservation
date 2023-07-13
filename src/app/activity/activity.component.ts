@@ -23,6 +23,7 @@ export class ActivityComponent implements OnInit{
   mediaForm: FormGroup;
   updateBtn = false;
   media: Media;
+  previewUrl: string | null = null;
   @ViewChild('fileInput') fileInput!: ElementRef;
   private showForm: false;
   constructor(private fb: FormBuilder, private storage: AngularFireStorage, private assetsData: AssetsDataService) {
@@ -32,7 +33,7 @@ export class ActivityComponent implements OnInit{
     this.mediaForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(3)]],
-      lien: [''],
+      lien: ['', [Validators.required]],
     });
   }
   getActivityData() {
@@ -54,40 +55,87 @@ export class ActivityComponent implements OnInit{
     console.log(event)
     if (event?.target?.files && event.target.files.length > 0) {
       this.file = event.target.files[0];
+      if (this.updateBtn && this.media) {
+        this.media.file = this.file;
+      }
+
+      // Ajoutez ce bloc pour l'aperçu de l'image
+      let reader = new FileReader();
+      reader.onload = (event: any) => {
+        this.previewUrl = event.target.result;
+      }
+      reader.readAsDataURL(this.file);
     }
   }
 
+
+
   saveMedia() {
-    if(this.updateBtn) return this.assetsData.createOrUpdate(this.media);
     console.log('Description:', this.description);
     console.log('lien:', this.lien);
-    console.log('file :', this.file.name);
+    console.log('file :', this.file?.name);
 
-    const filePath = `images/${this.file.name}`;
-    if (!this.file.name) return;
+    if (!this.file && !this.updateBtn) return;
+
+    const filePath = `images/${this.file?.name ?? this.media.imageUrl.substring(this.media.imageUrl.lastIndexOf('/') + 1)}`;
     const storageRef = this.storage.ref(filePath);
-    const uploadTask: AngularFireUploadTask = storageRef.put(this.file);
 
-    uploadTask.snapshotChanges().pipe(
-      finalize(() => {
-        storageRef.getDownloadURL().subscribe((downloadUrl) => {
-          // console.log('File available at', downloadUrl);
-          this.assetsData.createOrUpdate({id: Date.now().toString(), title:this.title,
-            description: this.description, imageUrl: downloadUrl, urlExterne: this.lien, order: this.index})
-        });
-      })
-    ).subscribe(
-      (snapshot) => {
-        if (snapshot) {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
+    if (this.file) {
+      const uploadTask: AngularFireUploadTask = storageRef.put(this.file);
+
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          storageRef.getDownloadURL().subscribe((downloadUrl) => {
+            this.processMediaData(downloadUrl);
+          });
+        })
+      ).subscribe(
+        (snapshot) => {
+          if (snapshot) {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+          }
+        },
+        (error) => {
+          console.log('Upload error:', error);
         }
-      },
-      (error) => {
-        console.log('Upload error:', error);
-      }
-    );
+      );
+    } else {
+      this.processMediaData(this.media.imageUrl);
+    }
   }
+
+  processMediaData(downloadUrl: string) {
+    const mediaData = {
+      id: this.updateBtn ? this.media.id : Date.now().toString(),
+      title: this.title,
+      description: this.description,
+      imageUrl: downloadUrl,
+      urlExterne: this.lien,
+      order: this.index
+    };
+
+    if (this.updateBtn) {
+      this.assetsData.update(mediaData).then(() => {
+        console.log('Updated in Firestore!');
+        this.updateBtn = false;  // réinitialiser le bouton de mise à jour
+        this.mediaForm.reset();   // réinitialiser le formulaire
+        this.previewUrl = '';
+      }).catch((error: any) => {
+        console.error('Error updating:', error);
+      });
+    } else {
+      this.assetsData.createOrUpdate(mediaData).then(() => {
+        console.log('Created in Firestore!');
+        this.mediaForm.reset();  // réinitialiser le formulaire
+        this.previewUrl = '';
+      }).catch((error: any) => {
+        console.error('Error creating:', error);
+      });
+    }
+  }
+
+
 
   deleteCard(media: Media) {
     console.log(media);
@@ -108,10 +156,13 @@ export class ActivityComponent implements OnInit{
     this.fileInput.nativeElement.click();
   }
   updateMedia(media: Media){
+    console.log(this.media)
     console.log(media)
-    this.media = media
+    this.media = media;
+    this.file = media.file;
     this.updateBtn = true;
       this.mediaForm.setValue({title: media.title, description: media.description, lien: media.urlExterne})
+    this.previewUrl = media.imageUrl;
       // this.showForm = true;
   // this.assetsData.update({...media})
   }

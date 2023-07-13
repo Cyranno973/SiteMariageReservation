@@ -5,4 +5,5 @@ export interface Media {
   description: string;
   urlExterne: string;
   order: number;
+  file?: File;
 }

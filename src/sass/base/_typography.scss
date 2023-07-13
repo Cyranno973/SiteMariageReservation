@@ -1,0 +1,20 @@
+$kingham: "kingham";
+$cream: "cream";
+$greenlight: "Greenlight Script.ttf";
+$bird: "Birds of Paradise.ttf";
+$fantabulous: "fantabulous.otf";
+
+$fonts: (
+  $kingham: "Kingham.otf",
+  $cream: "Cream Cake.otf",
+  $greenlight: "Greenlight Script.ttf",
+  $bird: "Birds of Paradise.ttf",
+  $fantabulous: "fantabulous.otf",
+);
+
+@each $font, $file in $fonts {
+  @font-face {
+    font-family: #{$font};
+    src: url("../../assets/fonts/#{$file}") format("opentype");
+  }
+}
