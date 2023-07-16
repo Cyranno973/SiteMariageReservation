@@ -29,4 +29,8 @@ export interface User extends Personne {
   choice: Choice,
   accompaniement?: Personne[]
 }
+export interface ConnectedPresent {
+  choix: Choice,
+
+}
 

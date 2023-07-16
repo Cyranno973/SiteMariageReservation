@@ -13,19 +13,19 @@
         <mat-error>Au moins 3 caractere</mat-error>
       </mat-form-field>
 
-      <ng-container *ngIf="i === undefined">
+      <ng-container *ngIf="index === undefined">
         <mat-form-field appearance="fill">
           <mat-label>Tel</mat-label>
           <input matInput type="text" placeholder="Entrez votre numero" formControlName="tel">
         </mat-form-field>
       </ng-container>
 
-      <mat-form-field appearance="fill">
-        <mat-select formControlName="menu">
+      <mat-form-field appearance="fill" class="custom-form-field">
+        <mat-select formControlName="menu" class="custom-form-field">
           <mat-optgroup disabled>Menu Adulte</mat-optgroup>
-          <mat-option *ngFor="let dish of menu ;" [value]="dish">{{dish}}</mat-option>
+          <mat-option class="custom-form-field" *ngFor="let dish of menu ;" [value]="dish">{{dish}}</mat-option>
           <mat-optgroup disabled>Menu Enfant</mat-optgroup>
-          <mat-option value="enfant">enfant</mat-option>
+          <mat-option class="custom-form-field" value="enfant">enfant</mat-option>
         </mat-select>
         <mat-error> Selectionnez un plat.</mat-error>
       </mat-form-field>

@@ -21,18 +21,12 @@ export class UserProfileComponent implements OnInit {
     name: "gouin",
     id: "568347",
     "accompaniement": [
-      {
-        allergie: "",
-        name: "zeze",
-        menu: Menu.Fish,
-        username: "zezez"
-      },
-      {
-        allergie: "",
-        name: "zeze",
-        menu: Menu.Fish,
-        username: "zezez"
-      }
+      // {
+      //   allergie: "",
+      //   name: "zeze",
+      //   menu: Menu.Fish,
+      //   username: "zezez"
+      // },
     ]
   }
   constructor(private fb: FormBuilder, private storeUserService: StoreUserService, private userService: UserService) {
@@ -41,7 +35,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.storeUserService.observeUser().subscribe(user => {
       this.user = this.userTest; //TODO this.user = user
-      const t = { menu: this.user.menu,  allergie: this.user.allergie || '', accompagnement: this.user.accompaniement}
+      const t = { menu: this.user.menu,  allergie: this.user.allergie || '', guests: this.user.accompaniement}
       this.oldForm = JSON.stringify(t)
 
       this.userForm = this.fb.group({
@@ -50,7 +44,7 @@ export class UserProfileComponent implements OnInit {
         tel: [this.user.tel],
         menu: [this.user.menu || '', Validators.required],
         allergie: [this.user.allergie || '',],
-        accompagnement: this.fb.array([]),
+        guests: this.fb.array([]),
       });
       if (this.user.accompaniement?.length) this.user.accompaniement.map(x => this.addAccompaniement(x))
       this.userForm.controls['name'].disable()

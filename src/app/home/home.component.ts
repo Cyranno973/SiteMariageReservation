@@ -6,7 +6,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {StoreUserService} from "../services/store-user.service";
 import {Choice, Menu, Status, User} from "../../model/user";
 import {Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Subject, Subscription, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -44,8 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private userService: UserService, private dialogUser: MatDialog, private fb: FormBuilder, private storeUserService: StoreUserService) {
   }
 
-  private subscribe: Subscription = new Subscription();
-
+  private unsubscribe$ = new Subject<void>();
   userList: User[] | undefined;
   inputBillet: string = '';
   errorFormulaire: boolean = false; //TODO faire un validator personnalisé et supprimer cette variable
@@ -79,28 +78,37 @@ export class HomeComponent implements OnInit, OnDestroy {
   })
 
   ngOnInit() {
-    console.log('%c salut', 'font-size:50px;')
-    this.subscribe.add(this.storeUserService.observeUser().subscribe(user => this.user = user))
-    this.storeUserService.observeUserList().subscribe(users => this.userList = users)
-    this.storeUserService.observeIsLoggedIn().subscribe(isLoggedIn => {
+    this.storeUserService.observeUser().pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(user => this.user = user);
+
+    this.storeUserService.observeUserList().pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(users => this.userList = users);
+
+    this.storeUserService.observeIsLoggedIn().pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
       if (this.user) {
-        this.form.setValue({numero: this.user.id})
-        this.updateData()
+        this.form.setValue({ numero: this.user.id });
+        this.updateData();
       }
-    })
+    });
   }
 
 
-  submit($event: Event) {
-    const inputElt = $event.target as HTMLInputElement;
+  submit(event: Event) {
+    const inputElt = event.target as HTMLInputElement;
     this.inputBillet = inputElt.value;
+
     if (this.inputBillet === '102030') {
       this.storeUserService.saveIsAdmin(true);
       console.log('admin true')
       this.router.navigate(['/admin']);
-      return
+      return;
     }
+
     const reg = new RegExp('^[0-9]*$');
     if (reg.test(this.inputBillet) && this.inputBillet.length === 6) this.checkUserExist();
     else this.errorFormulaire = true;
@@ -119,7 +127,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   updateData() {
     console.log('il exist', this.user)
-    // this.form.disable();
+    this.form.disable();
     this.errorFormulaire = false;
     // if (this.user.statusUser === Status.First) {
     //   this.user.statusUser = Status.Incomplete;
@@ -150,6 +158,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscribe?.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

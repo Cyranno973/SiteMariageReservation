@@ -14,7 +14,7 @@
 
   &__container-outlet {
     min-height: calc(100vh - 70px);
-    padding-bottom: 70px;
+    overflow-y: scroll;
   }
 
   &__app-header {

@@ -1,8 +1,10 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {User} from "../model/user";
+import {Choice, User} from "../model/user";
 import {UserService} from "./services/user.service";
 import {StoreUserService} from "./services/store-user.service";
 import {Router} from "@angular/router";
+import {combineLatest, of, switchMap} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -36,10 +38,27 @@ export class AppComponent implements OnInit {
   admin: boolean = false;
   // userList?: any[];
   user: User;
+  isShowHeader: boolean
 
   ngOnInit() {
-    this.storeUserService.observeUser().subscribe(user => this.user = user);
-    this.storeUserService.observeIsAdmin().subscribe(isaAdmin => this.admin = isaAdmin);
+    this.storeUserService.observeIsLoggedIn().pipe(
+      switchMap(isLoggedIn => {
+        if (isLoggedIn) {
+          return this.storeUserService.observeUser().pipe(
+            map(user => user?.choice === Choice.P)
+          );
+        } else {
+          return of(false);
+        }
+      })
+    ).subscribe(isShowHeader => {
+      this.isShowHeader = isShowHeader;
+    });
+
+    this.storeUserService.observeIsAdmin().subscribe(isAdmin => {
+      this.admin = isAdmin;
+    });
   }
+
 }
 

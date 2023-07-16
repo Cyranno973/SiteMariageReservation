@@ -2,5 +2,5 @@
   <div class="container-all__container-outlet">
       <router-outlet></router-outlet>
   </div>
-    <app-header class="container-all__app-header" *ngIf="!user || admin" [admin]="admin"></app-header>
+    <app-header class="container-all__app-header" *ngIf="isShowHeader || admin" [admin]="admin"></app-header>
 </div>

@@ -9,7 +9,6 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {InfoComponent} from './info/info.component';
 import {ActivityComponent} from './activity/activity.component';
-import {RoutingModule} from "./routing.module";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireModule} from "@angular/fire/compat";
 import {UserProfileComponent} from "./user-profile/user-profile.component";
@@ -26,6 +25,7 @@ import {getStorage, provideStorage} from "@angular/fire/storage";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 import {TestComponent} from "./test/test.component";
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -52,7 +52,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    RoutingModule,
+    AppRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
     FormsModule,
