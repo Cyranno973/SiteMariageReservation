@@ -1,19 +1,103 @@
 @use '../../sass/utils/_mixins';
 
 .form {
-  @include mixins.center-flex();
+  @include mixins.center-flex;
+  margin-top: 3rem;
+  //animation: fadeInDownPerso 2s ease 500ms forwards;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  position: relative;
 
-  .form__form-field {
-
+  .container-field {
+    //border: 1px solid red;
+    margin-bottom: 2rem;
+    position: relative;
   }
-  input {
-    text-transform: capitalize;
+
+  &__input,&__textarea {
+    padding: 15px 10px;
+    font-size: 1.2rem;
+    font-family: Roboto;
+    border: 0;
+    color: #211f1f;
+    background-color: rgba(255, 255, 255, 0.4);
+    outline: 0;
+    text-align: center;
+    font-weight: 500;
+
+    &:placeholder-shown ~ .form__label {
+      transition: all 0.5s ease;
+    }
+
+    &:focus {
+      box-shadow: 0 0 5pt 1pt #3c4f09;
+
+      ~ .form__label {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+    }
+
+    &:not(:placeholder-shown) ~ .form__label {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+  &__textarea {
+    padding: 20px 10px;
+    text-align: left;
+  }
+
+  &__label {
+    position: absolute;
+    top: 0;
+    padding: 1px 5px;
+    color: #211f1f;
     width: 100%;
-    padding: 1%;
-    margin: 1%;
+    height: 100%;
+    font-size: 1.2rem;
+    @include mixins.center-flex;
+    text-align: center;
+    font-weight: 500;
   }
 
+  &__error {
+    opacity: 0;
+    color: #870d0d;
+    font-weight: 500;
+  }
+
+  &__error--error {
+    opacity: 1;
+  }
 }
-.custom-form-field {
-  color: red !important; /* Remplacez "red" par la couleur souhaitée */
+
+.form {
+  /* Styles existants */
+
+  &__select {
+    padding: 15px 10px;
+    font-size: 1.2rem;
+    font-family: Roboto;
+    border: 0;
+    color: #211f1f;
+    background-color: rgba(255, 255, 255, 0.4);
+    outline: 0;
+    text-align: center;
+    font-weight: 500;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+
+    &:focus {
+      box-shadow: 0 0 5pt 1pt #3c4f09;
+    }
+  }
+
+  .error-message {
+    color: #870d0d;
+    font-weight: 500;
+    opacity: 1;
+    margin-top: 5px;
+  }
 }

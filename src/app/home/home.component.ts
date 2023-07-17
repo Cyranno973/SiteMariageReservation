@@ -126,14 +126,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   updateData() {
-    console.log('il exist', this.user)
+    // console.log('il exist', this.user)
     this.form.disable();
     this.errorFormulaire = false;
     // if (this.user.statusUser === Status.First) {
     //   this.user.statusUser = Status.Incomplete;
       // this.userService.createOrUpdate(this.user);
     // }
-    // this.storeUserService.saveUser(this.user);
+    this.storeUserService.saveUser(this.user);
   }
 
   btnChoice(choice: string) {

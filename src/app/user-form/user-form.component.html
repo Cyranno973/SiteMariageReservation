@@ -1,39 +1,39 @@
 <div class="container-userForm">
   <div class="container-form">
     <form class="form" [formGroup]="form">
-      <mat-form-field class="form__form-field" appearance="fill">
-        <mat-label class="form__form-label">Nom</mat-label>
-        <input class="form__form-input" matInput type="text" placeholder="Entrez votre nom" formControlName="name">
-        <mat-error class="form__form-error">Au moins 3 caractere</mat-error>
-      </mat-form-field>
+      <div class="container-field">
+        <input formControlName="name" [attr.id]="'myInput' + index" class="form__input" placeholder=" " type="text"/>
+        <label [attr.for]="'myInput' + index" class="form__label">Entrez votre nom</label>
+      </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Prenom</mat-label>
-        <input matInput type="text" placeholder="Entrez votre prenom" formControlName="username">
-        <mat-error>Au moins 3 caractere</mat-error>
-      </mat-form-field>
+      <div class="container-field">
+        <input formControlName="username" [attr.id]="'myInput' + (index + 1)" class="form__input" placeholder=" " type="text"/>
+        <label [attr.for]="'myInput' + (index + 1)" class="form__label">Entrez votre prenom</label>
+      </div>
 
-      <ng-container *ngIf="index === undefined">
-        <mat-form-field appearance="fill">
-          <mat-label>Tel</mat-label>
-          <input matInput type="text" placeholder="Entrez votre numero" formControlName="tel">
-        </mat-form-field>
-      </ng-container>
+      <div class="container-field">
+        <input formControlName="tel" [attr.id]="'myInput' + (index + 2)" class="form__input" placeholder=" " type="text"/>
+        <label [attr.for]="'myInput' + (index + 2)" class="form__label">Entrez votre numero</label>
+      </div>
 
-      <mat-form-field appearance="fill" class="custom-form-field">
-        <mat-select formControlName="menu" class="custom-form-field">
-          <mat-optgroup disabled>Menu Adulte</mat-optgroup>
-          <mat-option class="custom-form-field" *ngFor="let dish of menu ;" [value]="dish">{{dish}}</mat-option>
-          <mat-optgroup disabled>Menu Enfant</mat-optgroup>
-          <mat-option class="custom-form-field" value="enfant">enfant</mat-option>
-        </mat-select>
-        <mat-error> Selectionnez un plat.</mat-error>
-      </mat-form-field>
+      <div class="container-field">
+<!--        <label [attr.for]="'mySelect' + index" class="form__label">Choisissez un plat</label>-->
+        <select formControlName="menu" [attr.id]="'mySelect' + index" class="form__select">
+          <option disabled value="">Choisissez un plat</option>
+          <option *ngFor="let dish of menu;" [value]="dish">{{dish}}</option>
+        </select>
+        <ng-container *ngIf="form.get('menu')">
+          <div *ngIf="form.get('menu').invalid && form.get('menu').touched" class="error-message">
+            Selectionnez un plat.
+          </div>
+        </ng-container>
+      </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Allergie</mat-label>
-        <textarea matInput formControlName="allergie" placeholder="rentrez vos allergie"></textarea>
-      </mat-form-field>
+      <div class="container-field">
+        <textarea formControlName="allergie" [attr.id]="'myInput' + (index + 3)" class="form__textarea" placeholder=" " type="text"></textarea>
+        <label [attr.for]="'myInput' + (index + 3)" class="form__label">rentrez vos allergie</label>
+      </div>
+
     </form>
   </div>
 </div>

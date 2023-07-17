@@ -1,21 +1,20 @@
-<div class="container-form">
-  <div class="form" (focusin)="save()" (keyup)="save()" [formGroup]="userForm">
-    <app-user-form [form]="userForm"></app-user-form>
-    <div formArrayName="accompagnement">
-      <div *ngFor="let acc of formGroupeFake(); let i=index" [formGroupName]="i">
-        <h3 *ngIf="accompaniement.length">Invité n ° <span>{{i + 1}}</span></h3>
-        <div class="container-app-form">
-          <app-user-form [index]="i" [form]="acc"></app-user-form>
+  <div class="registration-form">
+    <div class="form-container" (focusin)="save()" (keyup)="save()" [formGroup]="userForm">
+      <app-user-form [index]="20" [form]="userForm"></app-user-form>
+      <div formArrayName="guests">
+        <div *ngFor="let guest of generateFormGroups(); let i=index" [formGroupName]="i">
+          <h3 *ngIf="guests.length" class="form-container__guest-title">Invité n ° <span class="form-container__guest-title__number">{{i + 1}}</span></h3>
+          <div class="form-container__guest-form-container">
+            <app-user-form [index]="i" [form]="guest"></app-user-form>
+          </div>
+          <div class="form-container__delete-guest-button">
+            <button mat-raised-button color="warn" (click)="removeGuest(i)" type="button" class="form-container__delete-guest-button__btn">Supprimer</button>
+          </div>
         </div>
-        <div class="container-btn-supprimer">
-          <button mat-raised-button color="warn" (click)="removeGroupe(i)" type="button"> supprimer</button>
-        </div>
-      </div>
 
-      <div class="container-add-inviter">
-        <button mat-raised-button color="warn" [disabled]="!userForm.valid" (click)="addAccompaniement()" type="button"> ajouter une personne</button>
+        <div class="form-container__add-guest-container">
+          <button mat-raised-button color="warn" [disabled]="!userForm.valid" (click)="addGuest()" type="button" class="form-container__add-guest-container__btn">Ajouter une personne</button>
+        </div>
       </div>
-      <!--    <h1>{{userForm.valid}}</h1>-->
     </div>
   </div>
-</div>
