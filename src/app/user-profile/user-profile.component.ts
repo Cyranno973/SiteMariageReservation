@@ -35,38 +35,45 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.storeUserService.observeUser().subscribe(user => {
-      this.user = user; //TODO this.user = user
-      const t = { menu: this.user.menu,  allergie: this.user.allergie || '', guests: this.user.accompaniement}
-      this.oldForm = JSON.stringify(t)
+      this.user = user;
+      console.log({...user})
+      const t = { menu: this.user.menu, allergie: this.user.allergie || '', guests: this.user.accompaniement };
+      this.oldForm = JSON.stringify(t);
 
       this.userForm = this.fb.group({
-        name: [this.user.name, [Validators.minLength(3)]],
-        username: [this.user.username, [Validators.minLength(3)]],
-        tel: [this.user.tel],
-        menu: [this.user.menu || '', Validators.required],
-        allergie: [this.user.allergie || '',],
-        guests: this.fb.array([]),
+        name: [this.user.name , [Validators.minLength(3)]],
+        username: [this.user.username , [Validators.minLength(3)]],
+        tel: [ this.user.tel ],
+        menu: [ this.user.menu || '', Validators.required],
+        allergie: [ this.user.allergie || ''],
+        selectedCategory: [this.user.selectedCategory || ''],
+        guests: this.fb.array([])
       });
-      if (this.user.accompaniement?.length) this.user.accompaniement.map(x => this.addGuest(x))
-      this.userForm.controls['name'].disable()
+
+      if (this.user.accompaniement?.length) this.user.accompaniement.map(x => this.addGuest(x));
+      this.userForm.controls['name'].disable();
       this.userForm.controls['username'].disable();
       this.userForm.controls['tel'].disable();
-    })
+    });
   }
+
+
 
   save() {
     if (this.userForm.valid) {
 
       if (JSON.stringify(this.userForm.value) === this.oldForm) return
 
-      this.oldForm = JSON.stringify(this.userForm.value)
-      const newUser = {...this.user}
-      newUser.menu = this.userForm.value.menu === Menu.Meat ? Menu.Meat : Menu.Fish;
+      this.oldForm = JSON.stringify(this.userForm.value);
+      const newUser = {...this.user};
+      console.log(newUser);
+      newUser.menu = this.userForm.value.menu;
       newUser.allergie = this.userForm.value.allergie?.length ? this.userForm.value.allergie: '';
       newUser.statusUser = Status.Complete;
+      newUser.selectedCategory = this.userForm.value.selectedCategory;
       newUser.accompaniement = this.userForm.value.guests as Personne[];
-      this.userService.createOrUpdate(newUser)
-      this.storeUserService.saveUser(newUser)
+      this.userService.createOrUpdate(newUser);
+      this.storeUserService.saveUser(newUser);
     }
   }
 
@@ -75,6 +82,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   addGuest(user?: Personne) {
+    console.log(this.userForm)
     const invite = this.fb.group({
       name: [user?.name, [Validators.minLength(3), Validators.required]],
       username: [user?.username, [Validators.minLength(3), Validators.required]],
@@ -99,5 +107,10 @@ export class UserProfileComponent implements OnInit {
     const formArray = this.userForm.get('guests') as FormArray
     const formGroups = formArray.controls as FormGroup[];
     return formGroups;
+  }
+
+  saveForm() {
+    console.log('change fonctionne');
+    this.save();
   }
 }

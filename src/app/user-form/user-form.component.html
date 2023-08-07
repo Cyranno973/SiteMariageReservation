@@ -4,29 +4,39 @@
       <div class="container-field">
         <input formControlName="name" [attr.id]="'myInput' + index" class="form__input" placeholder=" " type="text"/>
         <label [attr.for]="'myInput' + index" class="form__label">Entrez votre nom</label>
+        <div *ngIf="form?.get('name').invalid && form?.get('name').touched" class="error-message">
+          Entrer un nom
+        </div>
       </div>
 
       <div class="container-field">
         <input formControlName="username" [attr.id]="'myInput' + (index + 1)" class="form__input" placeholder=" " type="text"/>
         <label [attr.for]="'myInput' + (index + 1)" class="form__label">Entrez votre prenom</label>
+        <div *ngIf="form?.get('username').invalid && form?.get('username').touched" class="error-message">
+          Entrer un prenom
+        </div>
       </div>
 
-      <div class="container-field">
+      <div *ngIf="form?.get('tel').value && index === 20 || index !== 20" class="container-field">
         <input formControlName="tel" [attr.id]="'myInput' + (index + 2)" class="form__input" placeholder=" " type="text"/>
         <label [attr.for]="'myInput' + (index + 2)" class="form__label">Entrez votre numero</label>
+        <div *ngIf="form?.get('tel').invalid && form?.get('tel').touched" class="error-message">
+          Entrer un numero de tel
+        </div>
       </div>
 
       <div class="container-field">
-<!--        <label [attr.for]="'mySelect' + index" class="form__label">Choisissez un plat</label>-->
-        <select formControlName="menu" [attr.id]="'mySelect' + index" class="form__select">
-          <option disabled value="">Choisissez un plat</option>
-          <option *ngFor="let dish of menu;" [value]="dish">{{dish}}</option>
+        <select class="form__select" [formControlName]="'selectedCategory'" (change)="onCategoryChange()">
+          <option [value]="''" disabled hidden>Choisissez la catégorie</option>
+          <option *ngFor="let category of categories" [value]="category">{{category}}</option>
         </select>
-        <ng-container *ngIf="form.get('menu')">
-          <div *ngIf="form.get('menu').invalid && form.get('menu').touched" class="error-message">
-            Selectionnez un plat.
-          </div>
-        </ng-container>
+      </div>
+      <div class="container-field">
+<!--        <select class="form__select" [formControlName]="'menu'" (change)="formChange.emit(form)">-->
+        <select class="form__select" [formControlName]="'menu'" >
+          <option [value]="''" disabled hidden>Choisissez un plat</option>
+          <option *ngFor="let dish of dishes" [value]="dish">{{dish}}</option>
+        </select>
       </div>
 
       <div class="container-field">

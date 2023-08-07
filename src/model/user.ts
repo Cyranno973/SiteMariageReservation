@@ -7,6 +7,7 @@ export enum Status {
 export enum Menu {
   Fish = 'Poisson',
   Meat = 'Viande',
+  Child = 'Menu enfant'
 }
 
 export enum Choice {
@@ -27,10 +28,7 @@ export interface User extends Personne {
   tel?: string,
   statusUser?: Status,
   choice: Choice,
+  selectedCategory: string;
   accompaniement?: Personne[]
-}
-export interface ConnectedPresent {
-  choix: Choice,
-
 }
 
