@@ -17,7 +17,7 @@ const routes: Routes =
     // {path: 'activity', canActivate: [AuthGard], component: ActivityComponent},
     // {path: 'admin', canActivate: [AuthGard], component: AdministratorComponent},
     {path: 'admin', component: AdministratorComponent},
-    {path: '**', redirectTo: '/test'},
+    {path: '**', redirectTo: '/home'},
     // {path: '**', redirectTo: '/home'},
   ]
 

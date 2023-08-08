@@ -107,7 +107,7 @@ checkMenu(){
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);
 
-      this.userForm.markAsPristine();// Marque le formulaire comme non modifié (pristine)
+      this.userForm.markAsPristine();//  Cool Marque le formulaire comme non modifié (pristine)
     }
   }
 
@@ -121,9 +121,10 @@ checkMenu(){
       name: [user?.name, [Validators.minLength(3), Validators.required]],
       username: [user?.username, [Validators.minLength(3), Validators.required]],
       allergie: [user?.allergie || ''],
+      selectedCategory: [user?.selectedCategory || ''],
       menu: [user?.menu || '', Validators.required],
       tel: [],
-    });
+    },  { validators: this.menuValidator });
     this.guests.push(invite);
   }
 

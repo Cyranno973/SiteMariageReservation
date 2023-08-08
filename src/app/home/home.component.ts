@@ -149,6 +149,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.user.choice = Choice.A;
       delete this.user.menu;
       delete this.user.allergie;
+      delete this.user.selectedCategory;
       this.user.accompaniement = [];
       // console.log(this.user)
       this.userService.createOrUpdate(this.user);

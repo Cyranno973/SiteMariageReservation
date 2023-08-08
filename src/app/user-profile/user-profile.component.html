@@ -1,6 +1,6 @@
   <div class="registration-form">
     <div class="form-container" (keyup)="save()" [formGroup]="userForm">
-      <app-user-form [index]="20" [form]="userForm"></app-user-form>
+      <app-user-form [index]="2000" [form]="userForm"></app-user-form>
       <div formArrayName="guests">
         <div *ngFor="let guest of generateFormGroups(); let i=index" [formGroupName]="i">
           <h3 *ngIf="guests.length" class="form-container__guest-title">Invité n ° <span class="form-container__guest-title__number">{{i + 1}}</span></h3>

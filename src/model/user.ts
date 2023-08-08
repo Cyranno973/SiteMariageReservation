@@ -21,6 +21,7 @@ export interface Personne {
   name?: string,
   allergie?: string,
   menu?: Menu,
+  selectedCategory?: string ,
 }
 
 export interface User extends Personne {
@@ -28,7 +29,7 @@ export interface User extends Personne {
   tel?: string,
   statusUser?: Status,
   choice: Choice,
-  selectedCategory: string;
+  selectedCategory?: string;
   accompaniement?: Personne[]
 }
 
