@@ -5,7 +5,8 @@
         <div *ngFor="let guest of generateFormGroups(); let i=index" [formGroupName]="i">
           <h3 *ngIf="guests.length" class="form-container__guest-title">Invité n ° <span class="form-container__guest-title__number">{{i + 1}}</span></h3>
           <div class="form-container__guest-form-container">
-            <app-user-form (formChange)="saveForm()"  [index]="i" [form]="guest"></app-user-form>
+<!--            <app-user-form (formChange)="saveForm()"  [index]="i" [form]="guest"></app-user-form>-->
+            <app-user-form  [index]="i" [form]="guest"></app-user-form>
           </div>
           <div class="form-container__delete-guest-button">
             <button mat-raised-button color="warn" (click)="removeGuest(i)" type="button" class="form-container__delete-guest-button__btn">Supprimer</button>

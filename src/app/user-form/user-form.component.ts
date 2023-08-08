@@ -11,12 +11,14 @@ import {Menu} from "../../model/user";
 export class UserFormComponent implements OnInit{
   @Input() form: FormGroup;
   @Input() index: number;
-  menu = Object.values(Menu);
+  // @Output() formChange: EventEmitter<any> = new EventEmitter();
   dishes: string[] = [];
   categories = ['Adulte', 'Enfant'];
-  @Output() formChange: EventEmitter<any> = new EventEmitter<any>();
   ngOnInit() {
-   if(this.form.get('menu')?.value) this.populateMenus();
+   if(this.form.get('menu')?.value) {
+     this.populateMenus();
+   }
+
   }
 
   populateMenus(){
@@ -24,8 +26,16 @@ export class UserFormComponent implements OnInit{
   }
 
   onCategoryChange() {
+    console.log('ttaa')
     this.populateMenus();
-    if (this.form.get('selectedCategory')?.value === 'Enfant') this.form.get('menu')?.setValue(Menu.Child);
-    else this.form.get('menu')?.setValue('');
-  }
+
+    if (this.form.get('selectedCategory')?.value === 'Enfant') {
+      this.form.patchValue({
+        menu: Menu.Child
+      });
+    } else {
+      this.form.patchValue({
+        menu: ''
+      });
+    }}
 }

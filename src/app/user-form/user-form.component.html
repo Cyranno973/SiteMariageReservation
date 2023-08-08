@@ -32,7 +32,7 @@
         </select>
       </div>
       <div class="container-field">
-<!--        <select class="form__select" [formControlName]="'menu'" (change)="formChange.emit(form)">-->
+<!--        <select class="form__select" [formControlName]="'menu'"  (change)="formChange.emit(form)">-->
         <select class="form__select" [formControlName]="'menu'" >
           <option [value]="''" disabled hidden>Choisissez un plat</option>
           <option *ngFor="let dish of dishes" [value]="dish">{{dish}}</option>

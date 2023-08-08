@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Choice, Menu, Personne, Status, User} from "../../model/user";
 import {StoreUserService} from "../services/store-user.service";
 import {UserService} from "../services/user.service";
@@ -37,6 +37,8 @@ export class UserProfileComponent implements OnInit {
     this.storeUserService.observeUser().subscribe(user => {
       this.user = user;
       console.log({...user})
+      console.log(user.menu)
+      console.log(user.selectedCategory)
       const t = { menu: this.user.menu, allergie: this.user.allergie || '', guests: this.user.accompaniement };
       this.oldForm = JSON.stringify(t);
 
@@ -47,33 +49,65 @@ export class UserProfileComponent implements OnInit {
         menu: [ this.user.menu || '', Validators.required],
         allergie: [ this.user.allergie || ''],
         selectedCategory: [this.user.selectedCategory || ''],
-        guests: this.fb.array([])
-      });
+        guests: this.fb.array([]),
+      }, { validators: this.menuValidator });
 
       if (this.user.accompaniement?.length) this.user.accompaniement.map(x => this.addGuest(x));
       this.userForm.controls['name'].disable();
       this.userForm.controls['username'].disable();
       this.userForm.controls['tel'].disable();
+      this.userForm.valueChanges.subscribe(() => {
+        if (this.userForm.dirty && this.userForm.valid) {
+          console.log("valide");
+          this.checkMenu();
+          // console.log(this.userForm.value)
+          this.save();
+        }else{
+          console.log("non valide");}
+      });
     });
   }
+   menuValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const selectedCategory = control.get('selectedCategory');
+    const menu = control.get('menu');
 
+    if (selectedCategory && menu) {
+      if (selectedCategory.value === 'Enfant' && ['Menu enfant'].indexOf(menu.value) < 0) {
+        return { 'invalidMenu': true };
+      }
 
+      if (selectedCategory.value === 'Adulte' && ['Viande', 'Poisson'].indexOf(menu.value) < 0) {
+        return { 'invalidMenu': true };
+      }
+    }
+
+    return null;
+  }
+
+checkMenu(){
+  console.log(this.userForm.get('menu')?.value);
+  console.log(this.userForm.get('selectedCategory')?.value);
+  // if()
+}
 
   save() {
     if (this.userForm.valid) {
 
-      if (JSON.stringify(this.userForm.value) === this.oldForm) return
+      // if (JSON.stringify(this.userForm.value) === this.oldForm) return
 
       this.oldForm = JSON.stringify(this.userForm.value);
-      const newUser = {...this.user};
-      console.log(newUser);
-      newUser.menu = this.userForm.value.menu;
-      newUser.allergie = this.userForm.value.allergie?.length ? this.userForm.value.allergie: '';
-      newUser.statusUser = Status.Complete;
-      newUser.selectedCategory = this.userForm.value.selectedCategory;
-      newUser.accompaniement = this.userForm.value.guests as Personne[];
-      this.userService.createOrUpdate(newUser);
-      this.storeUserService.saveUser(newUser);
+      // const newUser = {...this.user};
+      // console.log(newUser);
+      this.user.menu = this.userForm.value.menu;
+      this.user.allergie = this.userForm.value.allergie?.length ? this.userForm.value.allergie: '';
+      this.user.statusUser = Status.Complete;
+      this.user.selectedCategory = this.userForm.value.selectedCategory;
+      this.user.accompaniement = this.userForm.value.guests as Personne[];
+
+      this.userService.createOrUpdate(this.user);
+      this.storeUserService.saveUser(this.user);
+
+      this.userForm.markAsPristine();// Marque le formulaire comme non modifié (pristine)
     }
   }
 
@@ -109,8 +143,8 @@ export class UserProfileComponent implements OnInit {
     return formGroups;
   }
 
-  saveForm() {
-    console.log('change fonctionne');
-    this.save();
-  }
+  // saveForm() {
+  //   console.log('change fonctionne');
+  //   this.save();
+  // }
 }
