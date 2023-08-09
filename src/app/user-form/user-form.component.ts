@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from "@angular/core";
+import {Component, Input, OnInit, Renderer2} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {Menu} from "../../model/user";
 import {animate, state, style, transition, trigger} from "@angular/animations";
@@ -7,7 +7,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('fadeInOut', [
       state('void', style({
@@ -24,6 +24,8 @@ export class UserFormComponent implements OnInit {
   dishes: string[] = [];
   categories = ['Adulte', 'Enfant'];
 
+  constructor( private renderer: Renderer2) {
+  }
   ngOnInit() {
     if (this.form.get('menu')?.value) this.populateMenus();
   }

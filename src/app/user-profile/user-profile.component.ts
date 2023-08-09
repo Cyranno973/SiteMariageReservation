@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Personne, Status, User} from "../../model/user";
 import {StoreUserService} from "../services/store-user.service";
@@ -16,7 +16,12 @@ export class UserProfileComponent implements OnInit {
   oldForm: string = '';
   user: User;
 
-  constructor(private fb: FormBuilder, private storeUserService: StoreUserService, private userService: UserService) {
+  constructor(private fb: FormBuilder,
+              private storeUserService: StoreUserService,
+              private userService: UserService,
+              private el: ElementRef,
+              private renderer: Renderer2,
+  ) {
   }
 
 
@@ -25,6 +30,7 @@ export class UserProfileComponent implements OnInit {
       this.user = user;
       console.log({...user})
       console.log(user.menu)
+      console.log(user.tel)
       console.log(user.selectedCategory)
       const t = {menu: this.user.menu, allergie: this.user.allergie || '', guests: this.user.accompaniement};
       this.oldForm = JSON.stringify(t);
@@ -32,7 +38,7 @@ export class UserProfileComponent implements OnInit {
       this.userForm = this.fb.group({
         name: [this.user.name, [Validators.minLength(2), Validators.pattern(/^\S.*\S$/)]],
         username: [this.user.username, [Validators.minLength(2), Validators.pattern(/^\S.*\S$/)]],
-        tel: [this.user.tel,  [Validators.pattern(/^\d+$/)]],
+        tel: [this.user.tel, [Validators.pattern(/^\d+$/)]],
         menu: [this.user.menu || '', Validators.required],
         allergie: [this.user.allergie || ''],
         selectedCategory: [this.user.selectedCategory || '', Validators.required],
@@ -88,9 +94,15 @@ export class UserProfileComponent implements OnInit {
       this.userForm.markAsPristine();//  Cool Marque le formulaire comme non modifié (pristine)
     }
   }
+
+  scrollToElement(element: HTMLElement) {
+    this.renderer.selectRootElement(element).scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+
   trackByFn(index: number, item: FormGroup): number {
     return index; // Utilisation de l'index comme identifiant unique pour chaque invité
   }
+
   get guests() {
     return this.userForm.get('guests') as FormArray;
   }
@@ -102,10 +114,16 @@ export class UserProfileComponent implements OnInit {
       username: [user?.username, [Validators.minLength(2), , Validators.pattern(/^\S.*\S$/), Validators.required]],
       tel: [''],
       allergie: [user?.allergie || ''],
-      selectedCategory: [user?.selectedCategory || '',  Validators.required],
+      selectedCategory: [user?.selectedCategory || '', Validators.required],
       menu: [user?.menu || '', Validators.required],
     }, {validators: this.menuValidator});
     this.guests.push(invite);
+    setTimeout(() => {
+      const lastGuestElement = this.el.nativeElement.querySelector('.form-container__guest-form-container:last-child');
+      if (lastGuestElement) {
+        this.scrollToElement(lastGuestElement);
+      }
+    });
   }
 
   removeGuest(i: number) {

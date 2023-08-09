@@ -3,6 +3,44 @@
 @use "sass/base/reset";
 
 @use "sass/utils/mixins";
-@use "sass/utils/variables";
+@use "sass/utils/variables" as *;
 
 @use "sass/themes/theme";
+
+.disabled {
+  background: $disabled !important;
+  pointer-events: none;
+}
+
+.error-message {
+  position: absolute;
+  color: #870d0d;
+  font-weight: 500;
+  margin-top: 5px;
+  top: 0;
+  left: 10px;
+  font-size: 11px;
+}
+.lockIcon{
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: $black;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-internal-autofill-selected,
+input:disabled
+{
+  background-color: rgba(255, 255, 255, 0.4) !important; // couleur de fond lorsque l'autocomplétion est utilisée
+  color: $black !important; // couleur du texte
+}
+input:-internal-autofill-selected {
+  appearance: none; // désactive l'apparence par défaut du bouton menulist
+  background-image: none !important;
+  background-color: rgba(255, 255, 255, 0.4) !important; // changez à la couleur souhaitée
+  color: $black !important; // changez à la couleur souhaitée
+}

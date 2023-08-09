@@ -4,7 +4,7 @@
       <div class="container-field">
         <input [attr.id]="'name' + index" class="form__input" formControlName="name" placeholder=" " type="text"/>
         <label [attr.for]="'name' + index" class="form__label">Nom</label>
-        <mat-icon *ngIf="index < 0" fontIcon="lock"></mat-icon>
+        <mat-icon *ngIf="index < 0" class="lockIcon" fontIcon="lock"></mat-icon>
         <div *ngIf="form?.get('name').invalid && form?.get('name').touched" [@fadeInOut] class="error-message">
           Entrez un nom
         </div>
@@ -13,16 +13,16 @@
       <div class="container-field">
         <input [attr.id]="'username' + index" class="form__input" formControlName="username" placeholder=" " type="text"/>
         <label [attr.for]="'username' + index" class="form__label">Prenom</label>
-        <mat-icon *ngIf="index < 0" fontIcon="lock"></mat-icon>
+        <mat-icon *ngIf="index < 0" class="lockIcon" fontIcon="lock"></mat-icon>
         <div *ngIf="form?.get('username').invalid && form?.get('username').touched" [@fadeInOut] class="error-message">
           Entrez un prenom
         </div>
       </div>
 
-      <div *ngIf="form?.get('tel').value" class="container-field">
-        <input [attr.id]="'tel' + index" class="form__input" formControlName="tel" placeholder=" " type="numeric"/>
+      <div *ngIf="form?.get('tel').value && form?.get('tel').value !== ''" class="container-field">
+      <input [attr.id]="'tel' + index" class="form__input" formControlName="tel" placeholder=" " type="numeric"/>
         <label [attr.for]="'tel' + index" class="form__label">Portable</label>
-        <mat-icon *ngIf="index < 0" fontIcon="lock"></mat-icon>
+        <mat-icon *ngIf="index < 0" class="lockIcon" fontIcon="lock"></mat-icon>
         <div *ngIf="form?.get('tel').invalid && form?.get('tel').touched" [@fadeInOut] class="error-message">
           Entrez un numero de tel
         </div>
