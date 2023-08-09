@@ -1,12 +1,7 @@
-import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import {map, Observable} from "rxjs";
 import {Entity} from "../../model/media";
 
-
-@Injectable({
-  providedIn: 'root'
-})
 export class AbstractCrudFichier<T extends Entity> {
   collection: AngularFirestoreCollection<T>;
   db: AngularFirestore;
@@ -20,12 +15,13 @@ export class AbstractCrudFichier<T extends Entity> {
 
   getAll(): Observable<T[]> {
     return this.collection.snapshotChanges().pipe(
-      map(changes => changes.map(c => ({ ...c.payload.doc.data(), id: c.payload.doc.id } as T)))
+      map(changes => changes.map(c => ({...c.payload.doc.data(), id: c.payload.doc.id} as T)))
     );
   }
 
   createOrUpdate(item: T): Promise<void> {
-    return this.collection.doc(item.id).set(item);
+    const cleanedItem = this.cleanObject(item);
+    return this.collection.doc(cleanedItem.id).set(cleanedItem);
   }
 
   updateOrderInFirestore(items: T[]): Promise<void> {
@@ -33,11 +29,13 @@ export class AbstractCrudFichier<T extends Entity> {
 
     items.forEach((item) => {
       const docRef = this.db.collection(this.dbPath).doc(item.id).ref;
-      batch.update(docRef, { order: item.order });
+      const cleanedItem = this.cleanObject({order: item.order});
+      batch.update(docRef, cleanedItem);
     });
 
     return batch.commit();
   }
+
 
   delete(id: string): Promise<void> {
     return this.collection.doc(id).delete();
@@ -47,6 +45,15 @@ export class AbstractCrudFichier<T extends Entity> {
     if (!item.id) {
       throw new Error("ID is required to update an item.");
     }
-    return this.collection.doc(item.id).update(item);
+    const cleanedItem = this.cleanObject(item);
+    return this.collection.doc(cleanedItem.id).update(cleanedItem);
   }
+
+  cleanObject(obj: any) {
+    Object.keys(obj).forEach(key =>
+      (obj[key] === undefined) && delete obj[key]
+    );
+    return obj;
+  }
+
 }

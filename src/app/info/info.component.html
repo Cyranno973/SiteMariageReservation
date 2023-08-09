@@ -1,65 +1,38 @@
-<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-  <div class="example-box" *ngFor="let movie of movies" cdkDrag>{{movie}}</div>
-</div>
+<div class="container-activity">
+  <form *ngIf="admin" [formGroup]="mediaForm" class="media">
+    <mat-form-field class="media__mat-form-field__title">
+      <mat-label class="media__mat-form-field__" >Titre</mat-label>
+      <input [(ngModel)]="title" formControlName="title" matInput name="title" value="">
+    </mat-form-field>
 
-<div class="container-all-card">
+    <mat-form-field class="media__mat-form-field__title">
+      <mat-label class="media__mat-form-field__" >Lien</mat-label>
+      <input [(ngModel)]="lien" formControlName="lien" matInput name="lien" value="">
+    </mat-form-field>
 
+    <mat-form-field class="example-full-width">
+      <mat-label>Description</mat-label>
+      <textarea [(ngModel)]="description" class="textarea" formControlName="description" matInput name="description"></textarea>
+    </mat-form-field>
 
-  <div class="container-card">
-    <mat-card>
-      <a href="https://www.instagram.com/reel/Co5nKO9DQ9f/?utm_source=ig_web_copy_link">
-        <img
-          mat-card-image
-          src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-          alt="Photo of a Shiba Inu"
-        />
+    <button (click)="openFileInput()" class="select-img" mat-raised-button type="button">Sélectionner une image</button>
+    <input #fileInput (change)="chooseFile($event)" hidden id="file" type="file">
+    <img *ngIf="previewUrl" [src]="previewUrl" class="image-preview" />
+    <button (click)="saveMedia()" mat-raised-button type="button">Enregistrer</button>
+  </form>
 
+  <div (cdkDropListDropped)="drop($event)" cdkDropList class="container-dropList">
+    <div *ngFor="let item of activityList" [cdkDragDisabled]="!admin" cdkDrag class="container-glass">
+      <div *ngIf="admin" class="container-glass__container-mat-icon">
+        <mat-icon (click)="updateMedia(item)" fontIcon="edit"></mat-icon>
+        <mat-icon (click)="deleteCard(item)" fontIcon="delete"></mat-icon>
+      </div>
+      <img [src]="item.imageUrl" alt="" class="img">
+      <h3 class="title">{{item.title}}</h3>
+      <p class="text">{{item.description}}</p>
+      <a [href]="item.urlExterne" target="_blank">
+        <button class="btn">Découvrir</button>
       </a>
-
-      <mat-card-content>
-        <p>
-          <strong>
-            A dog is a domestic mammal of the family Canidae and the order
-            Carnivora.</strong
-          >
-          Its scientific name is Canis lupus familiaris. Dogs are a subspecies of
-          the gray wolf, and they are also related to foxes and jackals. Dogs are
-          one of the two most ubiquitous and most popular domestic animals in the
-          world.
-        </p>
-      </mat-card-content>
-      <mat-card-actions align="end">
-        <button mat-button>Like ❤️</button>
-        <button mat-button>share 👍</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-  <div class="container-card">
-    <mat-card>
-      <a href="https://www.instagram.com/reel/Co5nKO9DQ9f/?utm_source=ig_web_copy_link">
-
-      <img
-        mat-card-image
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-        alt="Photo of a Shiba Inu"
-      />
-      </a>
-      <mat-card-content>
-        <p>
-          <strong>
-            A dog is a domestic mammal of the family Canidae and the order
-            Carnivora.</strong
-          >
-          Its scientific name is Canis lupus familiaris. Dogs are a subspecies of
-          the gray wolf, and they are also related to foxes and jackals. Dogs are
-          one of the two most ubiquitous and most popular domestic animals in the
-          world.
-        </p>
-      </mat-card-content>
-      <mat-card-actions align="end">
-        <button mat-button>Like ❤️</button>
-        <button mat-button>share 👍</button>
-      </mat-card-actions>
-    </mat-card>
+    </div>
   </div>
 </div>

@@ -26,6 +26,8 @@ import {getStorage, provideStorage} from "@angular/fire/storage";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {AppRoutingModule} from "./app-routing.module";
+import {MediaActivityService} from "./services/media-activity-service";
+import {MediaInfoService} from "./services/media-info-service";
 
 @NgModule({
   declarations: [
@@ -63,7 +65,7 @@ import {AppRoutingModule} from "./app-routing.module";
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [],
+  providers: [MediaActivityService, MediaInfoService],
 
   bootstrap: [AppComponent]
 })

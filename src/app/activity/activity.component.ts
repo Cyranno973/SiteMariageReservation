@@ -1,11 +1,11 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AngularFireStorage, AngularFireUploadTask} from '@angular/fire/compat/storage';
 import {finalize} from 'rxjs/operators';
-import {AssetsDataService} from "../services/assets-data.service";
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Media} from "../../model/media";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {StoreUserService} from "../services/store-user.service";
+import {MediaActivityService} from "../services/media-activity-service";
 
 
 @Component({
@@ -28,7 +28,10 @@ export class ActivityComponent implements OnInit{
   @ViewChild('fileInput') fileInput!: ElementRef;
   private showForm: false;
   admin: boolean = false;
-  constructor(private fb: FormBuilder, private storage: AngularFireStorage, private assetsData: AssetsDataService, private storeUserService: StoreUserService) {
+  constructor(private fb: FormBuilder,
+              private storage: AngularFireStorage,
+              private mediaActivityService: MediaActivityService,
+              private storeUserService: StoreUserService) {
   }
   ngOnInit(): void {
     this.storeUserService.observeIsAdmin().subscribe(admin =>{
@@ -42,14 +45,14 @@ export class ActivityComponent implements OnInit{
     });
   }
   getActivityData() {
-    this.assetsData.getAll().subscribe((activityList:Media[]) => {
+    this.mediaActivityService.getAll().subscribe((activityList:Media[]) => {
       this.activityList = activityList.sort( (a,b) => a.order - b.order );
       this.index = this.activityList.length;
     })
   }
   drop(event: CdkDragDrop<Media[]>) {
     moveItemInArray(this.activityList, event.previousIndex, event.currentIndex);
-    this.assetsData.updateOrderInFirestore(this.activityList).then(() => {
+    this.mediaActivityService.updateOrderInFirestore(this.activityList).then(() => {
       console.log('Order updated in Firestore!');
     }).catch((error) => {
       console.error('Error updating order:', error);
@@ -82,7 +85,9 @@ export class ActivityComponent implements OnInit{
 
     if (!this.file && !this.updateBtn) return;
 
-    const filePath = `images/${this.file?.name ?? this.media.imageUrl.substring(this.media.imageUrl.lastIndexOf('/') + 1)}`;
+    // const filePath = `images/${this.file?.name ?? this.media.imageUrl.substring(this.media.imageUrl.lastIndexOf('/') + 1)}`;
+    const filePath = `images/${this.file?.name ?? (this.media ? this.media.imageUrl.substring(this.media.imageUrl.lastIndexOf('/') + 1) : '')}`;
+
     const storageRef = this.storage.ref(filePath);
 
     if (this.file) {
@@ -121,7 +126,7 @@ export class ActivityComponent implements OnInit{
     };
 
     if (this.updateBtn) {
-      this.assetsData.update(mediaData).then(() => {
+      this.mediaActivityService.update(mediaData).then(() => {
         console.log('Updated in Firestore!');
         this.updateBtn = false;  // réinitialiser le bouton de mise à jour
         this.mediaForm.reset();   // réinitialiser le formulaire
@@ -130,7 +135,7 @@ export class ActivityComponent implements OnInit{
         console.error('Error updating:', error);
       });
     } else {
-      this.assetsData.createOrUpdate(mediaData).then(() => {
+      this.mediaActivityService.createOrUpdate(mediaData).then(() => {
         console.log('Created in Firestore!');
         this.mediaForm.reset();  // réinitialiser le formulaire
         this.previewUrl = '';
@@ -149,7 +154,7 @@ export class ActivityComponent implements OnInit{
     imageRef.delete().subscribe(
       () => {
         console.log('Image deleted successfully');
-        this.assetsData.delete(media.id)
+        this.mediaActivityService.delete(media.id)
       },
       (error) => {
         console.error('Error deleting image:', error);
@@ -169,6 +174,6 @@ export class ActivityComponent implements OnInit{
       this.mediaForm.setValue({title: media.title, description: media.description, lien: media.urlExterne})
     this.previewUrl = media.imageUrl;
       // this.showForm = true;
-  // this.assetsData.update({...media})
+  // this.mediaActivityService.update({...media})
   }
 }
