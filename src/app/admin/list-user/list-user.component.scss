@@ -1,94 +1,72 @@
-.container-input{
+@use './src/sass/utils/mixins' as *;
+
+.container-input {
   padding-top: 50px;
   text-align: center;
-  mat-form-field{
-    input:{
 
-    color: red;
-    border-color: red;
-
+  mat-form-field {
+    input: {
+      color: red;
+      border-color: red;
     }
-  };
+  }
+;
 }
 
-mat-table{
+mat-table {
   overflow-y: scroll;
   height: 500px;
   padding: 20px;
 }
-.mat-column-id,.mat-column-accompaniement,.mat-column-menu,.mat-column-action,.mat-column-tel,.mat-column-choice,.mat-column-statusUser{
-  min-width: 100px;
 
-  //width: 10%;
-  //border-right: 1px solid currentColor;
-  //border: darkred solid 3px ;
-  //padding-right: 24px;
-  //background-color: red;
+.mat-column-id, .mat-column-accompaniement, .mat-column-menu, .mat-column-action, .mat-column-tel, .mat-column-choice, .mat-column-statusUser {
+  min-width: 100px;
   text-align: center;
 }
-span .mat-header-cell{
+
+span .mat-header-cell {
   font-weight: bold;
 }
 
 .mat-column-name {
   min-width: 100px;
-  //border: green solid 3px ;
   padding-left: 16px;
   color: darkred;
   font-size: 18px;
 }
-.mat-column-tel,.mat-column-menu,.mat-column-accompaniement{
-  //width: 10px;
-  //display: none;
-//min-width: 10px;
-}
+
 .mat-column-username {
   min-width: 100px;
-  //color: red !important;
   font-style: italic;
 }
-.mat-column-action{
-  //width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.mat-column-action {
+  @include center-flex;
   text-align: center;
-  button{
+
+  button {
     text-align: center;
     width: 10px;
     padding: 0;
     margin: 0;
-    //background-color: none;
 
-  mat-icon{
-    margin: 0;
-    text-align: center;
-    padding: 0;
-  }
+    mat-icon {
+      margin: 0;
+      text-align: center;
+      padding: 0;
+    }
   }
 }
-.invite{
+
+.invite {
   color: white;
   background-color: #827717;
   display: flex;
   width: 40%;
- span {
-   margin-right: 2%;
-   font-size: 20px;
-   font-weight: 400;
- }
+
+  span {
+    margin-right: 2%;
+    font-size: 20px;
+    font-weight: 400;
+  }
 }
-//.mat-column-choice {
-//  width: 100px;
-//  text-align: center;
-//  font-weight: bold;
-//}
-//.mat-mdc-row .mat-mdc-cell {
-//  border-bottom: 5px solid red;
-//  border-top: 1px solid transparent;
-//  cursor: pointer;
-//}
-//
-//.mat-mdc-row:hover .mat-mdc-cell {
-//  border-color: blue;
-//}

@@ -1,5 +1,6 @@
 @use '../../sass/utils/_mixins';
 @use '../../sass/utils/variables';
+@use '../../sass/utils/animation' as *;
 @use '../../sass/base/typography';
 @use '../../sass/vendors/animate.css';
 
@@ -20,8 +21,6 @@
   1px 1px #43a047, -1px -1px #43a047, 1px -1px #43a047, -1px 1px #43a047;
 
   &__name {
-    //animation: fadeInDownPerso 2s ease;
-
     margin: 5% 0;
     font-family: typography.$kingham, sans-serif;
   }
@@ -31,7 +30,6 @@
   }
 
   &__subtitle {
-    //animation: fadeInDownPerso 2s ease 500ms forwards;
     text-align: center;
     font-size: 30px;
     font-family: typography.$greenlight, sans-serif;
@@ -41,7 +39,6 @@
 .form {
   @include mixins.center-flex;
   margin-top: 3rem;
-  //animation: fadeInDownPerso 2s ease 500ms forwards;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   position: relative;
 
@@ -95,7 +92,6 @@
   }
 }
 
-
 .choice {
   display: flex;
   flex-direction: column;
@@ -128,8 +124,6 @@
 }
 
 .textAbsent {
-  //padding: 10px 40px;
-  //width: 100%;
   @include mixins.center-flex;
   text-align: center;
   line-height: 2;
@@ -146,138 +140,7 @@
 
 }
 
-
-
-@keyframes fadeInDownPerso {
-  from {
-    opacity: 0;
-    transform: translate3d(0, -100%, 0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-    visibility: visible;
-  }
-}
-
 .fadeInDownPerso {
   animation-name: fadeInDownPerso;
   animation-duration: 3s;
 }
-
-//  .form {
-//    @include mixins.center-flex;
-//    margin-top: 3rem;
-//    animation: fadeInDownPerso 2s ease 500ms forwards;
-//  }
-//
-//  .form-field {
-//
-//    __label {
-//      color: #49a4ff;
-//      text-align: center;
-//      position: relative;
-//      z-index: -5;
-//    }
-//
-//    __input {
-//
-//    }
-//
-//    __error {
-//
-//    }
-//  }
-//
-//  .mdc-text-field .mat-mdc-input-element {
-//    color: #144617;
-//    letter-spacing: 2px;
-//    font-size: 18px;
-//    text-align: center;
-//    font-weight: 500;
-//  }
-//
-//.mat-form-field-appearance-legacy .mat-form-field-underline {
-//  height: 0 !important;
-//}
-//
-//
-// .mat-form-field-appearance-outline.mat-form-field-disabled, .mat-form-field-outline {
-//  opacity: 0;
-//}
-//
-//.read-only-true .mat-form-field-outline-start {
-//  border-color: white;
-//}
-//
-//.read-only-true .mat-form-field-outline-gap {
-//  border-color: white;
-//}
-//
-//.read-only-true .mat-form-field-outline-end {
-//  border-color: white;
-//}
-//
-//.mat-form-field-appearance-outline .mat-form-field-outline {
-//  display: none !important;
-//}
-//.mdc-text-field--focused,.mdc-text-field--outlined,.mat-form-field-appearance-outline,
-//.mat-primary,.mat-focused,.mat-mdc-text-field-wrapper,.mdp-text-field--{
-// color: red;
-//  border: red 1px solid;
-//  outline: red 1px solid;
-//  outline: none;
-//  border: none;
-//}
-//
-//.mat-form-field-appearance-outline .mat-form-field-outline {
-//  color: white !important;
-//}
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//  .container-form mat-form-field .mdc-text-field { //TDODO permet d'assombrir le fond des input
-//    //background: rgb(0, 0, 0, 0.5) !important;
-//  }
-//
-//  mat-form-field {
-//
-//    .mdc-text-field .mdc-text-field__input {
-//      color: #144617;
-//      letter-spacing: 2px;
-//      font-size: 20px;
-//      text-align: center;
-//      font-weight: 500;
-//    }
-//
-//    .mdc-text-field {
-//      //border: 1px solid white;
-//      //border-top: none;
-//    }
-//
-//    input {
-//
-//      &::placeholder {
-//        color: #7b8500;
-//      }
-//    }
-//
-//
-//    mat-error {
-//      color: red;
-//    }
-//  }
-//
-//  form .error1 {
-//    text-align: center;
-//    color: darkred;
-//    margin: auto;
-//  }

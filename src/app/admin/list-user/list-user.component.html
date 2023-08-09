@@ -46,16 +46,16 @@
   <ng-container matColumnDef="accompaniement">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Inviter</mat-header-cell>
     <mat-cell *matCellDef="let user">
-    <div class="container-invite">
-      <ng-container *ngFor="let user of user.accompaniement">
-        <div>
-          <span> {{user.name | titlecase}}  {{user.username | titlecase}} </span>
-          <br/>
-          <span>{{user.menu}} <br/> {{user.allergie}}</span>
-        </div>
-        <br/> <!-- Use br if you want to display the roles vertically -->
-      </ng-container>
-    </div>
+      <div class="container-invite">
+        <ng-container *ngFor="let user of user.accompaniement">
+          <div>
+            <span> {{user.name | titlecase}}  {{user.username | titlecase}} </span>
+            <br/>
+            <span>{{user.menu}} <br/> {{user.allergie}}</span>
+          </div>
+          <br/> <!-- Use br if you want to display the roles vertically -->
+        </ng-container>
+      </div>
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="action">
@@ -63,8 +63,12 @@
     <mat-cell *matCellDef="let user">
       <div class="action">
         <div class="container-btn">
-          <button mat-raised-button color="primary" (click)="onRowClicked(user)"><mat-icon fontIcon="edit"></mat-icon></button>
-          <button mat-raised-button color="warn" (click)="onRowClicked(user.id)"><mat-icon fontIcon="delete"></mat-icon></button>
+          <button (click)="onRowClicked(user)" color="primary" mat-raised-button>
+            <mat-icon fontIcon="edit"></mat-icon>
+          </button>
+          <button (click)="onRowClicked(user.id)" color="warn" mat-raised-button>
+            <mat-icon fontIcon="delete"></mat-icon>
+          </button>
         </div>
       </div>
     </mat-cell>

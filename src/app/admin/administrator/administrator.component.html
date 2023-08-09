@@ -3,7 +3,7 @@
     <input #fileInput hidden="hidden" type="file" (change)="readFile($event)">
     <button color="primary" mat-raised-button (click)="fileInput.click()"> Importer la liste d'invité</button>
   </li>
-  <li >
+  <li>
     <div>
       <button (click)="toggleForm()" mat-fab color="primary">
         <mat-icon>
@@ -19,8 +19,8 @@
   </li>
 
 </ul>
-<div *ngIf="showForm"  [formGroup]="userForm" class="container-userForm">
-  <app-user (userToUpdate)="updateSave($event)"  (userToSave)="saveForm($event)" [userForm]="userForm" [updateBtn]="updateBtn" ></app-user>
+<div *ngIf="showForm" [formGroup]="userForm" class="container-userForm">
+  <app-user (userToSave)="saveForm($event)" (userToUpdate)="updateSave($event)" [updateBtn]="updateBtn" [userForm]="userForm"></app-user>
 </div>
 <br>
 <br>

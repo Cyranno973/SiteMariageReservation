@@ -14,7 +14,7 @@ export class UserFormComponent implements OnInit {
   dishes: string[] = [];
   categories = ['Adulte', 'Enfant'];
 
-  ngOnInit()  {
+  ngOnInit() {
     if (this.form.get('menu')?.value) this.populateMenus();
   }
 

@@ -1,4 +1,4 @@
-import {NgModule, isDevMode} from '@angular/core';
+import {isDevMode, NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../environments/environment';
 import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
@@ -20,10 +20,9 @@ import {UserFormComponent} from "./user-form/user-form.component";
 import {ButtonComponent} from "./button/button.component";
 import {AdministratorComponent} from "./admin/administrator/administrator.component";
 import {UserComponent} from "./admin/user/user.component";
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {ServiceWorkerModule} from '@angular/service-worker';
 import {getStorage, provideStorage} from "@angular/fire/storage";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
-import {TestComponent} from "./test/test.component";
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {AppRoutingModule} from "./app-routing.module";
 
@@ -40,8 +39,6 @@ import {AppRoutingModule} from "./app-routing.module";
     ButtonComponent,
     AdministratorComponent,
     UserComponent,
-    TestComponent,
-
   ],
   imports: [
     BrowserModule,

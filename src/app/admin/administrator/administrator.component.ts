@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {StoreUserService} from "../../services/store-user.service";
 import {User} from "../../../model/user";
 import {UserService} from "../../services/user.service";
@@ -10,7 +10,7 @@ import {utils, WorkBook, WorkSheet, writeFile} from 'xlsx';
   templateUrl: './administrator.component.html',
   styleUrls: ['./administrator.component.scss']
 })
-export class AdministratorComponent implements OnInit, OnDestroy {
+export class AdministratorComponent implements OnInit {
   constructor(private fb: FormBuilder, private storeUserService: StoreUserService, private userService: UserService) {
 
   }
@@ -23,10 +23,10 @@ export class AdministratorComponent implements OnInit, OnDestroy {
   userForm: FormGroup;
 
   ngOnInit() {
-      this.userForm = this.fb.group({
-        name: ['', [Validators.required, Validators.minLength(3)]],
-        username: ['', [Validators.required, Validators.minLength(3)]],
-        tel: [''],
+    this.userForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      tel: [''],
     })
     this.storeUserService.observeUserList().subscribe(users => {
       this.userList = users;
@@ -61,16 +61,7 @@ export class AdministratorComponent implements OnInit, OnDestroy {
       .map(x => ({id: x[0] ? x[0] : '', name: x[1] ? x[1] : '', username: x[2] ? x[2] : '', tel: x[3] ? x[3] : ''}));
   }
 
-
-  ngOnDestroy() {
-  }
-
   saveForm(e: string) {
-    // if(this.user){
-    // }
-
-    // console.log('form ',this.userForm.value.name);
-    // console.log('user ',this.user.name);
     this.userService.createUSerPartial([], this.userForm.value);
     this.userForm.reset()
     this.showForm = !this.showForm
@@ -98,7 +89,6 @@ export class AdministratorComponent implements OnInit, OnDestroy {
     this.userForm.reset();
     this.showForm = !this.showForm;
     this.updateBtn = false;
-
   }
 
   exportexcel() {

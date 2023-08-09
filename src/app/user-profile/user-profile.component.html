@@ -1,21 +1,19 @@
-  <div class="registration-form">
-    <div class="form-container" (keyup)="save()" [formGroup]="userForm">
-      <app-user-form [index]="2000" [form]="userForm"></app-user-form>
-      <div formArrayName="guests">
-        <div *ngFor="let guest of generateFormGroups(); let i=index" [formGroupName]="i">
-          <h3 *ngIf="guests.length" class="form-container__guest-title">Invité n ° <span class="form-container__guest-title__number">{{i + 1}}</span></h3>
-          <div class="form-container__guest-form-container">
-<!--            <app-user-form (formChange)="saveForm()"  [index]="i" [form]="guest"></app-user-form>-->
-            <app-user-form  [index]="i" [form]="guest"></app-user-form>
-          </div>
-          <div class="form-container__delete-guest-button">
-            <button mat-raised-button color="warn" (click)="removeGuest(i)" type="button" class="form-container__delete-guest-button__btn">Supprimer</button>
-          </div>
+<div class="registration-form">
+  <div (keyup)="save()" [formGroup]="userForm" class="form-container">
+    <app-user-form [form]="userForm" [index]="-1"></app-user-form>
+    <div formArrayName="guests">
+      <div *ngFor="let guest of generateFormGroups(); let i=index" [formGroupName]="i">
+        <h3 *ngIf="guests.length" class="form-container__guest-title">Invité n ° <span class="form-container__guest-title__number">{{i + 1}}</span></h3>
+        <div class="form-container__guest-form-container">
+          <app-user-form [form]="guest" [index]="i"></app-user-form>
         </div>
-
-        <div class="form-container__add-guest-container">
-          <button mat-raised-button color="warn" [disabled]="!userForm.valid" (click)="addGuest()" type="button" class="form-container__add-guest-container__btn">Ajouter une personne</button>
+        <div class="form-container__delete-guest-button">
+          <button (click)="removeGuest(i)" class="form-container__delete-guest-button__btn" color="warn" mat-raised-button type="button">Supprimer</button>
         </div>
+      </div>
+      <div class="form-container__add-guest-container">
+        <button (click)="addGuest()" [disabled]="!userForm.valid" class="form-container__add-guest-container__btn" color="warn" mat-raised-button type="button">Ajouter une personne</button>
       </div>
     </div>
   </div>
+</div>
