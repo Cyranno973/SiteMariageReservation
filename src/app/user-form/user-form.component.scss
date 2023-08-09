@@ -1,7 +1,8 @@
-@use '../../sass/utils/_mixins';
+@use '../../sass/utils/variables' as *;
+@use '../../sass/utils/_mixins' as *;
 
 .form {
-  @include mixins.center-flex;
+  @include center-flex;
   margin-top: 3rem;
   //animation: fadeInDownPerso 2s ease 500ms forwards;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -23,6 +24,7 @@
     outline: 0;
     text-align: center;
     font-weight: 500;
+    text-transform: capitalize;
 
     &:placeholder-shown ~ .form__label {
       transition: all 0.5s ease;
@@ -55,7 +57,7 @@
     width: 100%;
     height: 100%;
     font-size: 1.2rem;
-    @include mixins.center-flex;
+    @include center-flex;
     text-align: center;
     font-weight: 500;
   }
@@ -93,11 +95,20 @@
       box-shadow: 0 0 5pt 1pt #3c4f09;
     }
   }
-
+  mat-icon{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: $black;
+  }
   .error-message {
+    position: absolute;
     color: #870d0d;
     font-weight: 500;
-    opacity: 1;
     margin-top: 5px;
+    top: 0;
+    left: 10px;
+    font-size: 11px;
   }
 }

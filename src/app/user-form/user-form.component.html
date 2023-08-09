@@ -3,25 +3,28 @@
     <form class="form" [formGroup]="form">
       <div class="container-field">
         <input [attr.id]="'name' + index" class="form__input" formControlName="name" placeholder=" " type="text"/>
-        <label [attr.for]="'name' + index" class="form__label">Entrez votre nom</label>
-        <div *ngIf="form?.get('name').invalid && form?.get('name').touched" class="error-message">
-          Entrer un nom
+        <label [attr.for]="'name' + index" class="form__label">Nom</label>
+        <mat-icon *ngIf="index < 0" fontIcon="lock"></mat-icon>
+        <div *ngIf="form?.get('name').invalid && form?.get('name').touched" [@fadeInOut] class="error-message">
+          Entrez un nom
         </div>
       </div>
 
       <div class="container-field">
         <input [attr.id]="'username' + index" class="form__input" formControlName="username" placeholder=" " type="text"/>
-        <label [attr.for]="'username' + index" class="form__label">Entrez votre prenom</label>
-        <div *ngIf="form?.get('username').invalid && form?.get('username').touched" class="error-message">
-          Entrer un prenom
+        <label [attr.for]="'username' + index" class="form__label">Prenom</label>
+        <mat-icon *ngIf="index < 0" fontIcon="lock"></mat-icon>
+        <div *ngIf="form?.get('username').invalid && form?.get('username').touched" [@fadeInOut] class="error-message">
+          Entrez un prenom
         </div>
       </div>
 
-      <div *ngIf="form?.get('tel').value && index === 20 || index !== 20" class="container-field">
-        <input [attr.id]="'tel' + index" class="form__input" formControlName="tel" placeholder=" " type="text"/>
-        <label [attr.for]="'tel' + index" class="form__label">Entrez votre numero</label>
-        <div *ngIf="form?.get('tel').invalid && form?.get('tel').touched" class="error-message">
-          Entrer un numero de tel
+      <div *ngIf="form?.get('tel').value" class="container-field">
+        <input [attr.id]="'tel' + index" class="form__input" formControlName="tel" placeholder=" " type="numeric"/>
+        <label [attr.for]="'tel' + index" class="form__label">Portable</label>
+        <mat-icon *ngIf="index < 0" fontIcon="lock"></mat-icon>
+        <div *ngIf="form?.get('tel').invalid && form?.get('tel').touched" [@fadeInOut] class="error-message">
+          Entrez un numero de tel
         </div>
       </div>
 
@@ -30,19 +33,24 @@
           <option [value]="''" disabled hidden>Choisissez la catégorie</option>
           <option *ngFor="let category of categories" [value]="category">{{category}}</option>
         </select>
+        <div *ngIf="form.get('selectedCategory')?.invalid && form.get('selectedCategory')?.touched" [@fadeInOut] class="error-message">
+          Veuillez choisir une catégorie
+        </div>
       </div>
       <div *ngIf="form.get('selectedCategory')?.value" class="container-field">
         <select [formControlName]="'menu'" class="form__select">
           <option [value]="''" disabled hidden>Choisissez un plat</option>
           <option *ngFor="let dish of dishes" [value]="dish">{{dish}}</option>
         </select>
+        <div *ngIf="form.get('menu')?.invalid && form.get('menu')?.touched" [@fadeInOut] class="error-message">
+          Veuillez choisir un plat
+        </div>
       </div>
 
       <div class="container-field">
         <textarea [attr.id]="'allergie' + index" class="form__textarea" formControlName="allergie" placeholder=" " type="text"></textarea>
-        <label [attr.for]="'allergie' + index" class="form__label">Rentrez vos allergie</label>
+        <label [attr.for]="'allergie' + index" class="form__label">Allergie</label>
       </div>
-
     </form>
   </div>
 </div>

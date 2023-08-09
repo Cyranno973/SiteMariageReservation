@@ -1,5 +1,5 @@
 <div class="container-activity">
-  <form class="media" [formGroup]="mediaForm">
+  <form *ngIf="admin" [formGroup]="mediaForm" class="media">
     <mat-form-field class="media__mat-form-field__title">
       <mat-label class="media__mat-form-field__" >Titre</mat-label>
       <input [(ngModel)]="title" name="title" matInput value="" formControlName="title">
@@ -22,8 +22,8 @@
   </form>
 
   <div class="container-dropList" cdkDropList (cdkDropListDropped)="drop($event)">
-    <div class="container-glass" *ngFor="let item of activityList" cdkDrag>
-      <div class="container-glass__container-mat-icon">
+    <div *ngFor="let item of activityList" [cdkDragDisabled]="!admin" cdkDrag class="container-glass">
+      <div *ngIf="admin" class="container-glass__container-mat-icon">
         <mat-icon (click)="updateMedia(item)" fontIcon="edit"></mat-icon>
         <mat-icon (click)="deleteCard(item)" fontIcon="delete"></mat-icon>
       </div>

@@ -1,10 +1,10 @@
+@use './src/sass/utils/variables' as *;
+@use './src/sass/utils/mixins' as *;
+
 .registration-form {
   .form-container {
     &--container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    @include center-flex();
       width: 100%;
       color: white;
 
@@ -54,7 +54,15 @@
       button {
         color: #fff;
         background-color: #4caf50;
+        padding: 10px 15px;
+        border-radius: 5px;
+        outline: transparent;
+        border: none;
       }
     }
   }
+}
+.disabled {
+  background: $disabled !important;
+  pointer-events: none;
 }

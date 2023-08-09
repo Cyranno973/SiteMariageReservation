@@ -9,7 +9,7 @@
   </div>
   <form class="form " [formGroup]="form">
     <input (input)="submit($event)" formControlName="numero" id="myInput" class="form__input" placeholder=" " type="text"/>
-    <label for="myInput" class="form__label">Entrer votre numéro</label>
+    <label class="form__label" for="myInput">Numéro de réservation</label>
     <span class="form__error" [ngClass]="{'form__error--error': errorFormulaire && form.touched}">Numéro Invalide</span>
   </form>
 

@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AngularFireStorage, AngularFireUploadTask} from '@angular/fire/compat/storage';
 import {finalize} from 'rxjs/operators';
 import {AssetsDataService} from "../services/assets-data.service";
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Media} from "../../model/media";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {StoreUserService} from "../services/store-user.service";
 
 
 @Component({
@@ -26,14 +27,18 @@ export class ActivityComponent implements OnInit{
   previewUrl: string | null = null;
   @ViewChild('fileInput') fileInput!: ElementRef;
   private showForm: false;
-  constructor(private fb: FormBuilder, private storage: AngularFireStorage, private assetsData: AssetsDataService) {
+  admin: boolean = false;
+  constructor(private fb: FormBuilder, private storage: AngularFireStorage, private assetsData: AssetsDataService, private storeUserService: StoreUserService) {
   }
   ngOnInit(): void {
+    this.storeUserService.observeIsAdmin().subscribe(admin =>{
+      this.admin = admin;
     this.getActivityData();
     this.mediaForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(3)]],
       lien: ['', [Validators.required]],
+    });
     });
   }
   getActivityData() {
