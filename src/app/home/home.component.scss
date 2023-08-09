@@ -4,12 +4,30 @@
 @use '../../sass/base/typography';
 @use '../../sass/vendors/animate.css';
 
+.fadeS{
+  //animation: fadeInDownPerso 2s forwards ease;
+ padding-top: 40%;
+  transition: all 03s ;
+}
 .container-home {
-  animation: fadeInDown 2s ease;
-  margin-top: 10rem;
+  //padding-top: 40%;
+
+  animation: fadeInDownPerso 2s forwards ease;
+  //margin-top: 10rem;
+  //transform: translateY(40%);
   height: 100%;
   @include mixins.center-flex;
   position: relative;
+  transition: all 0.3s ;
+
+}
+.normale {
+  //transform: translateY(0%);
+  padding-top: 0% !important;
+  //animation: fadeInUpPerso 2s forwards ease;
+  //animation: fadeInUpPerso 0.5s  ease;
+  //transition: all 03s ;
+  //animation: none !important;
 }
 
 .hero {
@@ -140,10 +158,6 @@
 
 }
 
-.fadeInDownPerso {
-  animation-name: fadeInDownPerso;
-  animation-duration: 3s;
-}
 .lockIcon{
   transform: translateY(-90%);
 }

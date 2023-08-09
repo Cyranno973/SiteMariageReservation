@@ -9,7 +9,7 @@ import {debounceTime} from "rxjs";
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserProfileComponent implements OnInit {
   userForm: FormGroup;
@@ -20,7 +20,7 @@ export class UserProfileComponent implements OnInit {
               private storeUserService: StoreUserService,
               private userService: UserService,
               private el: ElementRef,
-              private renderer: Renderer2,
+              private renderer: Renderer2
   ) {
   }
 
@@ -95,9 +95,11 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  scrollToElement(element: HTMLElement) {
-    this.renderer.selectRootElement(element).scrollIntoView({behavior: 'smooth', block: 'start'});
+  scrollToElement(selector: string) {
+    const element = document.querySelector(selector);
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+
 
   trackByFn(index: number, item: FormGroup): number {
     return index; // Utilisation de l'index comme identifiant unique pour chaque invité
@@ -118,12 +120,12 @@ export class UserProfileComponent implements OnInit {
       menu: [user?.menu || '', Validators.required],
     }, {validators: this.menuValidator});
     this.guests.push(invite);
-    setTimeout(() => {
-      const lastGuestElement = this.el.nativeElement.querySelector('.form-container__guest-form-container:last-child');
-      if (lastGuestElement) {
-        this.scrollToElement(lastGuestElement);
-      }
-    });
+    console.log('test')
+    // setTimeout(() => {
+    // setTimeout(() => {
+    //   this.scrollToElement('.form-container__guest-form-container:last-child');
+    // },2000);
+    // });
   }
 
   removeGuest(i: number) {

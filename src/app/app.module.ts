@@ -5,6 +5,7 @@ import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {getFirestore, provideFirestore} from '@angular/fire/firestore';
 import {BrowserModule} from '@angular/platform-browser';
 
+import {ScrollingModule} from '@angular/cdk/scrolling';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {InfoComponent} from './info/info.component';
@@ -54,6 +55,7 @@ import {AppRoutingModule} from "./app-routing.module";
     MaterialModule,
     FormsModule,
     DragDropModule,
+    ScrollingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

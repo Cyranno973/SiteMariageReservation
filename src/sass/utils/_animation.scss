@@ -1,12 +1,22 @@
 @keyframes fadeInDownPerso {
-  from {
+  0% {
     opacity: 0;
-    transform: translate3d(0, -100%, 0);
+    padding-top: 0%;
   }
 
-  to {
+  100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
-    visibility: visible;
+    padding-top: 40%;
+  }
+}
+@keyframes fadeInUpPerso {
+  0% {
+    //opacity: 0;
+    padding-top: 40%;
+  }
+
+  100% {
+    //opacity: 1;
+    padding-top: 0%;
   }
 }

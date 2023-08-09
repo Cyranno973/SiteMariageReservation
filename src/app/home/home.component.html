@@ -1,4 +1,4 @@
-<div class="container-home">
+<div [ngClass]="!user ? 'active' : 'normale'" class="container-home">
   <div class="hero">
     <div class="hero__title">
       <div class="hero__name">Andre</div>
@@ -40,12 +40,3 @@
     </ng-container>
   </ng-container>
 </div>
-
-
-<!--    <form class="form form&#45;&#45;error" [formGroup]="form">-->
-<!--      <mat-form-field class="form-field" appearance="outline">-->
-<!--        <mat-label  class="form__label" [ngClass]="{'error1': errorFormulaire && form.touched}">Entrer votre numéro</mat-label>-->
-<!--        <input style="border: transparent" class="form__input" matInput (input)="submit($event)" type="text" placeholder="" formControlName="numero">-->
-<!--        <mat-error class="form__error">Numero de ezbillet invalide</mat-error>-->
-<!--      </mat-form-field>-->
-<!--    </form>-->

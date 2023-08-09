@@ -1,18 +1,17 @@
-import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {StoreUserService} from "../services/store-user.service";
-import {Choice, Menu, Status, User} from "../../model/user";
+import {Choice, Status, User} from "../../model/user";
 import {Router} from "@angular/router";
-import {Subject, Subscription, takeUntil} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  // encapsulation: ViewEncapsulation.None,
 
   animations: [
     trigger(
@@ -50,32 +49,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   errorFormulaire: boolean = false; //TODO faire un validator personnalisé et supprimer cette variable
   showModifChoice: boolean = false;
   isLoggedIn: boolean = false;
-  // userTest: User = { //TODO A SUPPRIMMER
-  //   menu: Menu.Fish,
-  //   username: "steve",
-  //   statusUser: Status.First,
-  //   choice: Choice.P,
-  //   name: "gouin",
-  //   id: "568347",
-  //   "accompaniement": [
-  //     {
-  //       allergie: "",
-  //       name: "zeze",
-  //       menu: Menu.Fish,
-  //       username: "zezez"
-  //     },
-  //     {
-  //       allergie: "",
-  //       name: "zeze",
-  //       menu: Menu.Fish,
-  //       username: "zezez"
-  //     }
-  //   ]
-  // }
   @Input() user: User;
   form: FormGroup = this.fb.group({
     numero: ['', [Validators.required, Validators.minLength(6)]]
   })
+  first: boolean = true;
 
   ngOnInit() {
     this.storeUserService.observeUser().pipe(
@@ -118,6 +96,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.userService.getById(this.inputBillet).subscribe(user => {
       if (!user.exists) this.errorFormulaire = true
       else {
+        this.first =false;
         this.user = user.data();
         this.storeUserService.saveIsLoggedIn(true);
         this.updateData();
