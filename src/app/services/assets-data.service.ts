@@ -15,7 +15,7 @@ export class AssetsDataService {
     this.mediaRef = db.collection(this.dbPath);
   }
 
-  getAll(): Observable<any> {
+  getAll(): Observable<Media[]> {
     return this.mediaRef.snapshotChanges().pipe(
       map(changes => changes.map(c => ({...c.payload.doc.data(), id: c.payload.doc.id}))));
   }
