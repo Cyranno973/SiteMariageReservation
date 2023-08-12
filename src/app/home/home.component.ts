@@ -77,6 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   submit(event: Event) {
+
     const inputElt = event.target as HTMLInputElement;
     this.inputBillet = inputElt.value;
 
@@ -140,5 +141,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  noIncrementDecrementNumber(event: KeyboardEvent) {
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+    event.preventDefault();
+    }
   }
 }

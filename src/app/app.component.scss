@@ -10,7 +10,8 @@
   //position: relative;
   margin: 0 auto;
   max-width: 425px;
-  background-image: url("../assets/img/bgc1.jpg");
+  //background-image: url("../assets/img/bgc1.jpg");
+  background-image: url("../assets/img/binetoo_tropical_1c51f7b8-bacb-4dd0-807f-35eb0b7c4d15.png");
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -20,13 +21,17 @@
   &__container-outlet {
     flex:1;
     -webkit-overflow-scrolling: touch;
-    //padding-bottom: 70px;
+    padding-bottom: 70px;
   }
   router-outlet{
    flex:1;
     //padding: 100rem;
   }
   &__app-header {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     flex-shrink: 0;
     z-index: 40;
     height: 70px;

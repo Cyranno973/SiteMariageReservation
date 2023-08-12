@@ -4,32 +4,13 @@
 @use '../../sass/base/typography';
 @use '../../sass/vendors/animate.css';
 
-.active{
-  //animation: fadeInDownPerso 2s forwards ease;
- //padding-top: 40%;
- // transition: all 3s ;
-}
 .container-home {
   height: 100%;
   @include mixins.center-flex;
   position: relative;
-  //transition: all 3s ;
-  //padding-top: 40%;
-
-  //animation: fadeInDownPerso 2s forwards ease;
-  //margin-top: 10rem;
-  //transform: translateY(40%);
-
 }
 
-.normale {
-  //transform: translateY(0%);
-  //padding-top: 0% !important;
-  //animation: fadeInUpPerso 2s forwards ease;
-  //animation: fadeInUpPerso 0.5s  ease;
-  //transition: all 03s ;
-  //animation: none !important;
-}
+.normale {}
 
 .hero {
   font-weight: 600;
@@ -155,7 +136,6 @@
   color: #65601f;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
   margin-bottom: 2rem;
-
 }
 
 .lockIcon{

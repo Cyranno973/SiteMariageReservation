@@ -8,7 +8,7 @@
     <p class="hero__subtitle">Se marient</p>
   </div>
   <form [formGroup]="form" class="form">
-    <input (input)="submit($event)" autocomplete="off" class="form__input" formControlName="numero" id="myInput" placeholder=" " type="number"/>
+    <input (input)="submit($event)" (keydown)="noIncrementDecrementNumber($event)" autocomplete="off" class="form__input" formControlName="numero" id="myInput" placeholder=" " type="number"/>
     <mat-icon *ngIf="user" class="lockIcon" fontIcon="lock"></mat-icon>
     <label class="form__label" for="myInput">Numéro de réservation</label>
     <span class="form__error" [ngClass]="{'form__error--error': errorFormulaire && form.touched}">Numéro Invalide</span>

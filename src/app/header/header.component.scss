@@ -4,7 +4,6 @@ mat-toolbar {
   flex-direction: row;
   height: 70px;
   background-color: white !important;
-
   .wrap-mat-button {
     display: flex;
     justify-content: space-around;
@@ -30,9 +29,12 @@ mat-toolbar {
     align-items: center;
     justify-content: center;
     color: #43a047;
+    transition: color 0.5s ease-out;
   }
 }
 
 .active {
-  //background-color: cornflowerblue;
+  mat-icon {
+    color: #d2cf28;
+  }
 }
