@@ -1,30 +1,35 @@
 .container-all {
-  position: relative;
+  //position: fixed;
+  //top: 0;
+  //left: 0;
+  //right: 0;
+  //bottom: 0;
+  display: flex;
+  flex-direction: column;
+  //justify-content: center;
+  //position: relative;
   margin: 0 auto;
-  min-height: 100vh;
   max-width: 425px;
-//background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../assets/img/bgc1.jpg");
-background-image: url("../assets/img/bgc1.jpg");
+  background-image: url("../assets/img/bgc1.jpg");
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-//background-blend-mode: overlay;
-
-
-//height: 100vh;
-//overflow-y: scroll;
-
-&__container-outlet {
-min-height: calc(100vh);
-//overflow-y: scroll;
+  min-height: 100%;
+    overflow-y: auto;
+  &__container-outlet {
+    flex:1;
+    -webkit-overflow-scrolling: touch;
+    //padding-bottom: 70px;
+  }
+  router-outlet{
+   flex:1;
+    //padding: 100rem;
+  }
+  &__app-header {
+    flex-shrink: 0;
+    z-index: 40;
+    height: 70px;
+  }
 }
 
-&__app-header {
-position: sticky;
-bottom: 0;
-left: 0;
-right: 0;
-z-index: 40;
-}
-}

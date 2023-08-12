@@ -4,26 +4,27 @@
 @use '../../sass/base/typography';
 @use '../../sass/vendors/animate.css';
 
-.fadeS{
+.active{
   //animation: fadeInDownPerso 2s forwards ease;
- padding-top: 40%;
-  transition: all 03s ;
+ //padding-top: 40%;
+ // transition: all 3s ;
 }
 .container-home {
-  //padding-top: 40%;
-
-  animation: fadeInDownPerso 2s forwards ease;
-  //margin-top: 10rem;
-  //transform: translateY(40%);
   height: 100%;
   @include mixins.center-flex;
   position: relative;
-  transition: all 0.3s ;
+  //transition: all 3s ;
+  //padding-top: 40%;
+
+  //animation: fadeInDownPerso 2s forwards ease;
+  //margin-top: 10rem;
+  //transform: translateY(40%);
 
 }
+
 .normale {
   //transform: translateY(0%);
-  padding-top: 0% !important;
+  //padding-top: 0% !important;
   //animation: fadeInUpPerso 2s forwards ease;
   //animation: fadeInUpPerso 0.5s  ease;
   //transition: all 03s ;
@@ -153,7 +154,6 @@
   backdrop-filter: blur(5px);
   color: #65601f;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
-  //text-align: justify;
   margin-bottom: 2rem;
 
 }
