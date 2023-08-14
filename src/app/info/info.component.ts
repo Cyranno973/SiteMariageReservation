@@ -54,6 +54,13 @@ export class InfoComponent {
 
   drop(event: CdkDragDrop<Media[]>) {
     moveItemInArray(this.activityList, event.previousIndex, event.currentIndex);
+    console.log(event.previousIndex, event.currentIndex);
+    console.table(this.activityList)
+    this.activityList.forEach((item, index) => {
+      item.order = index;
+    });
+    console.table(this.activityList)
+
     this.mediaInfoService.updateOrderInFirestore(this.activityList).then(() => {
       console.log('Order updated in Firestore!');
     }).catch((error) => {

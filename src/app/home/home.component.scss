@@ -1,7 +1,7 @@
 @use '../../sass/utils/_mixins';
 @use '../../sass/utils/variables';
 @use '../../sass/utils/animation' as *;
-@use '../../sass/base/typography';
+@use '../../sass/base/typography' as *;
 @use '../../sass/vendors/animate.css';
 
 .container-home {
@@ -10,19 +10,47 @@
   position: relative;
 }
 
-.normale {}
+.normale {
+}
 
 .hero {
-  font-weight: 600;
+  margin-top: 80px;
+  background-color: white;
+  padding: 15px;
+  border: 1px solid #fff;
+  border-radius: 15px;
   font-size: 50px;
-  letter-spacing: 2px;
-  color: variables.$white;
-  text-shadow: 2px 0 #43a047, -2px 0 #43a047, 0 2px #43a047, 0 -2px #43a047,
-  1px 1px #43a047, -1px -1px #43a047, 1px -1px #43a047, -1px 1px #43a047;
+  color: variables.$gold;
 
   &__name {
     margin: 5% 0;
-    font-family: typography.$kingham, sans-serif;
+    font-family: $kingham, sans-serif;
+    position: relative;
+
+    &:first-child span {
+      &:before{
+        content: "\201c";
+        font-family: initial;
+      }
+      position: absolute;
+      top: -14px;
+      left: -43px;
+      font-size: 65px;
+    }
+    &:last-child span {
+      &:before{
+        content: "\201c";
+        font-family: initial;
+
+      }
+        transform: rotateY(180deg);
+      position: absolute;
+      top: 26px;
+      right: -47px;
+      font-size: 65px;
+
+
+    }
   }
 
   &__title {
@@ -31,9 +59,24 @@
 
   &__subtitle {
     text-align: center;
-    font-size: 30px;
-    font-family: typography.$greenlight, sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+    font-family: $greenlight, sans-serif;
+
+    //font-family: $kingham, sans-serif;
+    &:last-child {
+      font-family: $greenlight, sans-serif;
+
+      font-size: 23px;
+      margin-top: 15px;
+      //color: #fff;
+    }
   }
+}
+
+.container__hero__subtitle {
+
+  color: #134327;
 }
 
 .form {
@@ -48,10 +91,11 @@
     font-family: Roboto;
     border: 0;
     color: #211f1f;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.7);
     outline: 0;
     text-align: center;
     font-weight: 500;
+    text-shadow: white 0px 0.5px .5px;
 
     &:placeholder-shown ~ .form__label {
       transition: all 0.5s ease;
@@ -65,6 +109,7 @@
         transform: translateY(-20px);
       }
     }
+
     &:not(:placeholder-shown) ~ .form__label {
       opacity: 0;
       transform: translateY(-20px);
@@ -82,12 +127,14 @@
     text-align: center;
     font-weight: 500;
   }
+
   &__error {
     opacity: 0;
     color: #870d0d;
     font-weight: 500;
   }
-  &__error--error{
+
+  &__error--error {
     opacity: 1;
   }
 }
@@ -99,25 +146,28 @@
   height: 120px;
   align-items: center;
 
-  &__btn-participe{
+  &__btn-participe {
     color: #fff;
     background-color: #43a047;
     font-weight: 500;
     font-size: 1.1rem;
     padding: 25px 15px;
   }
+
   &__btn-absent {
-    background-color: #545b40de;
+    background-color: #000 !important;
     width: 80% !important;
   }
 }
+
 .modif {
   .modif__btn-modif {
-  color: #fff;
+    color: #fff;
 
   }
 }
-.modif,.updateBtn {
+
+.modif, .updateBtn {
   text-align: center;
   @include mixins.center-flex;
   margin-bottom: 2rem;
@@ -133,11 +183,17 @@
   border-radius: 7px;
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(5px);
-  color: #65601f;
+  color: variables.$b1Black;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
   margin-bottom: 2rem;
 }
 
-.lockIcon{
+.lockIcon {
   transform: translateY(-90%);
+}
+input[type="number"]::-webkit-inner-spin-button {
+  display: none;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }

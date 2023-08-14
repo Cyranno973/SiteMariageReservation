@@ -82,14 +82,14 @@
 
 }
 .container-glass .title {
-  color: #a79b01;
+  color: #a88410;
   text-align: center;
   font-size: 1.3rem;
   margin-top: 1.5rem
 }
 .container-glass .text {
   font-size: 1.2rem;
-  color: #65601f;
+  color: #000;
   margin: 1.5rem 0;
   transition: transform 2s ease;
   text-align: justify;
@@ -115,14 +115,15 @@
 
   padding: 0.6rem 1rem;
   background-color: transparent;
-  border: 1px solid #7f6e00;
+  border: 1px solid #a88410;
   border-radius: 5px;
-  color: #7f6e00;
+  color: #a88410;
   cursor: pointer;
   transition: all 0.2s linear;
 }
 
 .container-glass .btn:hover {
-  background-color: #ffdd00;
-  color: #333;
+  background-color: #49c54e;
+  border: 1px solid #fff;
+  color: #fff;
 }

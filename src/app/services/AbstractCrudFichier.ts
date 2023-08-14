@@ -26,7 +26,7 @@ export class AbstractCrudFichier<T extends Entity> {
 
   updateOrderInFirestore(items: T[]): Promise<void> {
     const batch = this.db.firestore.batch();
-
+    console.log(items)
     items.forEach((item) => {
       const docRef = this.db.collection(this.dbPath).doc(item.id).ref;
       const cleanedItem = this.cleanObject({order: item.order});

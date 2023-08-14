@@ -17,6 +17,7 @@ mat-table {
   overflow-y: scroll;
   height: 500px;
   padding: 20px;
+  margin-bottom: 70px;
 }
 
 .mat-column-id, .mat-column-accompaniement, .mat-column-menu, .mat-column-action, .mat-column-tel, .mat-column-choice, .mat-column-statusUser {
@@ -57,16 +58,21 @@ span .mat-header-cell {
     }
   }
 }
-
+.container-inviter{
+  display: flex;
+  justify-content: center;
+}
 .invite {
   color: white;
   background-color: #827717;
-  display: flex;
-  width: 40%;
+  margin: 2px 2px;
+  display: inline-block;
+  text-align: center;
+  padding: 5px;
 
   span {
     margin-right: 2%;
-    font-size: 20px;
+    //font-size: 20px;
     font-weight: 400;
   }
 }

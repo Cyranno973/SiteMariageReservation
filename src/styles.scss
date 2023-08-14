@@ -42,12 +42,12 @@ input:-webkit-autofill:active,
 input:-internal-autofill-selected,
 input:disabled
 {
-  background-color: rgba(255, 255, 255, 0.4) !important; // couleur de fond lorsque l'autocomplétion est utilisée
+  background-color: rgba(255, 255, 255, 0.7) !important; // couleur de fond lorsque l'autocomplétion est utilisée
   color: $black !important; // couleur du texte
 }
 input:-internal-autofill-selected {
   appearance: none; // désactive l'apparence par défaut du bouton menulist
   background-image: none !important;
-  background-color: rgba(255, 255, 255, 0.4) !important; // changez à la couleur souhaitée
+  background-color: rgba(255, 255, 255, 0.7) !important; // changez à la couleur souhaitée
   color: $black !important; // changez à la couleur souhaitée
 }

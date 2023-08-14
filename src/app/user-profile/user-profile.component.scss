@@ -14,19 +14,23 @@
     }
 
     &__guest-title {
-      background: linear-gradient(75deg, #0a0a09, #2bcbcbc2, #2e5d43);
+      //background: linear-gradient(75deg, #0a0a09, #2bcbcbc2, #2e5d43);
       background-clip: text;
-      color: transparent;
+      color: $white;
       text-align: center;
       font-family: "bird";
       font-size: 40px;
+      -webkit-text-stroke: 1px;
+      -webkit-text-stroke-color: #000;
 
       &__number {
-        background: linear-gradient(75deg, #0a0a09, #2bcbcbc2, #2e5d43);
+        //background: linear-gradient(75deg, #0a0a09, #2bcbcbc2, #2e5d43);
         background-clip: text;
-        color: transparent;
+        color: $white;
         font-family: "a Black Lives";
         font-size: 45px;
+        -webkit-text-stroke: 1px;
+        -webkit-text-stroke-color: #000;
       }
     }
 

@@ -1,16 +1,20 @@
 <div [ngClass]="!user ? 'active' : 'normale'" class="container-home">
   <div class="hero">
     <div class="hero__title">
-      <div class="hero__name">Andre</div>
+      <div class="hero__name"> <span></span>Andre</div>
       <div class="hero__name">&</div>
-      <div class="hero__name">Stella</div>
+      <div class="hero__name">Stella <span></span></div>
     </div>
-    <p class="hero__subtitle">Se marient</p>
+    <div class = "container__hero__subtitle">
+    <p class="hero__subtitle">se marient le</p>
+    <p class="hero__subtitle">18 NOVEMBRE 2023</p>
+    </div>
   </div>
   <form [formGroup]="form" class="form">
-    <input (input)="submit($event)" (keydown)="noIncrementDecrementNumber($event)" autocomplete="off" class="form__input" formControlName="numero" id="myInput" placeholder=" " type="number"/>
+    <input (input)="submit($event)"
+           (keydown)="noIncrementDecrementNumber($event)" autocomplete="off" class="form__input" formControlName="numero" id="myInput" inputmode="numeric" placeholder=" " type="number"/>
     <mat-icon *ngIf="user" class="lockIcon" fontIcon="lock"></mat-icon>
-    <label class="form__label" for="myInput">Numéro de réservation</label>
+    <label class="form__label" for="myInput">Numéro de billet</label>
     <span class="form__error" [ngClass]="{'form__error--error': errorFormulaire && form.touched}">Numéro Invalide</span>
   </form>
 

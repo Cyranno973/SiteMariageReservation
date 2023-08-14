@@ -47,21 +47,55 @@ export class UserService {
     return this.createOrUpdate(user, true);
   }
 
-  private generatorIdentifiant(): string {
-    const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
-    if (id === '99999' || id === '111111') this.generatorIdentifiant()
-    this.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
-    return id
-  }
-
+  // private generatorIdentifiant(): string {
+  //   const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
+  //   if (id === '99999' || id === '111111') this.generatorIdentifiant()
+  //   this.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
+  //   return id
   /**avec firebase si on veut creer une collection avec un od personalisé il faut utiliser update
    -*+   * @param user
    * @param creation
    */
 
+  // createOrUpdate(user: Partial<User>, creation: boolean = false): any {
+  //   const userClean = this.removeEmptyProperties(user);
+  //   return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user creer'));
+  // }
   createOrUpdate(user: Partial<User>, creation: boolean = false): any {
-    const userClean = this.removeEmptyProperties(user);
-    return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user creer'));
+    if (creation) {
+      return this.generatorIdentifiant().then(id => {
+        const userClean = this.removeEmptyProperties({ ...user, id });
+        return this.usersRef.doc(userClean.id).set(userClean);
+      }).then(user => console.log('user created'));
+    } else {
+      const userClean = this.removeEmptyProperties(user);
+      return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user updated'));
+    }
+  }
+
+  // }
+  private generatorIdentifiant(): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const generateId = (): string => {
+        return Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
+      };
+
+      const checkId = (id: string): void => {
+        if (id === '99999' || id === '111111') {
+          return checkId(generateId());
+        }
+
+        this.getById(id).subscribe(user => {
+          if (user.exists) {
+            checkId(generateId());
+          } else {
+            resolve(id);
+          }
+        }, err => reject(err));
+      };
+
+      checkId(generateId());
+    });
   }
 
   update(user: Partial<User>): any {

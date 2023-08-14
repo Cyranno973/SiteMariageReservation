@@ -11,6 +11,8 @@ import {MatSort} from "@angular/material/sort";
 })
 export class ListUserComponent implements OnInit {
   users: User[];
+  enfantNbr: number;
+  totalPeople: number;
   displayedColumns: string[] = [
     'id', 'name', 'username', 'tel', 'statusUser', 'choice', 'menu', 'accompaniement', 'action'];
   dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
@@ -27,6 +29,17 @@ export class ListUserComponent implements OnInit {
       this.dataSource.data = this.users;
       this.dataSource.sort = this.sort;
       this.users?.length;
+       this.totalPeople = users?.reduce((acc:number, curr:User) => acc + 1 + (curr.accompaniement ? curr.accompaniement.length : 0), 0);
+      console.log(this.totalPeople);
+      this.enfantNbr = this.users?.reduce((accumulator, current) => {
+        let count = current.selectedCategory === 'Enfant' ? 1 : 0;
+        if (current.accompaniement) {
+          count += current.accompaniement.filter(accomp => accomp.selectedCategory === 'Enfant').length;
+        }
+        return accumulator + count;
+      }, 0);
+
+      console.log(this.enfantNbr);
     })
   }
 

@@ -4,8 +4,10 @@
     <input matInput (keyup)="updateFilter($event)" type="text" name="" id="">
   </mat-form-field>
 </div>
-<div>
-  <p *ngIf="users.length" class="invite"><span> {{users.length}}</span> invités avec un numero</p>
+<div class="container-inviter">
+  <p *ngIf="users?.length" class="invite"><span> {{users?.length}}</span> Invités</p>
+  <p *ngIf="users?.length" class="invite"><span> {{enfantNbr}}</span>  Enfant </p>
+  <p *ngIf="users?.length" class="invite"><span> {{totalPeople}}</span> Total</p>
 </div>
 <mat-table matSort [dataSource]="dataSource">
   <ng-container matColumnDef="id">
