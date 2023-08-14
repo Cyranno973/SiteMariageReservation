@@ -35,6 +35,7 @@
             "styles": [
               "src/sass/themes/theme.scss",
               "src/sass/vendors/animate.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
             "scripts": [],
@@ -51,12 +52,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "2mb"
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "2mb"
+                  "maximumError": "5mb"
                 }
               ],
               "fileReplacements": [
@@ -115,6 +116,7 @@
             "styles": [
               "src/sass/themes/theme.scss",
               "src/sass/vendors/animate.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss"
             ],
             "scripts": []

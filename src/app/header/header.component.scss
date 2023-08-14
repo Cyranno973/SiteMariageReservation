@@ -1,3 +1,5 @@
+@use './src/sass/utils/variables' as *;
+
 mat-toolbar {
   display: flex;
   justify-content: space-evenly;
@@ -35,6 +37,6 @@ mat-toolbar {
 
 .active {
   mat-icon {
-    color: #d2cf28;
+    color: $gold;
   }
 }

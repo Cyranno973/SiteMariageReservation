@@ -28,6 +28,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {AppRoutingModule} from "./app-routing.module";
 import {MediaActivityService} from "./services/media-activity-service";
 import {MediaInfoService} from "./services/media-info-service";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -58,6 +59,11 @@ import {MediaInfoService} from "./services/media-info-service";
     FormsModule,
     DragDropModule,
     ScrollingModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+      // timeOut: 0,
+      // extendedTimeOut: 0,
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

@@ -1,31 +1,33 @@
-<ul>
-  <li class="containerInputCreate">
-    <input #fileInput hidden="hidden" type="file" (change)="readFile($event)">
-    <button color="primary" mat-raised-button (click)="fileInput.click()"> Importer la liste d'invité</button>
-  </li>
-  <li>
-    <div>
-      <button (click)="toggleForm()" mat-fab color="primary">
-        <mat-icon>
-          <span class="material-symbols-outlined">add</span>
-        </mat-icon>
-      </button>
-    </div>
-  </li>
-  <li class="excel">
-    <a class="excel--link" style="cursor: pointer" (click)="exportexcel()">
-      <mat-icon color="primary" class="excel--icon"> cloud_download</mat-icon>
-    </a>
-  </li>
+<div class="container-admin">
 
-</ul>
-<div *ngIf="showForm" [formGroup]="userForm" class="container-userForm">
-  <app-user (userToSave)="saveForm($event)" (userToUpdate)="updateSave($event)" [updateBtn]="updateBtn" [userForm]="userForm"></app-user>
-</div>
-<br>
-<br>
-<hr>
-<div class="container-list-user">
-  <app-list-user (idUser)="updateForm($event)"></app-list-user>
-</div>
+  <ul>
+    <li class="containerInputCreate">
+      <input #fileInput (change)="readFile($event)" hidden="hidden" type="file">
+      <button (click)="fileInput.click()" color="primary" mat-raised-button> Importer la liste d'invité</button>
+    </li>
+    <li>
+      <div>
+        <button (click)="toggleForm()" color="primary" mat-fab>
+          <mat-icon>
+            <span class="material-symbols-outlined">add</span>
+          </mat-icon>
+        </button>
+      </div>
+    </li>
+    <li class="excel">
+      <a (click)="exportexcel()" class="excel--link" style="cursor: pointer">
+        <mat-icon class="excel--icon" color="primary"> cloud_download</mat-icon>
+      </a>
+    </li>
 
+  </ul>
+  <div *ngIf="showForm" [formGroup]="userForm" class="container-userForm">
+    <app-user (userToSave)="saveForm($event)" (userToUpdate)="updateSave($event)" [updateBtn]="updateBtn" [userForm]="userForm"></app-user>
+  </div>
+  <br>
+  <br>
+  <hr>
+  <div class="container-list-user">
+    <app-list-user (idUser)="updateForm($event)"></app-list-user>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import {StoreUserService} from "../services/store-user.service";
 import {Choice, Status, User} from "../../model/user";
 import {Router} from "@angular/router";
 import {Subject, takeUntil} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-home',
@@ -40,7 +41,10 @@ import {Subject, takeUntil} from "rxjs";
 
 
 export class HomeComponent implements OnInit, OnDestroy {
-  constructor(private router: Router, private userService: UserService, private dialogUser: MatDialog, private fb: FormBuilder, private storeUserService: StoreUserService) {
+  constructor(private router: Router,
+              private userService: UserService,
+              private toastr: ToastrService,
+              private dialogUser: MatDialog, private fb: FormBuilder, private storeUserService: StoreUserService) {
   }
 
   private unsubscribe$ = new Subject<void>();
@@ -109,10 +113,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     // console.log('il exist', this.user)
     this.form.disable();
     this.errorFormulaire = false;
-    // if (this.user.statusUser === Status.First) {
-    //   this.user.statusUser = Status.Incomplete;
-      // this.userService.createOrUpdate(this.user);
-    // }
+    if (this.user.statusUser === Status.First) {
+      this.user.statusUser = Status.Incomplete;
+      this.userService.createOrUpdate(this.user);
+    }
     this.storeUserService.saveUser(this.user);
   }
 
@@ -122,6 +126,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.user.choice = Choice.P;
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);
+      console.log('show notif')
+      this.toastr.success('Votre préscence à bien été enregistrer!', 'Notification');
       // console.log(this.user)
 
     } else {
@@ -134,7 +140,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       // console.log(this.user)
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);
+      this.toastr.success('Votre absence à bien été enregistrer!', 'Notification', {
+        positionClass: 'toast-top-center',
+      });
+
     }
+
     this.showModifChoice = false;
   }
 

@@ -15,9 +15,10 @@
 
 mat-table {
   overflow-y: scroll;
-  height: 500px;
+  height: 80vh;
   padding: 20px;
   margin-bottom: 70px;
+  //min-height: 500px;
 }
 
 .mat-column-id, .mat-column-accompaniement, .mat-column-menu, .mat-column-action, .mat-column-tel, .mat-column-choice, .mat-column-statusUser {
@@ -58,10 +59,12 @@ span .mat-header-cell {
     }
   }
 }
-.container-inviter{
+
+.container-inviter {
   display: flex;
   justify-content: center;
 }
+
 .invite {
   color: white;
   background-color: #827717;
