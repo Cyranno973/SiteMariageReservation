@@ -3,8 +3,9 @@ import {Choice, User} from "../model/user";
 import {UserService} from "./services/user.service";
 import {StoreUserService} from "./services/store-user.service";
 import {Router} from "@angular/router";
-import {combineLatest, of, switchMap} from 'rxjs';
+import {of, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {SwUpdate} from "@angular/service-worker";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,13 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private userService: UserService, private storeUserService: StoreUserService, private router: Router) {
+  constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService, private router: Router) {
+    this.swUpdate.versionUpdates.subscribe(version => {
+      console.log(version);
+      if(version.type === "VERSION_READY"){
+        window.location.reload();
+      }
+    })
   }
 
   @HostListener('window:keyup', ['$event']) onKeyUp(e: KeyboardEvent) {

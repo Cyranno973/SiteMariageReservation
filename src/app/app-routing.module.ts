@@ -10,9 +10,7 @@ const routes: Routes =
   [
     {path: 'home', component: HomeComponent},
     {path: 'info', canActivate: [AuthGard], data: {route: 'info'}, component: InfoComponent},
-    // {path: 'info',  data: {route: 'info'}, component: InfoComponent},
     {path: 'activity', canActivate: [AuthGard], component: ActivityComponent},
-    // {path: 'activity', component: ActivityComponent},
     {path: 'admin', canActivate: [AuthGard], component: AdministratorComponent},
     {path: '**', redirectTo: '/home'},
   ]

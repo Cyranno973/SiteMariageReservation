@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {Personne, Status, User} from "../../model/user";
 import {StoreUserService} from "../services/store-user.service";
 import {UserService} from "../services/user.service";
@@ -36,8 +36,8 @@ export class UserProfileComponent implements OnInit {
       this.oldForm = JSON.stringify(t);
 
       this.userForm = this.fb.group({
-        name: [this.user.name, [Validators.minLength(2), Validators.pattern(/^\S.*\S$/)]],
-        username: [this.user.username, [Validators.minLength(2), Validators.pattern(/^\S.*\S$/)]],
+        name: [this.user.name, [Validators.minLength(2), this.noWhitespaceValidator]],
+        username: [this.user.username, [Validators.minLength(2)]],
         tel: [this.user.tel, [Validators.pattern(/^\d+$/)]],
         menu: [this.user.menu || '', Validators.required],
         allergie: [this.user.allergie || ''],
@@ -62,6 +62,12 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  noWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
+    if (control.value && control.value.trim() === '') {
+      return { 'whitespace': true };
+    }
+    return null;
+  }
   menuValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const selectedCategory = control.get('selectedCategory');
     const menu = control.get('menu');
@@ -112,8 +118,8 @@ export class UserProfileComponent implements OnInit {
   addGuest(user?: Personne) {
     console.log(this.userForm)
     const invite = this.fb.group({
-      name: [user?.name, [Validators.minLength(2), , Validators.pattern(/^\S.*\S$/), Validators.required]],
-      username: [user?.username, [Validators.minLength(2), , Validators.pattern(/^\S.*\S$/), Validators.required]],
+      name: [user?.name, [Validators.minLength(2), Validators.required, this.noWhitespaceValidator]],
+      username: [user?.username, [Validators.minLength(2), Validators.required, this.noWhitespaceValidator]],
       tel: [''],
       allergie: [user?.allergie || ''],
       selectedCategory: [user?.selectedCategory || '', Validators.required],

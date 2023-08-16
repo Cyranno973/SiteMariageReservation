@@ -25,8 +25,8 @@ export class UserService {
   }
 
   createUSerPartial(listUser?: Partial<User>[], user?: Partial<User>) {
-    if (listUser?.length) listUser.map(user => this.creationUser(user))
-    else if (user) this.creationUser(user)
+    if (listUser?.length) listUser.map(user => this.creationUser(user,true))
+    else if (user) this.creationUser(user, false)
   }
 
   // private creationUser(user: Partial<User>) {
@@ -36,21 +36,7 @@ export class UserService {
   //   user.choice = Choice.All;
   //   user.accompaniement = [];
   //   return this.createOrUpdate(user, true);
-  // }
-  private creationUser(user: Partial<User>) {
-    console.log(user)
-    // user.id = this.generatorIdentifiant();
-    user.statusUser = Status.First;
-    user.choice = Choice.All;
-    user.accompaniement = [];
-    console.log(user)
-    return this.createOrUpdate(user, true);
-  }
 
-  // private generatorIdentifiant(): string {
-  //   const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
-  //   if (id === '99999' || id === '111111') this.generatorIdentifiant()
-  //   this.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
   //   return id
   /**avec firebase si on veut creer une collection avec un od personalisé il faut utiliser update
    -*+   * @param user
@@ -61,6 +47,25 @@ export class UserService {
   //   const userClean = this.removeEmptyProperties(user);
   //   return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user creer'));
   // }
+  createWithOutGeneratorIdentifiant(){
+
+  }
+
+  // private generatorIdentifiant(): string {
+  //   const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
+  //   if (id === '99999' || id === '111111') this.generatorIdentifiant()
+  //   this.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
+
+  // }
+  private creationUser(user: Partial<User>, idInTheList:boolean) {
+    console.log(user)
+    // user.id = this.generatorIdentifiant();
+    user.statusUser = Status.First;
+    user.choice = Choice.All;
+    user.accompaniement = [];
+    console.log(user)
+    return idInTheList ? this.createOrUpdate(user, false): this.createOrUpdate(user, true);
+  }
   createOrUpdate(user: Partial<User>, creation: boolean = false): any {
     if (creation) {
       return this.generatorIdentifiant().then(id => {

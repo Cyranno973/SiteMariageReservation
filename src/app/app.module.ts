@@ -29,6 +29,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {MediaActivityService} from "./services/media-activity-service";
 import {MediaInfoService} from "./services/media-info-service";
 import {ToastrModule} from "ngx-toastr";
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {ToastrModule} from "ngx-toastr";
     ButtonComponent,
     AdministratorComponent,
     UserComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,7 @@ import {ToastrModule} from "ngx-toastr";
       // QuillModule.forRoot(),
     })
   ],
-  providers: [MediaActivityService, MediaInfoService],
+  providers: [MediaActivityService, MediaInfoService,{provide: LocationStrategy, useClass: HashLocationStrategy}],
 
   bootstrap: [AppComponent]
 })

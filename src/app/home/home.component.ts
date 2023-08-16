@@ -8,6 +8,7 @@ import {Choice, Status, User} from "../../model/user";
 import {Router} from "@angular/router";
 import {Subject, takeUntil} from "rxjs";
 import {ToastrService} from "ngx-toastr";
+import {AngularFireMessaging} from "@angular/fire/compat/messaging";
 
 @Component({
   selector: 'app-home',
@@ -44,7 +45,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private userService: UserService,
               private toastr: ToastrService,
-              private dialogUser: MatDialog, private fb: FormBuilder, private storeUserService: StoreUserService) {
+              private dialogUser: MatDialog,
+              private fb: FormBuilder,
+              private storeUserService: StoreUserService,
+              private afMessaging: AngularFireMessaging
+  ) {
   }
 
   private unsubscribe$ = new Subject<void>();
@@ -128,6 +133,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.storeUserService.saveUser(this.user);
       console.log('show notif')
       this.toastr.success('Votre préscence à bien été enregistrer!', 'Notification');
+      this.requestPermission();
       // console.log(this.user)
 
     } else {
@@ -158,5 +164,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
     event.preventDefault();
     }
+  }
+  requestPermission() {
+    this.afMessaging.requestToken
+      .subscribe(
+        (token) => {
+          console.log('Permission granted! Save to the server!', token);
+        },
+        (error) => {
+          console.error('Unable to get permission to notify.', error);
+        }
+      );
   }
 }
