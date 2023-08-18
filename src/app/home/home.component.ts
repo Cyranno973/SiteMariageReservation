@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     if (this.inputBillet === '102030') {
       this.storeUserService.saveIsAdmin(true);
-      console.log('admin true')
+      //console.log('admin true')
       this.router.navigate(['/admin']);
       return;
     }
@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   updateData() {
-    // console.log('il exist', this.user)
+    //// console.log('il exist', this.user)
     this.form.disable();
     this.errorFormulaire = false;
     if (this.user.statusUser === Status.First) {
@@ -131,10 +131,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.user.choice = Choice.P;
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);
-      console.log('show notif')
+      //console.log('show notif')
       this.toastr.success('Votre préscence à bien été enregistrer!', 'Notification');
       this.requestPermission();
-      // console.log(this.user)
+      //// console.log(this.user)
 
     } else {
       this.user.statusUser = Status.Complete;
@@ -143,7 +143,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       delete this.user.allergie;
       delete this.user.selectedCategory;
       this.user.accompaniement = [];
-      // console.log(this.user)
+      //// console.log(this.user)
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);
       this.toastr.success('Votre absence à bien été enregistrer!', 'Notification', {
@@ -169,10 +169,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.afMessaging.requestToken
       .subscribe(
         (token) => {
-          console.log('Permission granted! Save to the server!', token);
+          //console.log('Permission granted! Save to the server!', token);
         },
         (error) => {
-          console.error('Unable to get permission to notify.', error);
+          //console.error('Unable to get permission to notify.', error);
         }
       );
   }

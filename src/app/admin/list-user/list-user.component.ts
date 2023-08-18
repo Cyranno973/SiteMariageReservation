@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {StoreUserService} from "../../services/store-user.service";
-import {User} from "../../../model/user";
+import {Status, User} from "../../../model/user";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 
@@ -14,7 +14,7 @@ export class ListUserComponent implements OnInit {
   enfantNbr: number;
   totalPeople: number;
   displayedColumns: string[] = [
-    'id', 'name', 'username', 'tel', 'statusUser', 'choice', 'menu', 'accompaniement', 'action'];
+    'id', 'name', 'username', 'category', 'statusUser', 'choice', 'menu', 'accompaniement', 'action'];
   dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
   @ViewChild(MatSort) sort: MatSort;
   empty: boolean;
@@ -25,12 +25,12 @@ export class ListUserComponent implements OnInit {
   ngOnInit() {
     this.storeUserService.observeUserList().subscribe(users => {
       this.users = users;
-      console.log(users)
+      // console.log(users)
       this.dataSource.data = this.users;
       this.dataSource.sort = this.sort;
       this.users?.length;
        this.totalPeople = users?.reduce((acc:number, curr:User) => acc + 1 + (curr.accompaniement ? curr.accompaniement.length : 0), 0);
-      console.log(this.totalPeople);
+      // console.log(this.totalPeople);
       this.enfantNbr = this.users?.reduce((accumulator, current) => {
         let count = current.selectedCategory === 'Enfant' ? 1 : 0;
         if (current.accompaniement) {
@@ -38,8 +38,12 @@ export class ListUserComponent implements OnInit {
         }
         return accumulator + count;
       }, 0);
+      const present = users?.reduce((acc: number, user: User) => {
+        if(user.statusUser === Status.Complete) {
+          //console.table(user);
 
-      console.log(this.enfantNbr);
+        }
+      }, 0)
     })
   }
 

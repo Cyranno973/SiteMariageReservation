@@ -29,9 +29,11 @@ export class AppComponent implements OnInit {
       if (this.pressedKeys.join('') === this.secretCode) {
         this.admin = !this.admin;
         this.storeUserService.saveIsAdmin(this.admin);
-        if (this.admin) console.log('mode admin')
+        if (this.admin) {
+          //console.log('mode admin')
+        }
         else {
-          console.log('mode user')
+         // console.log('mode user')
           this.router.navigate(['/']);
         }
 

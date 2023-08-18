@@ -4,6 +4,8 @@ import {User} from "../../../model/user";
 import {UserService} from "../../services/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {utils, WorkBook, WorkSheet, writeFile} from 'xlsx';
+import {StatistiquesService} from "../../services/statistiques.service";
+import {AttendanceStatistics} from "../../../model/AttendanceStatistics";
 
 @Component({
   selector: 'app-admin',
@@ -11,9 +13,7 @@ import {utils, WorkBook, WorkSheet, writeFile} from 'xlsx';
   styleUrls: ['./administrator.component.scss']
 })
 export class AdministratorComponent implements OnInit {
-  constructor(private fb: FormBuilder, private storeUserService: StoreUserService, private userService: UserService) {
-
-  }
+  attendanceStatistics: AttendanceStatistics;
 
   updateBtn: boolean;
   UserToUpdate: User;
@@ -22,17 +22,25 @@ export class AdministratorComponent implements OnInit {
   showForm: boolean = false;
   userForm: FormGroup;
 
+  constructor(private statistiquesService: StatistiquesService, private fb: FormBuilder, private storeUserService: StoreUserService, private userService: UserService) {
+
+  }
+
   ngOnInit() {
+    this.statistiquesService.getAttendanceStatistics().subscribe((statistque: AttendanceStatistics)  => {
+      // console.log(statistque);
+      this.attendanceStatistics = statistque;
+    });
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       username: ['', [Validators.required, Validators.minLength(3)]],
       tel: [''],
     })
-    this.storeUserService.observeUserList().subscribe(users => {
-      this.userList = users;
-    })
+    this.storeUserService.observeUserList().subscribe(users => this.userList = users);
     this.userService.getAll().subscribe(data => {
       this.userList = data;
+      // console.log(data[80]);
+      // console.log(data);
       this.storeUserService.saveUserList(data)
     });
   }
@@ -45,7 +53,7 @@ export class AdministratorComponent implements OnInit {
       fileReader.onload = () => {
         const text = fileReader.result as string;
         const tabUser = this.formatText(text);
-        console.log(tabUser);
+        // console.log(tabUser);
         this.userService.createUSerPartial(tabUser);
       }
       fileReader.readAsText(fileList[0])

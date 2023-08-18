@@ -11,12 +11,12 @@ export class AuthGard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-    const subAdmin = this.storeUserService.observeIsAdmin()
-    const subUser = this.storeUserService.observeUser()
+    const subAdmin = this.storeUserService.observeIsAdmin();
+    const subUser = this.storeUserService.observeUser();
     return combineLatest([subAdmin, subUser]).pipe(map(x => {
       // console.log(x)
       if (x[0]) {
-        console.log('admin activé')
+       // console.log('admin activé')
         return true
       } else if (x[1] && state.url !== '/admin') {
         return true

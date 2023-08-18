@@ -28,10 +28,10 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.storeUserService.observeUser().subscribe(user => {
       this.user = user;
-      console.log({...user})
-      console.log(user.menu)
-      console.log(user.tel)
-      console.log(user.selectedCategory)
+      //console.log({...user})
+      //console.log(user.menu)
+      //console.log(user.tel)
+      //console.log(user.selectedCategory)
       const t = {menu: this.user.menu, allergie: this.user.allergie || '', guests: this.user.accompaniement};
       this.oldForm = JSON.stringify(t);
 
@@ -53,10 +53,10 @@ export class UserProfileComponent implements OnInit {
         debounceTime(300) // Attend 300ms après la dernière frappe
       ).subscribe(() => {
         if (this.userForm.dirty && this.userForm.valid) {
-          console.log("valide");
+          //console.log("valide");
           this.save();
         } else {
-          console.log("non valide");
+          //console.log("non valide");
         }
       });
     });
@@ -116,7 +116,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   addGuest(user?: Personne) {
-    console.log(this.userForm)
+    //console.log(this.userForm)
     const invite = this.fb.group({
       name: [user?.name, [Validators.minLength(2), Validators.required, this.noWhitespaceValidator]],
       username: [user?.username, [Validators.minLength(2), Validators.required, this.noWhitespaceValidator]],
@@ -126,7 +126,7 @@ export class UserProfileComponent implements OnInit {
       menu: [user?.menu || '', Validators.required],
     }, {validators: this.menuValidator});
     this.guests.push(invite);
-    console.log('test')
+    //console.log('test')
     // setTimeout(() => {
     // setTimeout(() => {
     //   this.scrollToElement('.form-container__guest-form-container:last-child');

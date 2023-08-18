@@ -4,11 +4,7 @@
     <input matInput (keyup)="updateFilter($event)" type="text" name="" id="">
   </mat-form-field>
 </div>
-<div *ngIf="users" class="container-inviter">
-  <p class="invite"><span> {{users?.length}}</span> Invités</p>
-  <p class="invite"><span> {{enfantNbr}}</span>  Enfant </p>
-  <p class="invite"><span> {{totalPeople}}</span> Total</p>
-</div>
+
 <mat-table matSort [dataSource]="dataSource">
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Id</mat-header-cell>
@@ -35,10 +31,10 @@
     <mat-cell *matCellDef="let user">
       {{user.choice | titlecase}}</mat-cell>
   </ng-container>
-  <ng-container matColumnDef="tel">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Tel</mat-header-cell>
+  <ng-container matColumnDef="category">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      {{user.tel}}</mat-cell>
+      {{user?.selectedCategory}}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="menu">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Menu</mat-header-cell>
@@ -53,6 +49,8 @@
           <div>
             <span> {{user.name | titlecase}}  {{user.username | titlecase}} </span>
             <br/>
+            <span>{{user.selectedCategory}}</span>
+            <br>
             <span>{{user.menu}} <br/> {{user.allergie}}</span>
           </div>
           <br/> <!-- Use br if you want to display the roles vertically -->

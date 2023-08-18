@@ -54,22 +54,22 @@ export class InfoComponent {
 
   drop(event: CdkDragDrop<Media[]>) {
     moveItemInArray(this.activityList, event.previousIndex, event.currentIndex);
-    console.log(event.previousIndex, event.currentIndex);
-    console.table(this.activityList)
+    //console.log(event.previousIndex, event.currentIndex);
+    //console.table(this.activityList)
     this.activityList.forEach((item, index) => {
       item.order = index;
     });
-    console.table(this.activityList)
+    //console.table(this.activityList)
 
     this.mediaInfoService.updateOrderInFirestore(this.activityList).then(() => {
-      console.log('Order updated in Firestore!');
+      //console.log('Order updated in Firestore!');
     }).catch((error) => {
-      console.error('Error updating order:', error);
+      //console.error('Error updating order:', error);
     });
   }
 
   chooseFile(event: any) {
-    console.log(event)
+    //console.log(event)
     if (event?.target?.files && event.target.files.length > 0) {
       this.file = event.target.files[0];
       if (this.updateBtn && this.media) {
@@ -87,9 +87,9 @@ export class InfoComponent {
 
 
   saveMedia() {
-    console.log('Description:', this.description);
-    console.log('lien:', this.lien);
-    console.log('file :', this.file?.name);
+    //console.log('Description:', this.description);
+    //console.log('lien:', this.lien);
+    //console.log('file :', this.file?.name);
 
     if (!this.file && !this.updateBtn) return;
 
@@ -111,11 +111,11 @@ export class InfoComponent {
         (snapshot) => {
           if (snapshot) {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
+            //console.log('Upload is ' + progress + '% done');
           }
         },
         (error) => {
-          console.log('Upload error:', error);
+          //console.log('Upload error:', error);
         }
       );
     } else {
@@ -135,36 +135,36 @@ export class InfoComponent {
 
     if (this.updateBtn) {
       this.mediaInfoService.update(mediaData).then(() => {
-        console.log('Updated in Firestore!');
+        //console.log('Updated in Firestore!');
         this.updateBtn = false;  // réinitialiser le bouton de mise à jour
         this.mediaForm.reset();   // réinitialiser le formulaire
         this.previewUrl = '';
       }).catch((error: any) => {
-        console.error('Error updating:', error);
+        //console.error('Error updating:', error);
       });
     } else {
       this.mediaInfoService.createOrUpdate(mediaData).then(() => {
-        console.log('Created in Firestore!');
+        //console.log('Created in Firestore!');
         this.mediaForm.reset();  // réinitialiser le formulaire
         this.previewUrl = '';
       }).catch((error: any) => {
-        console.error('Error creating:', error);
+        //console.error('Error creating:', error);
       });
     }
   }
 
 
   deleteCard(media: Media) {
-    console.log(media);
+    //console.log(media);
     const imagePath = media.imageUrl;
     const imageRef = this.storage.refFromURL(imagePath);
     imageRef.delete().subscribe(
       () => {
-        console.log('Image deleted successfully');
+        //console.log('Image deleted successfully');
         this.mediaInfoService.delete(media.id)
       },
       (error) => {
-        console.error('Error deleting image:', error);
+        //console.error('Error deleting image:', error);
       }
     );
   }
@@ -174,8 +174,8 @@ export class InfoComponent {
   }
 
   updateMedia(media: Media) {
-    console.log(this.media)
-    console.log(media)
+    //console.log(this.media)
+    //console.log(media)
     this.media = media;
     this.file = media.file;
     this.updateBtn = true;

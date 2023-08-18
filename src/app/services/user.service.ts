@@ -56,26 +56,27 @@ export class UserService {
   //   if (id === '99999' || id === '111111') this.generatorIdentifiant()
   //   this.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
 
-  // }
-  private creationUser(user: Partial<User>, idInTheList:boolean) {
-    console.log(user)
-    // user.id = this.generatorIdentifiant();
-    user.statusUser = Status.First;
-    user.choice = Choice.All;
-    user.accompaniement = [];
-    console.log(user)
-    return idInTheList ? this.createOrUpdate(user, false): this.createOrUpdate(user, true);
-  }
   createOrUpdate(user: Partial<User>, creation: boolean = false): any {
     if (creation) {
       return this.generatorIdentifiant().then(id => {
         const userClean = this.removeEmptyProperties({ ...user, id });
         return this.usersRef.doc(userClean.id).set(userClean);
-      }).then(user => console.log('user created'));
+      }).then(user => {
+        //console.log('user created')
+      });
     } else {
       const userClean = this.removeEmptyProperties(user);
-      return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user updated'));
+      return this.usersRef.doc(userClean.id).set(userClean).then(user => {
+        //console.log('user updated')
+      });
     }
+  }
+
+  update(user: Partial<User>): any {
+    const userClean = this.removeEmptyProperties(user);
+    return this.usersRef.doc(userClean.id).update(userClean).then(user => {
+      //console.log('user creer')
+    })
   }
 
   // }
@@ -103,9 +104,15 @@ export class UserService {
     });
   }
 
-  update(user: Partial<User>): any {
-    const userClean = this.removeEmptyProperties(user);
-    return this.usersRef.doc(userClean.id).update(userClean).then(user => console.log('user creer'))
+  // }
+  private creationUser(user: Partial<User>, idInTheList:boolean) {
+   // console.log(user)
+    // user.id = this.generatorIdentifiant();
+    user.statusUser = Status.First;
+    user.choice = Choice.All;
+    user.accompaniement = [];
+   // console.log(user)
+    return idInTheList ? this.createOrUpdate(user, false): this.createOrUpdate(user, true);
   }
 
   delete(id: string): Promise<void> {

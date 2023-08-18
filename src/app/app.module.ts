@@ -30,6 +30,7 @@ import {MediaActivityService} from "./services/media-activity-service";
 import {MediaInfoService} from "./services/media-info-service";
 import {ToastrModule} from "ngx-toastr";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import {StatsComponent} from './admin/stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
     ButtonComponent,
     AdministratorComponent,
     UserComponent,
+    StatsComponent,
 
   ],
   imports: [
