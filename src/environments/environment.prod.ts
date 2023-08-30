@@ -8,5 +8,6 @@ export const environment = {
     authDomain: 'andrestella-d7d47.firebaseapp.com',
     messagingSenderId: '502171773189',
     measurementId: 'G-3CRV6E0GST',
+    vapidKey: 'obrIk4A1iL8dv2g_CsjIVkq--jk6_aXM5ZzQR5yiKB0',
   }
 }

@@ -1,9 +1,12 @@
-import {ChangeDetectionStrategy, Component, ElementRef, OnInit, Renderer2} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {Personne, Status, User} from "../../model/user";
 import {StoreUserService} from "../services/store-user.service";
 import {UserService} from "../services/user.service";
+
+import {ToastrService} from "ngx-toastr";
 import {debounceTime} from "rxjs";
+import {debounce} from 'lodash';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,39 +19,36 @@ export class UserProfileComponent implements OnInit {
   oldForm: string = '';
   user: User;
 
+  private debouncedSave = debounce(() => this.actualSave(), 1000);
+
   constructor(private fb: FormBuilder,
               private storeUserService: StoreUserService,
               private userService: UserService,
-              private el: ElementRef,
-              private renderer: Renderer2
+              private toastr: ToastrService,
   ) {
   }
-
 
   ngOnInit() {
     this.storeUserService.observeUser().subscribe(user => {
       this.user = user;
-      //console.log({...user})
-      //console.log(user.menu)
-      //console.log(user.tel)
-      //console.log(user.selectedCategory)
-      const t = {menu: this.user.menu, allergie: this.user.allergie || '', guests: this.user.accompaniement};
+      const t = {menu: this.user?.menu, allergie: this.user?.allergie || '', guests: this.user?.accompaniement};
       this.oldForm = JSON.stringify(t);
 
       this.userForm = this.fb.group({
-        name: [this.user.name, [Validators.minLength(2), this.noWhitespaceValidator]],
-        username: [this.user.username, [Validators.minLength(2)]],
-        tel: [this.user.tel, [Validators.pattern(/^\d+$/)]],
-        menu: [this.user.menu || '', Validators.required],
-        allergie: [this.user.allergie || ''],
-        selectedCategory: [this.user.selectedCategory || '', Validators.required],
+        name: [this.user?.name, [Validators.minLength(2), this.noWhitespaceValidator]],
+        username: [this.user?.username, [Validators.minLength(2)]],
+        tel: [this.user?.tel, [Validators.pattern(/^\d+$/)]],
+        menu: [this.user?.menu || '', Validators.required],
+        allergie: [this.user?.allergie || ''],
+        selectedCategory: [this.user?.selectedCategory || '', Validators.required],
         guests: this.fb.array([]),
       }, {validators: this.menuValidator});
 
-      if (this.user.accompaniement?.length) this.user.accompaniement.map(x => this.addGuest(x));
+      if (this.user?.accompaniement?.length) this.user.accompaniement.map(x => this.addGuest(x));
       this.userForm.controls['name'].disable();
       this.userForm.controls['username'].disable();
       this.userForm.controls['tel'].disable();
+      // this.userForm.controls['selectedCategory'].disable();
       this.userForm.valueChanges.pipe(
         debounceTime(300) // Attend 300ms après la dernière frappe
       ).subscribe(() => {
@@ -62,12 +62,6 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  noWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
-    if (control.value && control.value.trim() === '') {
-      return { 'whitespace': true };
-    }
-    return null;
-  }
   menuValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const selectedCategory = control.get('selectedCategory');
     const menu = control.get('menu');
@@ -85,7 +79,18 @@ export class UserProfileComponent implements OnInit {
     return null;
   }
 
+  noWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
+    if (control.value && control.value.trim() === '') {
+      return {'whitespace': true};
+    }
+    return null;
+  }
+
   save() {
+    this.debouncedSave();
+  }
+
+  actualSave() {
     if (this.userForm.valid) {
       this.oldForm = JSON.stringify(this.userForm.value);
       this.user.menu = this.userForm.value.menu;
@@ -94,20 +99,21 @@ export class UserProfileComponent implements OnInit {
       this.user.selectedCategory = this.userForm.value.selectedCategory;
       this.user.accompaniement = this.userForm.value.guests as Personne[];
 
-      this.userService.createOrUpdate(this.user);
+      this.userService.createOrUpdate(this.user).then(() => {
+        // Notification après confirmation de Firebase
+        this.toastr.success('Formulaire enregistré avec succès !');
+
+      }).catch(() => {
+        // Notification en cas d'erreur
+        this.toastr.error('Erreur lors de l\'enregistrement du formulaire.');
+      });
       this.storeUserService.saveUser(this.user);
 
       this.userForm.markAsPristine();//  Cool Marque le formulaire comme non modifié (pristine)
     }
   }
 
-  scrollToElement(selector: string) {
-    const element = document.querySelector(selector);
-    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-
-  trackByFn(index: number, item: FormGroup): number {
+  trackByFn(index: number): number {
     return index; // Utilisation de l'index comme identifiant unique pour chaque invité
   }
 
@@ -126,12 +132,6 @@ export class UserProfileComponent implements OnInit {
       menu: [user?.menu || '', Validators.required],
     }, {validators: this.menuValidator});
     this.guests.push(invite);
-    //console.log('test')
-    // setTimeout(() => {
-    // setTimeout(() => {
-    //   this.scrollToElement('.form-container__guest-form-container:last-child');
-    // },2000);
-    // });
   }
 
   removeGuest(i: number) {
@@ -145,7 +145,6 @@ export class UserProfileComponent implements OnInit {
 
   generateFormGroups(): FormGroup[] {
     const formArray = this.userForm.get('guests') as FormArray
-    const formGroups = formArray.controls as FormGroup[];
-    return formGroups;
+    return formArray.controls as FormGroup[];
   }
 }

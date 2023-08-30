@@ -1,8 +1,8 @@
+@use './src/sass/utils/mixins' as *;
+
 .container-form__form{
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include center-flex();
   .container-btn{
     text-align: center;
   }

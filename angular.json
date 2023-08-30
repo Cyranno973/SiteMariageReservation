@@ -81,6 +81,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "AndreStella",
+            "hmr": true
+          },
           "configurations": {
             "production": {
               "browserTarget": "AndreStella:build:production"

@@ -8,10 +8,11 @@ import {AuthGard} from "./services/auth.gard";
 
 const routes: Routes =
   [
-    {path: 'home', component: HomeComponent},
-    {path: 'info', canActivate: [AuthGard], data: {route: 'info'}, component: InfoComponent},
-    {path: 'activity', canActivate: [AuthGard], component: ActivityComponent},
-    {path: 'admin', canActivate: [AuthGard], component: AdministratorComponent},
+    {path: 'home', component: HomeComponent, data: { animation: 'home' }},
+    // {path: 'acceuil', component: AcceuilComponent},
+    {path: 'activity', canActivate: [AuthGard] , data: { animation: 'activity' }, component: ActivityComponent},
+    {path: 'info', data: {route: 'info', animation: 'info'}, canActivate: [AuthGard],  component: InfoComponent},
+    {path: 'admin', canActivate: [AuthGard] , data: { animation: 'admin' }, component: AdministratorComponent},
     // {path: 'admin', component: AdministratorComponent},
     {path: '**', redirectTo: '/home'},
     // {path: '**', redirectTo: '/admin'},

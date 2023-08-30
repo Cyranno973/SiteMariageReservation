@@ -1,8 +1,7 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
-import {animate, style, transition, trigger} from "@angular/animations";
 import {StoreUserService} from "../services/store-user.service";
 import {Choice, Status, User} from "../../model/user";
 import {Router} from "@angular/router";
@@ -14,30 +13,6 @@ import {AngularFireMessaging} from "@angular/fire/compat/messaging";
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-
-  animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(
-          ':enter',
-          [
-            style({opacity: 0}),
-            animate('5s ease-out',
-              style({opacity: 1}))
-          ]
-        ),
-        transition(
-          ':leave',
-          [
-            style({height: 300, opacity: 1}),
-            animate('1s ease-in',
-              style({height: 0, opacity: 0}))
-          ]
-        )
-      ]
-    )
-  ]
 })
 
 
@@ -50,6 +25,10 @@ export class HomeComponent implements OnInit, OnDestroy {
               private storeUserService: StoreUserService,
               private afMessaging: AngularFireMessaging
   ) {
+    this.afMessaging.messages.subscribe((message) => {
+      console.log('Received message:', message);
+    });
+
   }
 
   private unsubscribe$ = new Subject<void>();
@@ -65,6 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   first: boolean = true;
 
   ngOnInit() {
+
     this.storeUserService.observeUser().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(user => this.user = user);
@@ -78,12 +58,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     ).subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
       if (this.user) {
-        this.form.setValue({ numero: this.user.id });
+        this.form.setValue({numero: this.user.id});
         this.updateData();
       }
     });
   }
 
+  // Écouter l'événement de clavier lorsque le clavier est affiché
+  @HostListener('window:keyboardWillShow', ['$event'])
+  onKeyboardWillShow(event: any): void {
+    alert('azazaa')
+    // Ajuster la position des notifications ici en fonction de la taille du clavier
+    // Par exemple, déplacez les notifications vers le haut pour éviter qu'elles ne soient recouvertes
+  }
 
   submit(event: Event) {
 
@@ -102,24 +89,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     else this.errorFormulaire = true;
   }
 
-  private checkUserExist() {
-    this.userService.getById(this.inputBillet).subscribe(user => {
-      if (!user.exists) this.errorFormulaire = true
-      else {
-        this.first =false;
-        this.user = user.data();
-        this.storeUserService.saveIsLoggedIn(true);
-        this.updateData();
-      }
-    })
-  }
-
   updateData() {
     //// console.log('il exist', this.user)
-    this.form.disable();
+    this.form?.disable();
     this.errorFormulaire = false;
     if (this.user.statusUser === Status.First) {
       this.user.statusUser = Status.Incomplete;
+      this.user.selectedCategory = "Adulte";
       this.userService.createOrUpdate(this.user);
     }
     this.storeUserService.saveUser(this.user);
@@ -132,7 +108,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);
       //console.log('show notif')
-      this.toastr.success('Votre préscence à bien été enregistrer!', 'Notification');
+      this.toastr.success('Nous serons ravis de vous voir et merci de votre présence !', 'Notification');
       this.requestPermission();
       //// console.log(this.user)
 
@@ -146,7 +122,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       //// console.log(this.user)
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);
-      this.toastr.success('Votre absence à bien été enregistrer!', 'Notification', {
+      this.toastr.success('C’est dommage mais je sais que le coeur y est !', 'Notification', {
         positionClass: 'toast-top-center',
       });
 
@@ -155,25 +131,53 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.showModifChoice = false;
   }
 
+  noIncrementDecrementNumber(event: KeyboardEvent) {
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      event.preventDefault();
+    }
+  }
+
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
-  noIncrementDecrementNumber(event: KeyboardEvent) {
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-    event.preventDefault();
-    }
-  }
+  //   });
   requestPermission() {
     this.afMessaging.requestToken
       .subscribe(
         (token) => {
-          //console.log('Permission granted! Save to the server!', token);
+          console.log('Permission granted! Save to the server!', token);
         },
         (error) => {
-          //console.error('Unable to get permission to notify.', error);
+          console.error('Unable to get permission to notify.', error);
         }
       );
+  }
+
+  // requestPermission() {
+  //   // const messaging = getMessaging();
+  //   getToken(messaging,
+  //     { vapidKey: environment.firebase.vapidKey}).then(
+  //     (currentToken) => {
+  //       if (currentToken) {
+  //         console.log("Hurraaa!!! we got the token.....");
+  //         console.log(currentToken);
+  //       } else {
+  //         console.log('No registration token available. Request permission to generate one.');
+  //       }
+  //     }).catch((err) => {
+  //     console.log('An error occurred while retrieving token. ', err);
+
+  private checkUserExist() {
+    this.userService.getById(this.inputBillet).subscribe(user => {
+      if (!user.exists) this.errorFormulaire = true
+      else {
+        this.first = false;
+        this.user = user.data();
+        this.storeUserService.saveIsLoggedIn(true);
+        this.updateData();
+      }
+    })
   }
 }

@@ -2,7 +2,8 @@
   <div class="container-form">
     <form class="form" [formGroup]="form">
       <div class="container-field">
-        <input [attr.id]="'name' + index" class="form__input" formControlName="name" placeholder=" " type="text"/>
+        <input [attr.id]="'name' + index"
+          [ngClass]="{'shakeX': form?.get('name').invalid && form?.get('name').touched}" class="form__input" formControlName="name" placeholder=" " type="text"/>
         <label [attr.for]="'name' + index" class="form__label">Nom</label>
         <mat-icon *ngIf="index < 0" class="lockIcon" fontIcon="lock"></mat-icon>
         <div *ngIf="form?.get('name').invalid && form?.get('name').touched" [@fadeInOut] class="error-message">
@@ -11,7 +12,7 @@
       </div>
 
       <div class="container-field">
-        <input [attr.id]="'username' + index" class="form__input" formControlName="username" placeholder=" " type="text"/>
+        <input [attr.id]="'username' + index" [ngClass]="{'shakeX': form?.get('username').invalid && form?.get('username').touched}" class="form__input" formControlName="username" placeholder=" " type="text"/>
         <label [attr.for]="'username' + index" class="form__label">Prenom</label>
         <mat-icon *ngIf="index < 0" class="lockIcon" fontIcon="lock"></mat-icon>
         <div *ngIf="form?.get('username').invalid && form?.get('username').touched" [@fadeInOut] class="error-message">
@@ -19,7 +20,8 @@
         </div>
       </div>
 
-      <div *ngIf="form?.get('tel').value && form?.get('tel').value !== ''" class="container-field">
+<!--      <div *ngIf="form?.get('tel').value && form?.get('tel').value !== ''" class="container-field">-->
+      <div class="container-field">
       <input [attr.id]="'tel' + index" class="form__input" formControlName="tel" placeholder=" " type="numeric"/>
         <label [attr.for]="'tel' + index" class="form__label">Portable</label>
         <mat-icon *ngIf="index < 0" class="lockIcon" fontIcon="lock"></mat-icon>
@@ -29,7 +31,8 @@
       </div>
 
       <div class="container-field">
-        <select class="form__select" [formControlName]="'selectedCategory'" (change)="onCategoryChange()">
+        <select #selectContainer
+          (change)="onCategoryChange()" [formControlName]="'selectedCategory'" [ngClass]="{'shakeX': form?.get('selectedCategory').invalid && form?.get('selectedCategory').touched}"  [style.textIndent]="indentationCategory" class="form__select  centered-select">
           <option [value]="''" disabled hidden>Choisissez la catégorie</option>
           <option *ngFor="let category of categories" [value]="category">{{category}}</option>
         </select>
@@ -38,9 +41,10 @@
         </div>
       </div>
       <div *ngIf="form.get('selectedCategory')?.value" class="container-field">
-        <select [formControlName]="'menu'" class="form__select">
-          <option [value]="''" disabled hidden>Choisissez un plat</option>
-          <option *ngFor="let dish of dishes" [value]="dish">{{dish}}</option>
+        <select [formControlName]="'menu'"
+          [ngClass]="{'shakeX': form?.get('menu').invalid && form?.get('menu').touched}" [style.textIndent]="indentationValueMenu" class="form__select centered-select">
+          <option [style.textIndent]="indentationValueMenu" [value]="''" disabled hidden>Choisissez un plat</option>
+          <option *ngFor="let dish of dishes" [style.textIndent]="indentationValueMenu" [value]="dish" class="centered-option">{{dish}}</option>
         </select>
         <div *ngIf="form.get('menu')?.invalid && form.get('menu')?.touched" [@fadeInOut] class="error-message">
           Veuillez choisir un plat

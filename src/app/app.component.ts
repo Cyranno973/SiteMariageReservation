@@ -1,26 +1,24 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, Renderer2} from '@angular/core';
 import {Choice, User} from "../model/user";
 import {UserService} from "./services/user.service";
 import {StoreUserService} from "./services/store-user.service";
-import {Router} from "@angular/router";
+import {Router, RouterOutlet} from "@angular/router";
+
 import {of, switchMap} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SwUpdate} from "@angular/service-worker";
+import {routeAnimations} from "./route-animations";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [routeAnimations],
 })
 export class AppComponent implements OnInit {
-  constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService, private router: Router) {
-    this.swUpdate.versionUpdates.subscribe(version => {
-      console.log(version);
-      if(version.type === "VERSION_READY"){
-        window.location.reload();
-      }
-    })
-  }
+  // }
+  pressedKeys: string[] = [];
+  showNewPage: boolean = false;
 
   @HostListener('window:keyup', ['$event']) onKeyUp(e: KeyboardEvent) {
     this.pressedKeys.push(e.code)
@@ -42,14 +40,40 @@ export class AppComponent implements OnInit {
     }
   }
 
-  pressedKeys: string[] = [];
+
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event:any) {
+  //   const body = this.elementRef.nativeElement.style.setProperty('--innerHeight', event.target.innerHeight+'px');
+    // setTimeout(() =>  alert(event.target.innerHeight),3000)
+
+    // this.renderer.setStyle(body, 'height', event.target.innerHeight+'px');
+
+  constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService,
+              private router: Router, private renderer: Renderer2,
+              private elementRef: ElementRef) {
+    this.swUpdate.versionUpdates.subscribe(version => {
+      // console.log(version);
+      if(version.type === "VERSION_READY"){
+        window.location.reload();
+      }
+    })
+
+  }
   secretCode: string = "ArrowLeftArrowLeftArrowRightArrowRightArrowUpArrowUpArrowDownArrowDown"
   admin: boolean = false;
   // userList?: any[];
   user: User;
   isShowHeader: boolean
 
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
+
   ngOnInit() {
+
+
+
+    // window.innerHeight
     this.storeUserService.observeIsLoggedIn().pipe(
       switchMap(isLoggedIn => {
         if (isLoggedIn) {

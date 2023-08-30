@@ -1,4 +1,5 @@
-<div [ngClass]="!user ? 'active' : 'normale'" class="container-home">
+<!--<div [ngClass]="!user ? 'active' : 'normale'" class="container-home ">-->
+<div class="container-home fadeInDown">
   <div class="hero">
     <div class="hero__title">
       <div class="hero__name"> <span></span>Andre</div>
@@ -6,11 +7,11 @@
       <div class="hero__name">Stella <span></span></div>
     </div>
     <div class = "container__hero__subtitle">
-    <p class="hero__subtitle">se marient le</p>
+    <p class="hero__subtitle">ont le plaisir de<br>  vous annoncer leur mariage le</p>
     <p class="hero__subtitle">18 NOVEMBRE 2023</p>
     </div>
   </div>
-  <form [formGroup]="form" class="form">
+  <form [formGroup]="form" class="form fadeInDown1">
     <input (input)="submit($event)"
            (keydown)="noIncrementDecrementNumber($event)" autocomplete="off" class="form__input" formControlName="numero" id="myInput" inputmode="numeric" placeholder=" " type="number"/>
     <mat-icon *ngIf="user" class="lockIcon" fontIcon="lock"></mat-icon>

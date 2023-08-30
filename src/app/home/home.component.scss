@@ -1,13 +1,12 @@
 @use '../../sass/utils/_mixins';
 @use '../../sass/utils/variables';
-@use '../../sass/utils/animation' as *;
 @use '../../sass/base/typography' as *;
-@use '../../sass/vendors/animate.css';
 
 .container-home {
-  height: 100%;
+  //height: 100%;
   @include mixins.center-flex;
   position: relative;
+  //will-change: transform;
 }
 
 .normale {
@@ -63,13 +62,10 @@
     font-weight: 800;
     font-family: $greenlight, sans-serif;
 
-    //font-family: $kingham, sans-serif;
     &:last-child {
       font-family: $greenlight, sans-serif;
-
       font-size: 23px;
       margin-top: 15px;
-      //color: #fff;
     }
   }
 }
@@ -84,18 +80,18 @@
   margin-top: 3rem;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   position: relative;
-
+  opacity: 0;
   &__input {
     padding: 15px 10px;
     font-size: 1.2rem;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     border: 0;
     color: #211f1f;
     background-color: rgba(255, 255, 255, 0.7);
     outline: 0;
     text-align: center;
     font-weight: 500;
-    text-shadow: white 0px 0.5px .5px;
+    text-shadow: white 0 0.5px .5px;
 
     &:placeholder-shown ~ .form__label {
       transition: all 0.5s ease;
@@ -198,7 +194,9 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.toast-success {
-  background-color: red;
+.fadeInDown {
+  animation: 1s fadeInDown ;
 }
-
+.fadeInDown1 {
+  animation: 0.8s 0.2s fadeInDown forwards;
+}

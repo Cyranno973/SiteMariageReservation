@@ -1,17 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
-@use "sass/base/reset";
-
-@use "sass/utils/mixins";
+@use "sass/base/reset" as *;
+@use "sass/utils/mixins" as *;
 @use "sass/utils/variables" as *;
+@use "sass/themes/theme" as *;
 
-@use "sass/themes/theme";
-
-html,body{
+html{
   height: 100%;
 }
 body{
-  background-color: #c1cbae;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .disabled {
@@ -28,6 +27,7 @@ body{
   left: 10px;
   font-size: 13px;
 }
+
 .lockIcon{
   position: absolute;
   top: 50%;

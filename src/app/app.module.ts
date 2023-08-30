@@ -31,6 +31,9 @@ import {MediaInfoService} from "./services/media-info-service";
 import {ToastrModule} from "ngx-toastr";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {StatsComponent} from './admin/stats/stats.component';
+import {AngularFireMessagingModule} from "@angular/fire/compat/messaging";
+import {AcceuilComponent} from './acceuil/acceuil.component';
+import {FallingPetalsComponent} from './components/falling-petals/falling-petals.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import {StatsComponent} from './admin/stats/stats.component';
     AdministratorComponent,
     UserComponent,
     StatsComponent,
+    AcceuilComponent,
+    FallingPetalsComponent,
 
   ],
   imports: [
@@ -55,6 +60,7 @@ import {StatsComponent} from './admin/stats/stats.component';
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireMessagingModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     AppRoutingModule,

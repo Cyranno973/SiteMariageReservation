@@ -1,4 +1,4 @@
-<div class="registration-form">
+<div *ngIf="userForm" class="registration-form">
   <div (keyup)="save()" [formGroup]="userForm" class="form-container">
     <app-user-form [form]="userForm" [index]="-1"></app-user-form>
     <div formArrayName="guests">

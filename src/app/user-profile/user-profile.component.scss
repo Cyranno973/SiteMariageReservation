@@ -1,6 +1,7 @@
 @use './src/sass/utils/variables' as *;
 @use './src/sass/utils/mixins' as *;
 
+
 .registration-form {
   .form-container {
     &--container {
@@ -67,4 +68,3 @@
     }
   }
 }
-

@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  hmr: true,
   firebase: {
     projectId: 'andrestella-d7d47',
     appId: '1:502171773189:web:13d44e9d0e23ac4a7cef6c',
@@ -8,5 +9,7 @@ export const environment = {
     authDomain: 'andrestella-d7d47.firebaseapp.com',
     messagingSenderId: '502171773189',
     measurementId: 'G-3CRV6E0GST',
+    vapidKey: 'obrIk4A1iL8dv2g_CsjIVkq--jk6_aXM5ZzQR5yiKB0',
+
   }
 };

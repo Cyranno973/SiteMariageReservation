@@ -1,5 +1,6 @@
 @use '../../sass/utils/variables' as *;
 @use '../../sass/utils/_mixins' as *;
+@use '../../sass/utils/animation' as *;
 
 .form {
   @include center-flex;
@@ -25,6 +26,8 @@
     text-align: center;
     font-weight: 500;
     text-transform: capitalize;
+    min-width: 250px;
+
 
     &:placeholder-shown ~ .form__label {
       transition: all 0.5s ease;
@@ -42,6 +45,26 @@
     &:not(:placeholder-shown) ~ .form__label {
       opacity: 0;
       transform: translateY(-20px);
+    }
+  }
+  &__select {
+    padding: 15px 10px;
+    font-size: 1.2rem;
+    font-family: Roboto;
+    border: 0;
+    color: #211f1f;
+    background-color: rgba(255, 255, 255, 0.7);
+    outline: 0;
+
+    font-weight: 500;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    min-width: 250px;
+
+    &:focus {
+      box-shadow: 0 0 5pt 1pt #3c4f09;
     }
   }
   &__textarea {
@@ -72,27 +95,22 @@
     opacity: 1;
   }
 }
+.centered-select {
+  //text-align: center;
+  ////text-indent: 3.5em;
+  //text-align: -webkit-center;
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  //position: relative;
+  //left: 50%;
+  //transform: translateX(-50%);
+}
+.centered-option {
+  text-align: center;
+}
+.shakeX {
+  animation: 0.5s shakeX ;
+  border: 2px solid $red;
 
-.form {
-  /* Styles existants */
-
-  &__select {
-    padding: 15px 10px;
-    font-size: 1.2rem;
-    font-family: Roboto;
-    border: 0;
-    color: #211f1f;
-    background-color: rgba(255, 255, 255, 0.7);
-    outline: 0;
-    text-align: center;
-    font-weight: 500;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    position: relative;
-
-    &:focus {
-      box-shadow: 0 0 5pt 1pt #3c4f09;
-    }
-  }
 }
