@@ -7,16 +7,23 @@
       <div class="hero__name">Stella <span></span></div>
     </div>
     <div class = "container__hero__subtitle">
+      <app-tooltip [tooltipText]="'Ceci est un texte passé du composant parent'"></app-tooltip>
     <p class="hero__subtitle">ont le plaisir de<br>  vous annoncer leur mariage le</p>
     <p class="hero__subtitle">18 NOVEMBRE 2023</p>
     </div>
   </div>
   <form [formGroup]="form" class="form fadeInDown1">
     <input (input)="submit($event)"
-           (keydown)="noIncrementDecrementNumber($event)" autocomplete="off" class="form__input" formControlName="numero" id="myInput" inputmode="numeric" placeholder=" " type="number"/>
+           (keydown)="noIncrementDecrementNumber($event)"
+           [ngClass]="{'shakeX': form?.get('numero').invalid && form?.get('numero').touched || errorFormulaire && form.touched}"
+           autocomplete="off" class="form__input"
+           formControlName="numero" id="myInput" inputmode="numeric" placeholder=" " type="number"/>
     <mat-icon *ngIf="user" class="lockIcon" fontIcon="lock"></mat-icon>
     <label class="form__label" for="myInput">Numéro de billet</label>
-    <span class="form__error" [ngClass]="{'form__error--error': errorFormulaire && form.touched}">Numéro Invalide</span>
+    <div *ngIf="form.get('numero')?.invalid && form.get('numero')?.touched || errorFormulaire && form.touched" class="error-message">
+      Numéro Invalide
+    </div>
+<!--    <span class="form__error" [ngClass]="{'form__error&#45;&#45;error': errorFormulaire && form.touched}">Numéro Invalide</span>-->
   </form>
 
   <ng-container *ngIf="user">

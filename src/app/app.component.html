@@ -1,6 +1,6 @@
 <div class="container-all">
-  <div #scrollContainer [@routeAnimations]="prepareRoute(outlet)"  class="container-all__container-outlet">
+  <div [@routeAnimations]="prepareRoute(outlet)"  class="container-all__container-outlet">
       <router-outlet #outlet="outlet"></router-outlet>
   </div>
-    <app-header class="container-all__app-header" *ngIf="isShowHeader || admin" [admin]="admin"></app-header>
+    <app-header *ngIf="(isShowHeader$ | async ) || (admin$ | async)" [admin]=" (admin$ | async)" class="container-all__app-header"></app-header>
 </div>

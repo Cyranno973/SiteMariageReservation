@@ -1,10 +1,10 @@
-@use '../../sass/utils/_mixins';
-@use '../../sass/utils/variables';
+@use '../../sass/utils/_mixins' as *;
+@use '../../sass/utils/variables' as *;
 @use '../../sass/base/typography' as *;
 
 .container-home {
   //height: 100%;
-  @include mixins.center-flex;
+  @include center-flex;
   position: relative;
   //will-change: transform;
 }
@@ -19,7 +19,7 @@
   border: 1px solid #fff;
   border-radius: 15px;
   font-size: 50px;
-  color: variables.$gold;
+  color: $gold;
 
   &__name {
     margin: 5% 0;
@@ -53,7 +53,7 @@
   }
 
   &__title {
-    @include mixins.center-flex;
+    @include center-flex;
   }
 
   &__subtitle {
@@ -76,8 +76,9 @@
 }
 
 .form {
-  @include mixins.center-flex;
+  @include center-flex;
   margin-top: 3rem;
+  margin-bottom: 15px;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   position: relative;
   opacity: 0;
@@ -119,7 +120,7 @@
     width: 100%;
     height: 100%;
     font-size: 1.2rem;
-    @include mixins.center-flex;
+    @include center-flex;
     text-align: center;
     font-weight: 500;
   }
@@ -128,6 +129,9 @@
     opacity: 0;
     color: #870d0d;
     font-weight: 500;
+    position: absolute;
+    top: 1px;
+    left: 5px;
   }
 
   &__error--error {
@@ -165,12 +169,12 @@
 
 .modif, .updateBtn {
   text-align: center;
-  @include mixins.center-flex;
+  @include center-flex;
   margin-bottom: 2rem;
 }
 
 .textAbsent {
-  @include mixins.center-flex;
+  @include center-flex;
   text-align: center;
   line-height: 2;
   padding: 2.5rem 1.5rem;
@@ -179,7 +183,7 @@
   border-radius: 7px;
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(5px);
-  color: variables.$b1Black;
+  color: $b1Black;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
   margin-bottom: 2rem;
 }
@@ -199,4 +203,8 @@ input[type="number"] {
 }
 .fadeInDown1 {
   animation: 0.8s 0.2s fadeInDown forwards;
+}
+.shakeX {
+  animation: 0.5s shakeX ;
+  border: 2px solid $red;
 }

@@ -6,6 +6,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {utils, WorkBook, WorkSheet, writeFile} from 'xlsx';
 import {StatistiquesService} from "../../services/statistiques.service";
 import {AttendanceStatistics} from "../../../model/AttendanceStatistics";
+import {saveAs} from 'file-saver';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +15,7 @@ import {AttendanceStatistics} from "../../../model/AttendanceStatistics";
   styleUrls: ['./administrator.component.scss']
 })
 export class AdministratorComponent implements OnInit {
-  attendanceStatistics: AttendanceStatistics;
+  attendanceStatistics$: Observable<AttendanceStatistics>;
 
   updateBtn: boolean;
   UserToUpdate: User;
@@ -22,15 +24,14 @@ export class AdministratorComponent implements OnInit {
   showForm: boolean = false;
   userForm: FormGroup;
 
-  constructor(private statistiquesService: StatistiquesService, private fb: FormBuilder, private storeUserService: StoreUserService, private userService: UserService) {
+  constructor(private statistiquesService: StatistiquesService,
+              private fb: FormBuilder, private storeUserService: StoreUserService,
+              private userService: UserService) {
 
   }
 
   ngOnInit() {
-    this.statistiquesService.getAttendanceStatistics().subscribe((statistque: AttendanceStatistics)  => {
-      // console.log(statistque);
-      this.attendanceStatistics = statistque;
-    });
+    this.attendanceStatistics$ = this.statistiquesService.getAttendanceStatistics();
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -40,7 +41,7 @@ export class AdministratorComponent implements OnInit {
     this.userService.getAll().subscribe(data => {
       this.userList = data;
       // console.log(data[80]);
-      // console.log(data);
+      console.log(data);
       this.storeUserService.saveUserList(data)
     });
   }
@@ -52,28 +53,26 @@ export class AdministratorComponent implements OnInit {
       const fileReader = new FileReader();
       fileReader.onload = () => {
         const text = fileReader.result as string;
-        const tabUser = this.formatText(text);
-        // console.log(tabUser);
-        this.userService.createUSerPartial(tabUser);
-      }
-      fileReader.readAsText(fileList[0])
+        try {
+          const jsonArray = JSON.parse(text);
+          if (Array.isArray(jsonArray)) {
+            this.userService.createUSerPartial(jsonArray);
+          } else {
+            console.error('JSON data is not an array.');
+          }
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+        }
+      };
+      fileReader.readAsText(fileList[0]);
     }
   }
 
-  formatText(text: string): Partial<User>[] {
-    return text
-      .split('\n')
-      .filter(ligne => ligne)
-      .map(ligne => ligne.toLocaleLowerCase())
-      .map(ligne => ligne.split(',').map(colonne => colonne.trim()))
-      .map(x => ({id: x[0] ? x[0] : '', name: x[1] ? x[1] : '', username: x[2] ? x[2] : '', tel: x[3] ? x[3] : ''}));
-  }
 
   saveForm(e: string) {
     this.userService.createUSerPartial([], this.userForm.value);
     this.userForm.reset()
     this.showForm = !this.showForm
-    // this.userService.getById()
   }
 
   updateForm(e: User | string) {
@@ -107,5 +106,27 @@ export class AdministratorComponent implements OnInit {
     utils.book_append_sheet(wb, ws, 'Sheet1');
     /* save to file */
     writeFile(wb, "Liste d'invités.xlsx");
+  }
+
+  exportUser() {
+    try {
+      const dataUserJson = JSON.stringify(this.userList);
+      // console.log(dataUserJson);
+      const blob = new Blob([dataUserJson], { type: 'text/plain;charset=utf-8' });
+      const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const year = String(currentDate.getFullYear());
+      const hour = String(currentDate.getHours()).padStart(2, '0');
+      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+      const formattedDate = `${year}${month}${day}-${hour}${minutes}${seconds}`;
+      // console.log(formattedDate);
+
+      saveAs(blob, `backupListInvite-${formattedDate}.json`);
+    }
+    catch(err){
+      console.error('Erreur lors de la conversion en JSON :', err)
+    }
   }
 }

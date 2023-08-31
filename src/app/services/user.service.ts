@@ -29,32 +29,6 @@ export class UserService {
     else if (user) this.creationUser(user, false)
   }
 
-  // private creationUser(user: Partial<User>) {
-  //   console.log(user)
-  //   user.id = this.generatorIdentifiant();
-  //   user.statusUser = Status.First;
-  //   user.choice = Choice.All;
-  //   user.accompaniement = [];
-  //   return this.createOrUpdate(user, true);
-
-  //   return id
-  /**avec firebase si on veut creer une collection avec un od personalisé il faut utiliser update
-   -*+   * @param user
-   * @param creation
-   */
-
-  // createOrUpdate(user: Partial<User>, creation: boolean = false): any {
-  //   const userClean = this.removeEmptyProperties(user);
-  //   return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user creer'));
-  // }
-  createWithOutGeneratorIdentifiant(){
-
-  }
-
-  // private generatorIdentifiant(): string {
-  //   const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
-  //   if (id === '99999' || id === '111111') this.generatorIdentifiant()
-  //   this.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
 
   createOrUpdate(user: Partial<User>, creation: boolean = false): any {
     if (creation) {
@@ -62,12 +36,12 @@ export class UserService {
         const userClean = this.removeEmptyProperties({ ...user, id });
         return this.usersRef.doc(userClean.id).set(userClean);
       }).then(user => {
-        //console.log('user created')
+        // console.log('user created')
       });
     } else {
       const userClean = this.removeEmptyProperties(user);
       return this.usersRef.doc(userClean.id).set(userClean).then(user => {
-        //console.log('user updated')
+        // console.log('user updated')
       });
     }
   }
@@ -104,15 +78,18 @@ export class UserService {
     });
   }
 
+  //   return id
+  /**avec firebase si on veut creer une collection avec un od personalisé il faut utiliser update
+   -*+   * @param user
+   * @param creation
+   */
+
+  // createOrUpdate(user: Partial<User>, creation: boolean = false): any {
+  //   const userClean = this.removeEmptyProperties(user);
+  //   return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user creer'));
   // }
-  private creationUser(user: Partial<User>, idInTheList:boolean) {
-   // console.log(user)
-    // user.id = this.generatorIdentifiant();
-    user.statusUser = Status.First;
-    user.choice = Choice.All;
-    user.accompaniement = [];
-   // console.log(user)
-    return idInTheList ? this.createOrUpdate(user, false): this.createOrUpdate(user, true);
+  createWithOutGeneratorIdentifiant(){
+
   }
 
   delete(id: string): Promise<void> {
@@ -128,5 +105,32 @@ export class UserService {
     });
     return obj
   }
+
+
+  // private creationUser(user: Partial<User>) {
+  //   console.log(user)
+  //   user.id = this.generatorIdentifiant();
+  //   user.statusUser = Status.First;
+  //   user.choice = Choice.All;
+  //   user.accompaniement = [];
+  //   return this.createOrUpdate(user, true);
+
+  // }
+  private creationUser(user: Partial<User>, idInTheList:boolean) {
+   // console.log(user)
+    // user.id = this.generatorIdentifiant();
+    user.statusUser = user.statusUser || Status.First;
+    user.choice = user.choice || Choice.All;
+
+    const accompaniement = user.accompaniement || []; // Initialiser accompaniement avec un tableau vide s'il n'est pas fourni
+    user.accompaniement = accompaniement;
+   // console.log(user)
+    return idInTheList ? this.createOrUpdate(user, false): this.createOrUpdate(user, true);
+  }
+
+  // private generatorIdentifiant(): string {
+  //   const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
+  //   if (id === '99999' || id === '111111') this.generatorIdentifiant()
+  //   this.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
 
 }

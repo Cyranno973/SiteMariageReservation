@@ -39,7 +39,7 @@ mat-toolbar {
     padding: 0 10px;
   }
 
-  mat-icon {
+  mat-icon, img{
     position: sticky;
     bottom: 0;
     z-index: 1000;
@@ -53,7 +53,7 @@ mat-toolbar {
 }
 
 .active {
-  mat-icon {
+  mat-icon,img {
     color: $gold;
   }
   span {

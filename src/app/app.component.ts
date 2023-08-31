@@ -1,11 +1,11 @@
-import {Component, ElementRef, HostListener, OnInit, Renderer2} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Choice, User} from "../model/user";
 import {UserService} from "./services/user.service";
 import {StoreUserService} from "./services/store-user.service";
 import {Router, RouterOutlet} from "@angular/router";
 
-import {of, switchMap} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Observable, of, switchMap} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 import {SwUpdate} from "@angular/service-worker";
 import {routeAnimations} from "./route-animations";
 
@@ -16,65 +16,37 @@ import {routeAnimations} from "./route-animations";
   animations: [routeAnimations],
 })
 export class AppComponent implements OnInit {
-  // }
+
+  secretCode: string = "ArrowLeftArrowLeftArrowRightArrowRightArrowUpArrowUpArrowDownArrowDown"
+  user: User;
   pressedKeys: string[] = [];
-  showNewPage: boolean = false;
+  isShowHeader$: Observable<boolean>;
+  admin$: Observable<boolean>;
+  private isAdminMode: boolean = false;
+
+  constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService,
+              private router: Router) {
+
+    this.swUpdate.versionUpdates.subscribe(version => {
+      if (version.type === "VERSION_READY") window.location.reload();
+    })
+    this.admin$ = this.storeUserService.observeIsAdmin().pipe(startWith(false));
+  }
 
   @HostListener('window:keyup', ['$event']) onKeyUp(e: KeyboardEvent) {
-    this.pressedKeys.push(e.code)
-    // console.log(this.pressedKeys)
+    this.pressedKeys.push(e.code);
     if (this.pressedKeys.length === 8) {
       if (this.pressedKeys.join('') === this.secretCode) {
-        this.admin = !this.admin;
-        this.storeUserService.saveIsAdmin(this.admin);
-        if (this.admin) {
-          //console.log('mode admin')
-        }
-        else {
-         // console.log('mode user')
-          this.router.navigate(['/']);
-        }
-
+        this.isAdminMode = !this.isAdminMode;
+        this.storeUserService.saveIsAdmin(this.isAdminMode);
+        if (!this.isAdminMode) this.router.navigate(['/']);
       }
       this.pressedKeys.splice(0, 1);
     }
   }
 
-
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event:any) {
-  //   const body = this.elementRef.nativeElement.style.setProperty('--innerHeight', event.target.innerHeight+'px');
-    // setTimeout(() =>  alert(event.target.innerHeight),3000)
-
-    // this.renderer.setStyle(body, 'height', event.target.innerHeight+'px');
-
-  constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService,
-              private router: Router, private renderer: Renderer2,
-              private elementRef: ElementRef) {
-    this.swUpdate.versionUpdates.subscribe(version => {
-      // console.log(version);
-      if(version.type === "VERSION_READY"){
-        window.location.reload();
-      }
-    })
-
-  }
-  secretCode: string = "ArrowLeftArrowLeftArrowRightArrowRightArrowUpArrowUpArrowDownArrowDown"
-  admin: boolean = false;
-  // userList?: any[];
-  user: User;
-  isShowHeader: boolean
-
-  prepareRoute(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
-  }
-
   ngOnInit() {
-
-
-
-    // window.innerHeight
-    this.storeUserService.observeIsLoggedIn().pipe(
+    this.isShowHeader$ = this.storeUserService.observeIsLoggedIn().pipe(
       switchMap(isLoggedIn => {
         if (isLoggedIn) {
           return this.storeUserService.observeUser().pipe(
@@ -84,14 +56,11 @@ export class AppComponent implements OnInit {
           return of(false);
         }
       })
-    ).subscribe(isShowHeader => {
-      this.isShowHeader = isShowHeader;
-    });
-
-    this.storeUserService.observeIsAdmin().subscribe(isAdmin => {
-      this.admin = isAdmin;
-    });
+    )
   }
 
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
 }
 
