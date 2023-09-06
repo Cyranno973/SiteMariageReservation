@@ -10,7 +10,7 @@ import {ProgramComponent} from "./program/program.component";
 const routes: Routes =
   [
     {path: 'home', component: HomeComponent, data: { animation: 'home' }},
-    {path: 'program', component: ProgramComponent, data: { animation: 'program' }},
+    {path: 'program', canActivate: [AuthGard] , component: ProgramComponent, data: { animation: 'program' }},
     // {path: 'acceuil', component: AcceuilComponent},
     {path: 'activity', canActivate: [AuthGard] , data: { animation: 'activity' }, component: ActivityComponent},
     {path: 'info', data: {route: 'info', animation: 'info'}, canActivate: [AuthGard],  component: InfoComponent},

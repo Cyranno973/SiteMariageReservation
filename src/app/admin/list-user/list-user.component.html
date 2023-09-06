@@ -1,7 +1,7 @@
 <div class="container-input">
   <mat-form-field appearance="fill">
     <mat-label>Filtre</mat-label>
-    <input (keyup)="updateFilter($event)"  id="" matInput name="" type="text">
+    <input (keyup)="updateFilter($event)" id="" matInput name="" type="text">
   </mat-form-field>
 </div>
 
@@ -24,12 +24,19 @@
   <ng-container matColumnDef="statusUser">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Statut</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      {{user.statusUser | titlecase}}</mat-cell>
+      <ng-container *ngIf="user.statusUser === 'incomplete'"><div>Incomplet</div></ng-container>
+      <ng-container *ngIf="user.statusUser === 'complete'"><div>Compléter</div></ng-container>
+      <ng-container *ngIf="user.statusUser === 'first'"><div>Jamais connecté</div></ng-container>
+    </mat-cell>
   </ng-container>
+
   <ng-container matColumnDef="choice">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Participe</mat-header-cell>
     <mat-cell *matCellDef="let user">
-      {{user.choice | titlecase}}</mat-cell>
+      <ng-container *ngIf="user.choice === 'all'">N'a pas choisie</ng-container>
+      <ng-container *ngIf="user.choice === 'p'">Présent</ng-container>
+      <ng-container *ngIf="user.choice === 'a'">Absent</ng-container>
+    </mat-cell>
   </ng-container>
   <ng-container matColumnDef="category">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
@@ -63,6 +70,10 @@
     <mat-cell *matCellDef="let user">
       <div class="action">
         <div class="container-btn">
+          <div>
+            <input (click)="toggleOrganization(user)" [checked]="user.organisation" name="" type="checkbox" >
+<!--            <mat-checkbox [checked]="user.organisation"  color="warn" (click)="toggleOrganization(user)"></mat-checkbox>-->
+          </div>
           <button (click)="onRowClicked(user)" color="primary" mat-raised-button>
             <mat-icon fontIcon="edit"></mat-icon>
           </button>

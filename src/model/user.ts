@@ -25,11 +25,12 @@ export interface Personne {
 }
 
 export interface User extends Personne {
+  isModifying: boolean;
   id: string,
   tel?: string,
   statusUser?: Status,
   choice: Choice,
-  organisation: false,
+  organisation: boolean,
   accompaniement?: Personne[]
 }
 

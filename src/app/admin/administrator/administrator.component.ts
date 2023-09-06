@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StoreUserService} from "../../services/store-user.service";
 import {User} from "../../../model/user";
 import {UserService} from "../../services/user.service";
@@ -7,14 +7,16 @@ import {utils, WorkBook, WorkSheet, writeFile} from 'xlsx';
 import {StatistiquesService} from "../../services/statistiques.service";
 import {AttendanceStatistics} from "../../../model/AttendanceStatistics";
 import {saveAs} from 'file-saver';
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
+import {ModalComponent} from "../../components/modal/modal.component";
 
 @Component({
   selector: 'app-admin',
   templateUrl: './administrator.component.html',
   styleUrls: ['./administrator.component.scss']
 })
-export class AdministratorComponent implements OnInit {
+export class AdministratorComponent implements OnInit, OnDestroy {
   attendanceStatistics$: Observable<AttendanceStatistics>;
 
   updateBtn: boolean;
@@ -22,26 +24,28 @@ export class AdministratorComponent implements OnInit {
   userList: User[];
   showForm: boolean = false;
   userForm: FormGroup;
+  private userSubscription: Subscription;
+  private userStoreSubscription: Subscription;
+  private storeUserSubscription: Subscription;
 
   constructor(private statistiquesService: StatistiquesService,
               private fb: FormBuilder, private storeUserService: StoreUserService,
-              private userService: UserService) {
+              private userService: UserService, private dialog: MatDialog) {
 
   }
 
   ngOnInit() {
-    // this.userService.updateAllUsersWithNewProperty();
     this.attendanceStatistics$ = this.statistiquesService.getAttendanceStatistics();
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       username: ['', [Validators.required, Validators.minLength(3)]],
       tel: [''],
-    })
-    this.storeUserService.observeUserList().subscribe(users => this.userList = users);
-    this.userService.getAll().subscribe(data => {
+    });
+    this.userStoreSubscription = this.storeUserService.observeUserList().subscribe(users => this.userList = users);
+    this.userSubscription = this.userService.getAll().subscribe(data => {
       this.userList = data;
       // console.log(data[80]);
-      console.log(data);
+      // console.log(data);
       this.storeUserService.saveUserList(data)
     });
   }
@@ -78,7 +82,15 @@ export class AdministratorComponent implements OnInit {
   updateForm(e: User | string) {
     if (typeof e === "string") {
       this.updateBtn = false;
-      this.userService.delete(e);
+      const dialogRef = this.dialog.open(ModalComponent, {width: '390px', height: '160px'});
+
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+        if (result) {
+          console.log(result);
+          // console.log('suppression effectué')
+          this.userService.delete(e);
+        }
+      });
     } else {
       this.updateBtn = true;
       this.user = e;
@@ -111,7 +123,7 @@ export class AdministratorComponent implements OnInit {
   exportUser() {
     try {
       const dataUserJson = JSON.stringify(this.userList);
-      const blob = new Blob([dataUserJson], { type: 'text/plain;charset=utf-8' });
+      const blob = new Blob([dataUserJson], {type: 'text/plain;charset=utf-8'});
       const currentDate = new Date();
       const day = String(currentDate.getDate()).padStart(2, '0');
       const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -122,9 +134,22 @@ export class AdministratorComponent implements OnInit {
       const formattedDate = `${year}${month}${day}-${hour}${minutes}${seconds}`;
 
       saveAs(blob, `backupListInvite-${formattedDate}.json`);
-    }
-    catch(err){
+    } catch (err) {
       console.error('Erreur lors de la conversion en JSON :', err)
+    }
+  }
+
+  ngOnDestroy() {
+    // Désabonnez tous les observables pour éviter les fuites mémoire
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+
+    if (this.userStoreSubscription) {
+      this.userStoreSubscription.unsubscribe();
+    }
+    if (this.storeUserSubscription) {
+      this.storeUserSubscription.unsubscribe();
     }
   }
 }

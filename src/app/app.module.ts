@@ -37,6 +37,7 @@ import {FallingPetalsComponent} from './components/falling-petals/falling-petals
 import {TooltipComponent} from './components/tooltip/tooltip.component';
 import {ProgramComponent} from './program/program.component';
 import {CountdownComponent} from './components/countdown/countdown.component';
+import {ModalComponent} from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {CountdownComponent} from './components/countdown/countdown.component';
     TooltipComponent,
     ProgramComponent,
     CountdownComponent,
+    ModalComponent,
 
   ],
   imports: [

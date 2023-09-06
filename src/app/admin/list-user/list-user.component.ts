@@ -1,18 +1,19 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {StoreUserService} from "../../services/store-user.service";
-import {Status, User} from "../../../model/user";
+import {User} from "../../../model/user";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
+import {UserService} from "../../services/user.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-list-user',
   templateUrl: './list-user.component.html',
   styleUrls: ['./list-user.component.scss']
 })
-export class ListUserComponent implements OnInit {
+export class ListUserComponent implements OnInit, OnDestroy {
   users: User[];
-  enfantNbr: number;
-  totalPeople: number;
+  private userSubscription: Subscription;
   displayedColumns: string[] = [
     'id', 'name', 'username', 'category', 'statusUser', 'choice', 'menu', 'accompaniement', 'action'];
   dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
@@ -20,30 +21,15 @@ export class ListUserComponent implements OnInit {
   empty: boolean;
   @Output() idUser: EventEmitter<User | string> = new EventEmitter<User | string>();
 
-  constructor(private storeUserService: StoreUserService) {}
+  constructor(private storeUserService: StoreUserService, private userService: UserService) {}
 
   ngOnInit() {
-    this.storeUserService.observeUserList().subscribe(users => {
-      this.users = users;
-      // console.log(users)
+    this.userSubscription = this.storeUserService.observeUserList().subscribe(users => {
+      this.users = users?.filter((user: User) => user.id === "568347");
+      console.log(this.users);
+      // this.users = users;
       this.dataSource.data = this.users;
       this.dataSource.sort = this.sort;
-      this.users?.length;
-       this.totalPeople = users?.reduce((acc:number, curr:User) => acc + 1 + (curr.accompaniement ? curr.accompaniement.length : 0), 0);
-      // console.log(this.totalPeople);
-      this.enfantNbr = this.users?.reduce((accumulator, current) => {
-        let count = current.selectedCategory === 'Enfant' ? 1 : 0;
-        if (current.accompaniement) {
-          count += current.accompaniement.filter(accomp => accomp.selectedCategory === 'Enfant').length;
-        }
-        return accumulator + count;
-      }, 0);
-      const present = users?.reduce((acc: number, user: User) => {
-        if(user.statusUser === Status.Complete) {
-          //console.table(user);
-
-        }
-      }, 0)
     })
   }
 
@@ -57,5 +43,20 @@ export class ListUserComponent implements OnInit {
     const finalFilter = value.trim().toLowerCase();
     this.dataSource.filter = finalFilter;
     if (!finalFilter.length) this.empty = true;
+  }
+  toggleOrganization(user: User) {
+    user.organisation = !user.organisation;
+    console.log(user.organisation);
+    this.storeUserService.saveUser(user);
+    setTimeout(() =>{
+    this.userService.update(user);
+    },1000)
+  }
+
+  ngOnDestroy() {
+    // Désabonnez-vous de l'abonnement ici pour éviter les fuites de mémoire
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 }
