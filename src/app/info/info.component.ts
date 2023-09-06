@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Media} from "../../model/media";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -12,7 +12,7 @@ import {MediaInfoService} from "../services/media-info-service";
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.scss']
 })
-export class InfoComponent {
+export class InfoComponent implements OnInit {
   title: string;
   lien: string;
   description: string;
@@ -34,6 +34,7 @@ export class InfoComponent {
   }
 
   ngOnInit(): void {
+    console.log('aiieee')
     this.storeUserService.observeIsAdmin().subscribe(admin => {
       this.admin = admin;
       this.getActivityData();

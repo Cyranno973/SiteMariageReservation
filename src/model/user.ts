@@ -29,7 +29,7 @@ export interface User extends Personne {
   tel?: string,
   statusUser?: Status,
   choice: Choice,
-  selectedCategory?: string;
+  organisation: false,
   accompaniement?: Personne[]
 }
 

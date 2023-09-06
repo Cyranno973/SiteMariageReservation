@@ -39,22 +39,25 @@ mat-toolbar {
     padding: 0 10px;
   }
 
-  mat-icon, img{
+   svg{
     position: sticky;
     bottom: 0;
     z-index: 1000;
     padding: 15px;
     font-size: 30px;
-    width: 100%;
+    width: 63px;
     height: 100%;
     text-align: center;
     color: #43a047;
+    fill: #43a047;
   }
+
 }
 
 .active {
-  mat-icon,img {
+  mat-icon,svg {
     color: $gold;
+    fill: $gold;
   }
   span {
     color: $gold;

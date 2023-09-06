@@ -35,6 +35,8 @@ import {AngularFireMessagingModule} from "@angular/fire/compat/messaging";
 import {AcceuilComponent} from './acceuil/acceuil.component';
 import {FallingPetalsComponent} from './components/falling-petals/falling-petals.component';
 import {TooltipComponent} from './components/tooltip/tooltip.component';
+import {ProgramComponent} from './program/program.component';
+import {CountdownComponent} from './components/countdown/countdown.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import {TooltipComponent} from './components/tooltip/tooltip.component';
     AcceuilComponent,
     FallingPetalsComponent,
     TooltipComponent,
+    ProgramComponent,
+    CountdownComponent,
 
   ],
   imports: [

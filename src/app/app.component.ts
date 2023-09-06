@@ -2,7 +2,7 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {Choice, User} from "../model/user";
 import {UserService} from "./services/user.service";
 import {StoreUserService} from "./services/store-user.service";
-import {Router, RouterOutlet} from "@angular/router";
+import {NavigationEnd, Router, RouterOutlet} from "@angular/router";
 
 import {Observable, of, switchMap} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   isShowHeader$: Observable<boolean>;
   admin$: Observable<boolean>;
   private isAdminMode: boolean = false;
+
 
   constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService,
               private router: Router) {
@@ -46,6 +47,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.events.subscribe(x => {
+      if(x instanceof NavigationEnd)
+      {
+        window.scrollTo(0, 0);
+      }
+    });
+
     this.isShowHeader$ = this.storeUserService.observeIsLoggedIn().pipe(
       switchMap(isLoggedIn => {
         if (isLoggedIn) {

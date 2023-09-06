@@ -18,7 +18,6 @@ export class AdministratorComponent implements OnInit {
   attendanceStatistics$: Observable<AttendanceStatistics>;
 
   updateBtn: boolean;
-  UserToUpdate: User;
   user: User;
   userList: User[];
   showForm: boolean = false;
@@ -31,6 +30,7 @@ export class AdministratorComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.userService.updateAllUsersWithNewProperty();
     this.attendanceStatistics$ = this.statistiquesService.getAttendanceStatistics();
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -69,7 +69,7 @@ export class AdministratorComponent implements OnInit {
   }
 
 
-  saveForm(e: string) {
+  saveForm() {
     this.userService.createUSerPartial([], this.userForm.value);
     this.userForm.reset()
     this.showForm = !this.showForm
@@ -111,7 +111,6 @@ export class AdministratorComponent implements OnInit {
   exportUser() {
     try {
       const dataUserJson = JSON.stringify(this.userList);
-      // console.log(dataUserJson);
       const blob = new Blob([dataUserJson], { type: 'text/plain;charset=utf-8' });
       const currentDate = new Date();
       const day = String(currentDate.getDate()).padStart(2, '0');
@@ -121,7 +120,6 @@ export class AdministratorComponent implements OnInit {
       const minutes = String(currentDate.getMinutes()).padStart(2, '0');
       const seconds = String(currentDate.getSeconds()).padStart(2, '0');
       const formattedDate = `${year}${month}${day}-${hour}${minutes}${seconds}`;
-      // console.log(formattedDate);
 
       saveAs(blob, `backupListInvite-${formattedDate}.json`);
     }

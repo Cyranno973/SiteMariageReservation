@@ -29,14 +29,13 @@ export class UserService {
     else if (user) this.creationUser(user, false)
   }
 
-
   createOrUpdate(user: Partial<User>, creation: boolean = false): any {
     if (creation) {
       return this.generatorIdentifiant().then(id => {
         const userClean = this.removeEmptyProperties({ ...user, id });
         return this.usersRef.doc(userClean.id).set(userClean);
       }).then(user => {
-        // console.log('user created')
+        console.log('user created', user);
       });
     } else {
       const userClean = this.removeEmptyProperties(user);
@@ -46,6 +45,19 @@ export class UserService {
     }
   }
 
+  updateAllUsersWithNewProperty(): void {
+    this.getAll().subscribe(users => {
+      const res = users.reduce((acc:number, user:Partial<User>) => user? acc+1: acc+0, 0)
+      console.log(res);
+      users.forEach((user: Partial<User>) => {
+        user.selectedCategory = "Adulte";
+        // user.organisation = false;
+        // console.log(user)// Ajoutez la nouvelle propriété à chaque utilisateur
+        this.update(user); // Mettez à jour l'utilisateur dans Firebase
+      });
+    });
+  }
+
   update(user: Partial<User>): any {
     const userClean = this.removeEmptyProperties(user);
     return this.usersRef.doc(userClean.id).update(userClean).then(user => {
@@ -53,7 +65,18 @@ export class UserService {
     })
   }
 
-  // }
+  private creationUser(user: Partial<User>, idInTheList:boolean) {
+    user.statusUser = user.statusUser || Status.First;
+    user.choice = user.choice || Choice.All;
+    user.organisation = user.organisation || false;
+    user.selectedCategory = "Adulte";
+
+    const accompaniement = user.accompaniement || []; // Initialiser accompaniement avec un tableau vide s'il n'est pas fourni
+    user.accompaniement = accompaniement;
+    // console.log(user)
+    return idInTheList ? this.createOrUpdate(user, false): this.createOrUpdate(user, true);
+  }
+
   private generatorIdentifiant(): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const generateId = (): string => {
@@ -78,20 +101,6 @@ export class UserService {
     });
   }
 
-  //   return id
-  /**avec firebase si on veut creer une collection avec un od personalisé il faut utiliser update
-   -*+   * @param user
-   * @param creation
-   */
-
-  // createOrUpdate(user: Partial<User>, creation: boolean = false): any {
-  //   const userClean = this.removeEmptyProperties(user);
-  //   return this.usersRef.doc(userClean.id).set(userClean).then(user => console.log('user creer'));
-  // }
-  createWithOutGeneratorIdentifiant(){
-
-  }
-
   delete(id: string): Promise<void> {
     return this.usersRef.doc(id).delete()
   }
@@ -105,32 +114,4 @@ export class UserService {
     });
     return obj
   }
-
-
-  // private creationUser(user: Partial<User>) {
-  //   console.log(user)
-  //   user.id = this.generatorIdentifiant();
-  //   user.statusUser = Status.First;
-  //   user.choice = Choice.All;
-  //   user.accompaniement = [];
-  //   return this.createOrUpdate(user, true);
-
-  // }
-  private creationUser(user: Partial<User>, idInTheList:boolean) {
-   // console.log(user)
-    // user.id = this.generatorIdentifiant();
-    user.statusUser = user.statusUser || Status.First;
-    user.choice = user.choice || Choice.All;
-
-    const accompaniement = user.accompaniement || []; // Initialiser accompaniement avec un tableau vide s'il n'est pas fourni
-    user.accompaniement = accompaniement;
-   // console.log(user)
-    return idInTheList ? this.createOrUpdate(user, false): this.createOrUpdate(user, true);
-  }
-
-  // private generatorIdentifiant(): string {
-  //   const id = Math.floor(Math.random() * (999999 - 111111) + 111111).toString();
-  //   if (id === '99999' || id === '111111') this.generatorIdentifiant()
-  //   this.getById(id).subscribe(user => user.exists ? this.generatorIdentifiant() : id)
-
 }
