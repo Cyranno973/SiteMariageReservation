@@ -21,11 +21,10 @@ export interface Personne {
   name?: string,
   allergie?: string,
   menu?: Menu,
-  selectedCategory?: string ,
+  selectedCategory: string ,
 }
 
 export interface User extends Personne {
-  isModifying: boolean;
   id: string,
   tel?: string,
   statusUser?: Status,

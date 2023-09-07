@@ -1,4 +1,4 @@
-import {Component, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -64,22 +64,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Écouter l'événement de clavier lorsque le clavier est affiché
-  @HostListener('window:keyboardWillShow', ['$event'])
-  onKeyboardWillShow(event: any): void {
-    alert('azazaa')
-    // Ajuster la position des notifications ici en fonction de la taille du clavier
-    // Par exemple, déplacez les notifications vers le haut pour éviter qu'elles ne soient recouvertes
-  }
-
   submit(event: Event) {
-
     const inputElt = event.target as HTMLInputElement;
     this.inputBillet = inputElt.value;
 
     if (this.inputBillet === '102030') {
       this.storeUserService.saveIsAdmin(true);
-      //console.log('admin true')
       this.router.navigate(['/admin']);
       return;
     }
@@ -87,6 +77,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     const reg = new RegExp('^[0-9]*$');
     if (reg.test(this.inputBillet) && this.inputBillet.length === 6) this.checkUserExist();
     else this.errorFormulaire = true;
+  }
+
+  private checkUserExist() {
+    this.userService.getById(this.inputBillet).subscribe(user => {
+      if (!user.exists) this.errorFormulaire = true
+      else {
+        this.first = false;
+        this.user = user.data();
+        this.storeUserService.saveIsLoggedIn(true);
+        this.updateData();
+      }
+    })
   }
 
   updateData() {
@@ -117,7 +119,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.user.choice = Choice.A;
       delete this.user.menu;
       delete this.user.allergie;
-      delete this.user.selectedCategory;
       this.user.accompaniement = [];
       //// console.log(this.user)
       this.userService.createOrUpdate(this.user);
@@ -169,15 +170,5 @@ export class HomeComponent implements OnInit, OnDestroy {
   //     }).catch((err) => {
   //     console.log('An error occurred while retrieving token. ', err);
 
-  private checkUserExist() {
-    this.userService.getById(this.inputBillet).subscribe(user => {
-      if (!user.exists) this.errorFormulaire = true
-      else {
-        this.first = false;
-        this.user = user.data();
-        this.storeUserService.saveIsLoggedIn(true);
-        this.updateData();
-      }
-    })
-  }
+
 }

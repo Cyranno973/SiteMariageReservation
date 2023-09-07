@@ -21,7 +21,7 @@
       </div>
 
 <!--      <div *ngIf="form?.get('tel').value && form?.get('tel').value !== ''" class="container-field">-->
-      <div class="container-field">
+      <div *ngIf="index > 1" class="container-field">
       <input [attr.id]="'tel' + index" class="form__input" formControlName="tel" placeholder=" " type="numeric"/>
         <label [attr.for]="'tel' + index" class="form__label">Portable</label>
         <mat-icon *ngIf="index < 0" class="lockIcon" fontIcon="lock"></mat-icon>
@@ -36,6 +36,7 @@
           <option [value]="''" disabled hidden>Choisissez la catégorie</option>
           <option *ngFor="let category of categories" [value]="category">{{category}}</option>
         </select>
+        <mat-icon *ngIf="index < 0" class="lockIcon" fontIcon="lock"></mat-icon>
         <div *ngIf="form.get('selectedCategory')?.invalid && form.get('selectedCategory')?.touched" [@fadeInOut] class="error-message">
           Veuillez choisir une catégorie
         </div>

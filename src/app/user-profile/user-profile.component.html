@@ -1,5 +1,5 @@
 <div *ngIf="userForm" class="registration-form">
-  <div (keyup)="save()" [formGroup]="userForm" class="form-container">
+  <div  [formGroup]="userForm" class="form-container">
     <app-user-form [form]="userForm" [index]="-1"></app-user-form>
     <div formArrayName="guests">
       <div *ngFor="let guest of generateFormGroups();  trackBy: trackByFn; let i=index" [formGroupName]="i">
@@ -12,6 +12,11 @@
         </div>
       </div>
       <div class="form-container__add-guest-container">
+        <button (click)="save()" [disabled]="!userForm.valid" [ngClass]="{'disabled': userForm.invalid || !userForm.dirty}"
+                class="form-container__add-guest-container__btn" type="submit">Enregistrer</button>
+
+        <br><br><br>
+
         <button (click)="addGuest()" [disabled]="!userForm.valid" [ngClass]="{'disabled': userForm.invalid}"
                 class="form-container__add-guest-container__btn" type="button">Ajouter une personne</button>
       </div>
