@@ -55,7 +55,7 @@ export class UserProfileComponent implements OnInit {
 
   actualSave(guest:boolean = false) {
     if (this.userForm.valid && this.userForm.dirty) {
-      console.log('aa')
+      // console.log('aa')
       this.user.menu = this.userForm.value.menu;
       this.user.allergie = this.userForm.value.allergie?.length ? this.userForm.value.allergie : '';
       this.user.statusUser = Status.Complete;

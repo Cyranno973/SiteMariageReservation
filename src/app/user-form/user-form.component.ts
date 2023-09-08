@@ -33,7 +33,7 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.index);
+    // console.log(this.index);
     if(this.index < 0){
       this.indentationCategory = '83px';
       this.indentationValueMenu = `38px`;
@@ -43,7 +43,7 @@ export class UserFormComponent implements OnInit {
   }
 
   onCategoryChange() {
-    console.log('onCategoryChange')
+    // console.log('onCategoryChange')
     this.populateMenus();
     const menuChild = this.form.get('selectedCategory')?.value === 'Enfant' ? Menu.Child : '';
     // console.log(this.form.get('selectedCategory')?.value);
@@ -52,7 +52,7 @@ export class UserFormComponent implements OnInit {
   }
 
   onMenuChange() {
-    console.log(this.form.get('menu')?.value);
+    // console.log(this.form.get('menu')?.value);
     if (this.index < 0){
       if (this.form.get('menu')?.value === Menu.Fish) this.indentationValueMenu = '83px';
       if (this.form.get('menu')?.value === Menu.Meat) this.indentationValueMenu = '86px';
@@ -64,7 +64,7 @@ export class UserFormComponent implements OnInit {
 
   private populateMenus = () => {
     const selectedCategory = this.form.get('selectedCategory')?.value;
-    console.log(selectedCategory)
+    // console.log(selectedCategory)
     this.dishes = selectedCategory === 'Enfant' ? [Menu.Child] : [Menu.Fish, Menu.Meat];
 
     selectedCategory === '' ? this.indentationCategory = `35px`: selectedCategory === 'Enfant' ? this.indentationCategory = `85px` : this.indentationCategory = '86px';
