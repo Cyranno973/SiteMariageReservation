@@ -35,8 +35,9 @@ export class UserService {
         const userClean = this.removeEmptyProperties({ ...user, id });
         return this.usersRef.doc(userClean.id).set(userClean);
       }).then(user => {
-        console.log('user created', user);
-      });
+        // console.log('user created', user);
+      })
+        // .catch((err) => console.log(err));
     } else {
       const userClean = this.removeEmptyProperties(user);
       return this.usersRef.doc(userClean.id).set(userClean).then(user => {

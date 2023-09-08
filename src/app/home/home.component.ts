@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -37,14 +37,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   errorFormulaire: boolean = false; //TODO faire un validator personnalisé et supprimer cette variable
   showModifChoice: boolean = false;
   isLoggedIn: boolean = false;
-  user: User;
+  @Input() user: User;
   form: FormGroup = this.fb.group({
     numero: ['', [Validators.required, Validators.minLength(6)]]
   })
   first: boolean = true;
 
   ngOnInit() {
-
+    // this.submit();
     this.storeUserService.observeUser().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(user => this.user = user);
@@ -64,9 +64,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  submit(event: Event) {
-    const inputElt = event.target as HTMLInputElement;
-    this.inputBillet = inputElt.value;
+  submit(event?: Event) { // Todo retirer point d'interogation
+    const inputElt = event?.target as HTMLInputElement; //TODO retirer point d'interogation
+    this.inputBillet = inputElt.value; // Todo et remmettre
+    // this.inputBillet = '568347'; // Todo supprimer
 
     if (this.inputBillet === '102030') {
       this.storeUserService.saveIsAdmin(true);
@@ -107,6 +108,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (choice === 'p') {
       this.user.statusUser = Status.Incomplete;
       this.user.choice = Choice.P;
+      this.user.selectedCategory = "Adulte";
+
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);
       //console.log('show notif')

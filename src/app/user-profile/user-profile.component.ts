@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Personne, Status, User} from "../../model/user";
 import {StoreUserService} from "../services/store-user.service";
@@ -24,6 +24,7 @@ export class UserProfileComponent implements OnInit {
               private storeUserService: StoreUserService,
               private userService: UserService,
               private toastr: ToastrService,
+              private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -61,7 +62,8 @@ export class UserProfileComponent implements OnInit {
       this.user.accompaniement = this.userForm.value.guests as Personne[];
       this.userService.createOrUpdate(this.user).then(() => {
         // Notification après confirmation de Firebase
-        const inviteName = this.user!.accompaniement![this.user!.accompaniement!.length-1].username;
+        const inviteName = this.user?.accompaniement?.[this.user.accompaniement.length-1]?.username;
+
         guest? this.toastr.success(`Invité ${inviteName} enregistré avec succès !`): this.toastr.success('Formulaire enregistré avec succès !');
 
       }).catch(() => {
@@ -71,6 +73,7 @@ export class UserProfileComponent implements OnInit {
       this.storeUserService.saveUser(this.user);
 
       this.userForm.markAsPristine();//  Cool Marque le formulaire comme non modifié (pristine)
+      this.cdr.detectChanges();
     }
   }
 
@@ -95,7 +98,7 @@ export class UserProfileComponent implements OnInit {
       menu: [user?.menu || '', Validators.required],
     }, {validators: menuValidator});
     this.guests.push(invite);
-
+    this.cdr.detectChanges();
   }
 
   removeGuest(i: number) {

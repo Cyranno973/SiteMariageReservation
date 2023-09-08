@@ -14,8 +14,8 @@ const routes: Routes =
     // {path: 'acceuil', component: AcceuilComponent},
     {path: 'activity', canActivate: [AuthGard] , data: { animation: 'activity' }, component: ActivityComponent},
     {path: 'info', data: {route: 'info', animation: 'info'}, canActivate: [AuthGard],  component: InfoComponent},
-    // {path: 'admin', canActivate: [AuthGard] , data: { animation: 'admin' }, component: AdministratorComponent},
-    {path: 'admin', component: AdministratorComponent},
+    {path: 'admin', canActivate: [AuthGard] , data: { animation: 'admin' }, component: AdministratorComponent},
+    // {path: 'admin', component: AdministratorComponent},
     {path: '**', redirectTo: '/home'},
     // {path: '**', redirectTo: '/admin'},
   ]
