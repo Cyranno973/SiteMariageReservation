@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   errorFormulaire: boolean = false; //TODO faire un validator personnalisé et supprimer cette variable
   showModifChoice: boolean = false;
   isLoggedIn: boolean = false;
-  @Input() user: User;
+  user: User;
   form: FormGroup = this.fb.group({
     numero: ['', [Validators.required, Validators.minLength(6)]]
   })

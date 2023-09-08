@@ -47,6 +47,9 @@
       transform: translateY(-20px);
     }
   }
+  select:disabled {
+    opacity: 1!important;
+  }
   &__select {
     padding: 15px 10px;
     font-size: 1.2rem;
@@ -55,13 +58,14 @@
     color: #211f1f;
     background-color: rgba(255, 255, 255, 0.7);
     outline: 0;
-
+    text-align: inherit;
     font-weight: 500;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     position: relative;
     min-width: 250px;
+    max-width: 250px;
 
     &:focus {
       box-shadow: 0 0 5pt 1pt #3c4f09;
@@ -107,7 +111,7 @@
   //transform: translateX(-50%);
 }
 .centered-option {
-  text-align: center;
+  //text-align: center;
 }
 .shakeX {
   animation: 0.5s shakeX ;

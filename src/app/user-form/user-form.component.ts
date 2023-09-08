@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {Menu} from "../../model/user";
 import {animate, state, style, transition, trigger} from "@angular/animations";
@@ -17,48 +17,63 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
     ])
   ]
 })
-export class UserFormComponent implements AfterViewInit {
+export class UserFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() index: number;
   dishes: string[] = [];
   categories = ['Adulte', 'Enfant'];
-  indentationCategory: string = '0';
-  indentationValueMenu: string = '0';
+  indentationCategory: string = '0px';
+  indentationValueMenu: string = '0px';
+  indentationGuestMenu: string = '0px';
   @ViewChild('selectContainer') selectContainer!: ElementRef;
-  constructor() {
+
+  constructor(private cdRef: ChangeDetectorRef) {
   }
 
   onCategoryChange() {
     this.populateMenus();
-    const menu = this.form.get('selectedCategory')?.value === 'Enfant' ? Menu.Child : '';
-    this.form.get('menu')?.setValue(menu);
+    const menuChild = this.form.get('selectedCategory')?.value === 'Enfant' ? Menu.Child : '';
+    const menuAdulte = this.form.get('selectedCategory')?.value === 'Adulte';
+    console.log(this.form.get('selectedCategory')?.value);
+    this.form.get('menu')?.setValue(menuChild);
+    if (menuChild === '') this.indentationGuestMenu = '35px';
+    // if (menuAdulte === Menu.Meat) this.indentationGuestMenu = '35px';
+  }
+  onMenuChange(index: number){
+    console.log(this.form.get('menu')?.value);
+    if (this.form.get('menu')?.value === Menu.Fish) this.indentationGuestMenu = '83px';
+    if (this.form.get('menu')?.value === Menu.Fish) this.indentationGuestMenu = '83px';
+
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
+    console.log(this.form?.get('menu')?.value);
     if (this.form?.get('menu')?.value) this.populateMenus();
   }
 
   private populateMenus = () => {
+    console.log('aiiie');
     const selectedCategory = this.form.get('selectedCategory')?.value;
-    // console.log(selectedCategory);
-    this.dishes = selectedCategory === 'Enfant' ? [Menu.Child] : [Menu.Fish, Menu.Meat];
-    const parentWidth = this.selectContainer?.nativeElement.offsetWidth;
-    console.log(parentWidth);
-    // console.log(parentWidth);
-    // console.log(this.form);
-    if (selectedCategory === "Adulte"){
-      // this.indentationCategory = "3em"
-      // this.indentationCategory = "3em"
-      this.indentationCategory = `${parentWidth / 2.7}px`;
-      console.log(this.indentationCategory);
-      if(this.form.get('menu')?.value === ''){
 
-      this.indentationValueMenu = `36px`;
-      }
-    }else{
-      this.indentationCategory = `${parentWidth / 6}px`;
-      console.log(this.indentationCategory);
+    this.dishes = selectedCategory === 'Enfant' ? [Menu.Child] : [Menu.Fish, Menu.Meat];
+    console.log(this.dishes)
+    // const parentWidth = this.selectContainer?.nativeElement.offsetWidth;
+    this.indentationCategory = `89px`; //trop petit a droite
+    if (this.form.get('menu')?.value === Menu.Fish) {
+      this.indentationValueMenu = `83px`;
+      this.indentationGuestMenu =this.indentationValueMenu;
     }
+    if (this.form.get('menu')?.value === Menu.Meat) {
+      this.indentationValueMenu = `86px`;
+      this.indentationGuestMenu = this.indentationValueMenu
+    }
+    if (this.form.get('menu')?.value === Menu.Child) {
+      this.indentationGuestMenu = `62px`;
+    }
+    if (this.form.get('menu')?.value === null) {
+      this.indentationGuestMenu = '0px';
+    }
+    this.cdRef.detectChanges();
   };
 
 }

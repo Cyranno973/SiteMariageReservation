@@ -34,7 +34,6 @@ export class InfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('aiieee')
     this.storeUserService.observeIsAdmin().subscribe(admin => {
       this.admin = admin;
       this.getActivityData();
@@ -55,12 +54,9 @@ export class InfoComponent implements OnInit {
 
   drop(event: CdkDragDrop<Media[]>) {
     moveItemInArray(this.activityList, event.previousIndex, event.currentIndex);
-    //console.log(event.previousIndex, event.currentIndex);
-    //console.table(this.activityList)
     this.activityList.forEach((item, index) => {
       item.order = index;
     });
-    //console.table(this.activityList)
 
     this.mediaInfoService.updateOrderInFirestore(this.activityList).then(() => {
       //console.log('Order updated in Firestore!');
@@ -88,13 +84,8 @@ export class InfoComponent implements OnInit {
 
 
   saveMedia() {
-    //console.log('Description:', this.description);
-    //console.log('lien:', this.lien);
-    //console.log('file :', this.file?.name);
-
     if (!this.file && !this.updateBtn) return;
 
-    // const filePath = `images/${this.file?.name ?? this.media.imageUrl.substring(this.media.imageUrl.lastIndexOf('/') + 1)}`;
     const filePath = `images/${this.file?.name ?? (this.media ? this.media.imageUrl.substring(this.media.imageUrl.lastIndexOf('/') + 1) : '')}`;
 
     const storageRef = this.storage.ref(filePath);
@@ -175,14 +166,10 @@ export class InfoComponent implements OnInit {
   }
 
   updateMedia(media: Media) {
-    //console.log(this.media)
-    //console.log(media)
     this.media = media;
     this.file = media.file;
     this.updateBtn = true;
     this.mediaForm.setValue({title: media.title, description: media.description, lien: media.urlExterne})
     this.previewUrl = media.imageUrl;
-    // this.showForm = true;
-    // this.mediaInfoService.update({...media})
   }
 }

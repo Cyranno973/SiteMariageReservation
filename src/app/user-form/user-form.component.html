@@ -31,8 +31,11 @@
       </div>
 
       <div class="container-field">
+        {{ indentationCategory}}
+        <br>
         <select #selectContainer
-          (change)="onCategoryChange()" [formControlName]="'selectedCategory'" [ngClass]="{'shakeX': form?.get('selectedCategory').invalid && form?.get('selectedCategory').touched}"  [style.textIndent]="indentationCategory" class="form__select  centered-select">
+          (change)="onCategoryChange()" [formControlName]="'selectedCategory'" [ngClass]="{'shakeX': form?.get('selectedCategory').invalid && form?.get('selectedCategory').touched}"
+                [style.textIndent]="indentationCategory" class="form__select  centered-select">
           <option [value]="''" disabled hidden>Choisissez la catégorie</option>
           <option *ngFor="let category of categories" [value]="category">{{category}}</option>
         </select>
@@ -41,11 +44,15 @@
           Veuillez choisir une catégorie
         </div>
       </div>
+
       <div *ngIf="form.get('selectedCategory')?.value" class="container-field">
-        <select [formControlName]="'menu'"
-          [ngClass]="{'shakeX': form?.get('menu').invalid && form?.get('menu').touched}" [style.textIndent]="indentationValueMenu" class="form__select centered-select">
-          <option [style.textIndent]="indentationValueMenu" [value]="''" disabled hidden>Choisissez un plat</option>
-          <option *ngFor="let dish of dishes" [style.textIndent]="indentationValueMenu" [value]="dish" class="centered-option">{{dish}}</option>
+        {{ index < 0 ? indentationValueMenu: indentationGuestMenu}}
+        <br>
+        <select (change)="onMenuChange(index)" [formControlName]="'menu'"
+          [ngClass]="{'shakeX': form?.get('menu').invalid && form?.get('menu').touched}"
+                [style.textIndent]="index < 0 ? indentationValueMenu: indentationGuestMenu" class="form__select centered-select">
+          <option [value]="''" disabled hidden>Choisissez un plat</option>
+          <option *ngFor="let dish of dishes" [value]="dish" class="centered-option">{{dish}}</option>
         </select>
         <div *ngIf="form.get('menu')?.invalid && form.get('menu')?.touched" [@fadeInOut] class="error-message">
           Veuillez choisir un plat

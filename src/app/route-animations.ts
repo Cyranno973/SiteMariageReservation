@@ -3,15 +3,23 @@ import {animate, group, query, style, transition, trigger,} from '@angular/anima
 export const routeAnimations =
   trigger('routeAnimations', [
     transition('home => activity', slideTo('right')),
+    transition('home => program', slideTo('right')),
     transition('home => info', slideTo('right')),
     transition('home => admin', slideTo('right')),
+    transition('program => activity', slideTo('right')),
+    transition('program => info', slideTo('right')),
+    transition('program => admin', slideTo('right')),
+    transition('program => home', slideTo('left')),
     transition('activity => home', slideTo('left')),
+    transition('activity => program', slideTo('left')),
     transition('activity => info', slideTo('right')),
     transition('activity => admin', slideTo('right')),
     transition('info => home', slideTo('left')),
+    transition('info => program', slideTo('left')),
     transition('info => activity', slideTo('left')),
     transition('info => admin', slideTo('right')),
     transition('admin => home', slideTo('left')),
+    transition('admin => program', slideTo('left')),
     transition('admin => activity', slideTo('left')),
     transition('admin => info', slideTo('left')),
   ]);

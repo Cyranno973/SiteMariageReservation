@@ -25,9 +25,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userSubscription = this.storeUserService.observeUserList().subscribe(users => {
-      this.users = users?.filter((user: User) => user.id === "568347");
-      console.log(this.users);
-      // this.users = users;
+      this.users = users;
       this.dataSource.data = this.users;
       this.dataSource.sort = this.sort;
     })
