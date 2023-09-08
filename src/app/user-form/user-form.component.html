@@ -31,8 +31,6 @@
       </div>
 
       <div class="container-field">
-        {{ indentationCategory}}
-        <br>
         <select #selectContainer
           (change)="onCategoryChange()" [formControlName]="'selectedCategory'" [ngClass]="{'shakeX': form?.get('selectedCategory').invalid && form?.get('selectedCategory').touched}"
                 [style.textIndent]="indentationCategory" class="form__select  centered-select">
@@ -46,9 +44,7 @@
       </div>
 
       <div *ngIf="form.get('selectedCategory')?.value" class="container-field">
-        {{ index < 0 ? indentationValueMenu: indentationGuestMenu}}
-        <br>
-        <select (change)="onMenuChange(index)" [formControlName]="'menu'"
+        <select (change)="onMenuChange()" [formControlName]="'menu'"
           [ngClass]="{'shakeX': form?.get('menu').invalid && form?.get('menu').touched}"
                 [style.textIndent]="index < 0 ? indentationValueMenu: indentationGuestMenu" class="form__select centered-select">
           <option [value]="''" disabled hidden>Choisissez un plat</option>
