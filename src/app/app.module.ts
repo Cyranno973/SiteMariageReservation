@@ -32,7 +32,6 @@ import {ToastrModule} from "ngx-toastr";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {StatsComponent} from './admin/stats/stats.component';
 import {AngularFireMessagingModule} from "@angular/fire/compat/messaging";
-import {AcceuilComponent} from './acceuil/acceuil.component';
 import {FallingPetalsComponent} from './components/falling-petals/falling-petals.component';
 import {TooltipComponent} from './components/tooltip/tooltip.component';
 import {ProgramComponent} from './program/program.component';
@@ -53,7 +52,6 @@ import {ModalComponent} from './components/modal/modal.component';
     AdministratorComponent,
     UserComponent,
     StatsComponent,
-    AcceuilComponent,
     FallingPetalsComponent,
     TooltipComponent,
     ProgramComponent,
@@ -90,8 +88,9 @@ import {ModalComponent} from './components/modal/modal.component';
       // QuillModule.forRoot(),
     })
   ],
-  providers: [MediaActivityService, MediaInfoService,{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [MediaActivityService, MediaInfoService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
 
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
