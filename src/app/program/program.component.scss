@@ -1,0 +1,30 @@
+@use './src/sass/utils/variables' as *;
+@use './src/sass/utils/mixins' as *;
+
+.container-program {
+  width: 100%;
+  height: 100%;
+  @include center-flex();
+
+  .container-img-program {
+    margin-top: 20px;
+    width: 95%;
+    max-width: 600px;
+
+    img {
+      width: 100%;
+      background-color: #fff;
+    }
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .container-img-program {
+    width: 43% !important;
+  }
+}
+@media only screen and (min-width: 496px) {
+  .container-img-program {
+    width: 90% !important;
+  }
+}

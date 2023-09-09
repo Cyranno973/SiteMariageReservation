@@ -1,0 +1,97 @@
+@use './src/sass/utils/variables' as *;
+@use './src/sass/utils/mixins' as *;
+
+.wrapper {
+  padding: 15px;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+  //background-color: rgba(0,0,0,0.5);
+  color: $b1Black;
+  width: 40%;
+  margin: 0 auto;
+  grid-template-areas:
+            "a a a"
+            "b b b"
+            "c c c"
+            "d d d"
+            "e e e"
+            "f f f"
+            "g g g"
+            "h h h"
+            "i i i"
+            "j j j";
+
+  div {
+    background-color: $white;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    @include center-flex();
+
+    h4 {
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 10px;
+      font-size: 1.5em;
+    }
+
+    h5 {
+      font-size: 2em;
+    }
+  }
+
+  .a, .i, .f {
+    grid-column: 1 / span 3;
+    text-align: center;
+    margin: 20px 0;
+    width: 100%;
+    background: linear-gradient(to bottom, #FFD700, #FFA500);
+  }
+
+  .b {
+    background: linear-gradient(to bottom, #66CCFF, #3399FF);
+  }
+
+  .c {
+    background: linear-gradient(to bottom, #FF6666, #FF3333);
+  }
+
+  .d {
+    background: linear-gradient(to bottom, #99FF99, #66FF66);
+  }
+
+  .e {
+    background: linear-gradient(to bottom, #FFB6C1, #FF69B4);
+  }
+
+  .f {
+    background: linear-gradient(to bottom, #FFD700, #FFA500);
+  }
+
+  .g {
+    background: linear-gradient(to bottom, #ffffff, #365e86)
+
+  }
+
+  .h {
+    background: linear-gradient(to bottom, #FF6666, #ad35c2);
+  }
+
+
+  .j {
+    background: linear-gradient(to bottom, #cebcbf, #574d52);
+  }
+
+  .k {
+    background: linear-gradient(to bottom, #ed1212, #f33f56)
+  }
+
+  .l {
+    background: linear-gradient(to bottom, #FFB6C1, #FF69B4);
+  }
+}

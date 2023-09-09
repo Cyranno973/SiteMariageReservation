@@ -1,0 +1,23 @@
+@use './src/sass/utils/variables' as *;
+@use './src/sass/utils/mixins' as *;
+.container-modal{
+  text-align: center;
+  @include center-flex();
+  color: $b1Black;
+  padding: 20px 5px;
+}
+.conf{
+  margin-top: 10px;
+  background-color: $red;
+  box-shadow: 1px 4px 2px rgb(0, 0,0, 0.5);
+  margin-bottom: 10px;
+  transition: all 0.3s ease-out;
+  &:hover,&:active {
+    color: $white;
+  }
+}
+.annule {
+  background-color: $white;
+  box-shadow: 1px 4px 2px rgb(0, 0,0, 0.5);
+
+}

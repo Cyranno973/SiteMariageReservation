@@ -1,0 +1,52 @@
+@use "./src/sass/utils/animation" as *;
+
+#countdown {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 10px;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  font-size: 13px;
+
+  .date {
+    padding: 5px;
+  }
+
+  .countdown-block {
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 5px;
+    margin: 0 5px;
+    text-align: center;
+
+
+    &.separator {
+      background-color: transparent;
+      color: #555;
+      padding: 0;
+
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  /* Votre CSS pour les tablettes ici */
+
+  #countdown {
+    font-size: 18px;
+  }
+
+  .date {
+    padding: 10px;
+  }
+  .separator {
+    padding: 5px;
+  }
+
+}
+

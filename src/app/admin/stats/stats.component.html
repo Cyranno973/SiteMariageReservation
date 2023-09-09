@@ -1,0 +1,52 @@
+<div>
+  <div *ngIf="statistics$ | async" class="wrapper">
+
+    <div class="a">
+      <h4>Billets envoyés</h4>
+      <h5>{{ (statistics$ | async)?.mainGuestCount }}</h5>
+    </div>
+    <div class="b">
+      <h4>présents</h4>
+      <h5>{{ (statistics$ | async)?.present }}</h5>
+    </div>
+    <div class="c">
+      <h4>absents</h4>
+      <h5>{{ (statistics$ | async)?.absent }}</h5>
+    </div>
+    <div class="d">
+      <h4>Sans reponse</h4>
+      <h5>{{ (statistics$ | async)?.notChosen }}</h5>
+    </div>
+    <div class="f">
+      <h4>Total des Personnes Presentes</h4>
+      <h5>{{ (statistics$ | async)?.totalPeople }}</h5>
+    </div>
+    <div class="h">
+      <h4>Adultes</h4>
+      <h5>{{ (statistics$ | async)?.adultCount }}</h5>
+    </div>
+    <div class="g">
+      <h4>enfants</h4>
+      <h5>{{ (statistics$ | async)?.enfantCount }}</h5>
+    </div>
+    <div class="h">
+      <h4>Statut à compléter</h4>
+      <h5>{{ (statistics$ | async)?.menuIncomplet }}</h5>
+    </div>
+    <div class="i">
+      <h4>Menu</h4>
+    </div>
+    <div class="j">
+      <h4>Poisson</h4>
+      <h5>{{ (statistics$ | async)?.poissonCount }}</h5>
+    </div>
+    <div class="k">
+      <h4>Viande</h4>
+      <h5>{{ (statistics$ | async)?.viandeCount }}</h5>
+    </div>
+    <div class="l">
+      <h4>Menu enfant</h4>
+      <h5>{{ (statistics$ | async)?.enfantCount }}</h5>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div id="countdown">
+  <div class="countdown-block date" id="days">{{ days }}j</div>
+  <div class="countdown-block separator">:</div>
+  <div class="countdown-block date">{{ hours }}h</div>
+  <div class="countdown-block separator">:</div>
+  <div class="countdown-block date">{{ minutes }}m</div>
+  <div class="countdown-block separator">:</div>
+  <div [ngClass]="{ 'pulsating': isPulsating }" class="countdown-block date"  id="seconds">{{ seconds }}s</div>
+</div>

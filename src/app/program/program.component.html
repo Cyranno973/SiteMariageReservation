@@ -1,0 +1,12 @@
+<div class="container-program">
+  <div class="container-img-program">
+    <ng-container *ngIf="(user$ | async)?.organisation">
+      <!-- Afficher l'image pour une organisation si user.organisation est vrai (true) -->
+      <img alt="" src="./assets/img/journee_mariage1.png">
+    </ng-container>
+    <ng-container *ngIf="!(user$ | async)?.organisation">
+      <!-- Afficher l'image pour une organisation si user.organisation est vrai (true) -->
+      <img alt="" src="./assets/img/journee_mariage1.png">
+    </ng-container>
+  </div>
+</div>
