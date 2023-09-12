@@ -57,7 +57,6 @@ import {ModalComponent} from './components/modal/modal.component';
     ProgramComponent,
     CountdownComponent,
     ModalComponent,
-
   ],
   imports: [
     BrowserModule,

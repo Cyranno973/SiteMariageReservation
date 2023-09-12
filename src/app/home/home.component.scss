@@ -3,10 +3,8 @@
 @use '../../sass/base/typography' as *;
 
 .container-home {
-  //height: 100%;
   @include center-flex;
   position: relative;
-  //will-change: transform;
 }
 
 .normale {
@@ -28,29 +26,22 @@
     font-family: $kingham, sans-serif;
     position: relative;
 
-    &:first-child span {
-      &:before{
-        content: "\201c";
-        font-family: initial;
-      }
+    &:first-child::before {
+      content: "\201c";
+      font-family: initial;
       position: absolute;
       top: -14px;
       left: -43px;
       font-size: 65px;
     }
-    &:last-child span {
-      &:before{
-        content: "\201c";
-        font-family: initial;
 
-      }
-        transform: rotateY(180deg);
+    &:last-child::after {
+      content: "\201d";
+      font-family: initial;
       position: absolute;
       top: 26px;
       right: -47px;
       font-size: 65px;
-
-
     }
   }
 
@@ -84,6 +75,7 @@
   font-family: Roboto, "Helvetica Neue", sans-serif;
   position: relative;
   opacity: 0;
+
   &__input {
     padding: 15px 10px;
     font-size: 1.2rem;
@@ -193,20 +185,24 @@
 .lockIcon {
   transform: translateY(-90%);
 }
+
 input[type="number"]::-webkit-inner-spin-button {
   display: none;
 }
+
 input[type="number"] {
   -moz-appearance: textfield;
 }
 
 .fadeInDown {
-  animation: 1s fadeInDown ;
+  animation: 1s fadeInDown;
 }
+
 .fadeInDown1 {
   animation: 0.8s 0.2s fadeInDown forwards;
 }
+
 .shakeX {
-  animation: 0.5s shakeX ;
+  animation: 0.5s shakeX;
   border: 2px solid $red;
 }
