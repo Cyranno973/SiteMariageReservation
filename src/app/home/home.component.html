@@ -18,7 +18,7 @@
            [ngClass]="{'shakeX': form?.get('numero').invalid && form?.get('numero').touched || errorFormulaire && form.touched}"
            autocomplete="off" class="form__input"
            formControlName="numero" id="myInput" inputmode="numeric" placeholder=" " type="number"/>
-    <mat-icon *ngIf="user" class="lockIcon" fontIcon="lock"></mat-icon>
+    <mat-icon *ngIf="user" class="lockIcon1" fontIcon="lock"></mat-icon>
     <label class="form__label" for="myInput">Numéro de billet</label>
     <div *ngIf="form.get('numero')?.invalid && form.get('numero')?.touched || errorFormulaire && form.touched" class="error-message">
       Numéro Invalide

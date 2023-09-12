@@ -19,6 +19,10 @@ export class StoreUserService {
     this.storeUser.next(user)
   }
 
+  clearUser() {
+    this.storeUser.next(null);
+  }
+
   observeUserList() {
     return this.storeUserList.asObservable();
   }

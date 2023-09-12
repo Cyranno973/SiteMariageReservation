@@ -13,6 +13,24 @@ body{
   -moz-osx-font-smoothing: grayscale;
 }
 
+.logout{
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  fill: white;
+  background-color: $green;
+  cursor: pointer;
+  z-index: 10;
+  width: 34px;
+  height: 55px;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  &:active,&:hover{
+    fill: $gold;
+    background-color: $white;
+  }
+}
+
 .disabled {
   background: $disabled !important;
   pointer-events: none;
@@ -35,6 +53,14 @@ body{
   transform: translateY(-50%);
   color: $black;
 }
+.lockIcon1{
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-60%);
+  color: $black;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

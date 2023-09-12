@@ -17,6 +17,14 @@ import {AngularFireMessaging} from "@angular/fire/compat/messaging";
 
 
 export class HomeComponent implements OnInit, OnDestroy {
+  billet: string;
+  userList: User[] | undefined;
+  inputBillet: string = '';
+  errorFormulaire: boolean = false; //TODO faire un validator personnalisé et supprimer cette variable
+  showModifChoice: boolean = false;
+  isLoggedIn: boolean = false;
+  private unsubscribe$ = new Subject<void>();
+
   constructor(private router: Router,
               private userService: UserService,
               private toastr: ToastrService,
@@ -25,18 +33,15 @@ export class HomeComponent implements OnInit, OnDestroy {
               private storeUserService: StoreUserService,
               private afMessaging: AngularFireMessaging
   ) {
+    if(localStorage.getItem('billet')){
+      this.billet = localStorage.getItem('billet') as string;
+    }
+
     this.afMessaging.messages.subscribe((message) => {
       console.log('Received message:', message);
     });
 
   }
-
-  private unsubscribe$ = new Subject<void>();
-  userList: User[] | undefined;
-  inputBillet: string = '';
-  errorFormulaire: boolean = false; //TODO faire un validator personnalisé et supprimer cette variable
-  showModifChoice: boolean = false;
-  isLoggedIn: boolean = false;
   @Input() user: User;
   form: FormGroup = this.fb.group({
     numero: ['', [Validators.required, Validators.minLength(6)]]
@@ -44,7 +49,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   first: boolean = true;
 
   ngOnInit() {
-    // this.submit();
+    this.submit();
+    // console.log(this.billet);
     this.storeUserService.observeUser().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(user => this.user = user);
@@ -64,10 +70,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  submit(event?: Event) { // Todo retirer point d'interogation
-    const inputElt = event?.target as HTMLInputElement; //TODO retirer point d'interogation
-    this.inputBillet = inputElt.value; // Todo et remmettre
-    // this.inputBillet = '568347'; // Todo supprimer
+  submit(event?: Event) {
+    const inputElt = event?.target as HTMLInputElement;
+    if(this.billet){
+      this.inputBillet = this.billet;
+    }else if(inputElt?.value){
+
+    this.inputBillet = inputElt.value;
+    }
+    else {
+      return
+    }
 
     if (this.inputBillet === '102030') {
       this.storeUserService.saveIsAdmin(true);
@@ -102,6 +115,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.userService.createOrUpdate(this.user);
     }
     this.storeUserService.saveUser(this.user);
+    localStorage.setItem('billet', this.user.id);
   }
 
   btnChoice(choice: string) {

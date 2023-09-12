@@ -24,10 +24,8 @@ export class AppComponent implements OnInit {
   admin$: Observable<boolean>;
   private isAdminMode: boolean = false;
 
-
   constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService,
               private router: Router) {
-
     this.swUpdate.versionUpdates.subscribe(version => {
       if (version.type === "VERSION_READY") window.location.reload();
     })
@@ -69,6 +67,16 @@ export class AppComponent implements OnInit {
 
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
+  logout(){
+    console.log('logout');
+    localStorage.removeItem('billet');
+    console.log(localStorage.getItem('billet'));
+    this.storeUserService.clearUser();
+    this.storeUserService.saveIsLoggedIn(false);
+    this.router.navigate(['/home']);
+    window.location.reload();
+
   }
 }
 
