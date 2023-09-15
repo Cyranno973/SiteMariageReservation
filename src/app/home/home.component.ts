@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   errorFormulaire: boolean = false; //TODO faire un validator personnalisé et supprimer cette variable
   showModifChoice: boolean = false;
   isLoggedIn: boolean = false;
+  admin: boolean;
 
   constructor(private router: Router,
               private userService: UserService,
@@ -54,7 +55,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.storeUserService.observeUser().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(user => this.user = user);
-
+    this.storeUserService.observeIsAdmin().pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(admin => {
+      this.admin = admin;
+      if (this.admin) {
+        this.form?.disable();
+      }
+    });
     this.storeUserService.observeUserList().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(users => this.userList = users);
@@ -72,15 +80,16 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   submit(event?: Event) {
     const inputElt = event?.target as HTMLInputElement;
-    if (this.billet) {
-      this.inputBillet = this.billet;
-    } else if (inputElt?.value) this.inputBillet = inputElt.value;
-    else {
-      return
-    }
+    console.log(inputElt);
+    console.log(this.billet);
+    if (this.billet) this.inputBillet = this.billet;
+   else if (inputElt?.value) this.inputBillet = inputElt.value;
+    else { return }
 
     if (this.inputBillet === '102030') {
       this.storeUserService.saveIsAdmin(true);
+      this.form.reset();
+      this.form?.disable();
       this.router.navigate(['/admin']);
       return;
     }
@@ -144,10 +153,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   logout(){
+    this.billet = '';
+    this.form.reset();
     this.storeUserService.clearUser();
     this.storeUserService.saveIsLoggedIn(false);
     this.form?.enable();
-    this.form.reset();
+    localStorage.removeItem('billet');
   }
 
 

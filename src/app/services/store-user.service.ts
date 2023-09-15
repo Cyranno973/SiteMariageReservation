@@ -21,6 +21,7 @@ export class StoreUserService {
 
   clearUser() {
     this.storeUser.next(null);
+    this.storeIsAdmin.next(false);
   }
 
   observeUserList() {
