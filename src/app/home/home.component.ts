@@ -80,10 +80,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   submit(event?: Event) {
     const inputElt = event?.target as HTMLInputElement;
-    console.log(inputElt);
-    console.log(this.billet);
     if (this.billet) this.inputBillet = this.billet;
-   else if (inputElt?.value) this.inputBillet = inputElt.value;
+    else if (inputElt?.value) this.inputBillet = inputElt.value;
     else { return }
 
     if (this.inputBillet === '102030') {
@@ -152,7 +150,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') event.preventDefault();
   }
 
-  logout(){
+  logout() {
     this.billet = '';
     this.form.reset();
     this.storeUserService.clearUser();

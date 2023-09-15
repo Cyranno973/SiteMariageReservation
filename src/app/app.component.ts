@@ -52,7 +52,12 @@ export class AppComponent implements OnInit {
       if (this.pressedKeys.join('') === this.secretCode) {
         this.isAdminMode = !this.isAdminMode;
         this.storeUserService.saveIsAdmin(this.isAdminMode);
-        if (!this.isAdminMode) this.router.navigate(['/']);
+        if (!this.isAdminMode) {
+          this.storeUserService.clearUser();
+          this.storeUserService.saveIsLoggedIn(false);
+          localStorage.removeItem('billet');
+          this.router.navigate(['/']);
+        }
       }
       this.pressedKeys.splice(0, 1);
     }
