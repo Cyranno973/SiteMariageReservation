@@ -7,9 +7,6 @@
   position: relative;
 }
 
-.normale {
-}
-
 .hero {
   margin-top: 80px;
   background-color: white;
@@ -64,7 +61,6 @@
 }
 
 .container__hero__subtitle {
-
   color: #134327;
 }
 
@@ -206,3 +202,4 @@ input[type="number"] {
   animation: 0.5s shakeX;
   border: 2px solid $red;
 }
+

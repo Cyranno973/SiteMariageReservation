@@ -29,20 +29,17 @@ export class UserService {
     else if (user) this.creationUser(user, false)
   }
 
-  createOrUpdate(user: Partial<User>, creation: boolean = false): any {
+  createOrUpdate(user: Partial<User>, creation: boolean = false): Promise<User> {
+    let userClean: User;
     if (creation) {
       return this.generatorIdentifiant().then(id => {
-        const userClean = this.removeEmptyProperties({ ...user, id });
+         userClean = this.removeEmptyProperties({ ...user, id }) as User;
         return this.usersRef.doc(userClean.id).set(userClean);
-      }).then(user => {
-        // console.log('user created', user);
-      })
+      }).then(() => userClean)
         // .catch((err) => console.log(err));
     } else {
-      const userClean = this.removeEmptyProperties(user);
-      return this.usersRef.doc(userClean.id).set(userClean).then(user => {
-        // console.log('user updated')
-      });
+      const userClean = this.removeEmptyProperties(user) as User;
+      return this.usersRef.doc(userClean.id).set(userClean).then(() => userClean);
     }
   }
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -18,12 +18,12 @@ import {AngularFireMessaging} from "@angular/fire/compat/messaging";
 
 export class HomeComponent implements OnInit, OnDestroy {
   billet: string;
+  private unsubscribe$ = new Subject<void>();
   userList: User[] | undefined;
   inputBillet: string = '';
   errorFormulaire: boolean = false; //TODO faire un validator personnalisé et supprimer cette variable
   showModifChoice: boolean = false;
   isLoggedIn: boolean = false;
-  private unsubscribe$ = new Subject<void>();
 
   constructor(private router: Router,
               private userService: UserService,
@@ -33,15 +33,16 @@ export class HomeComponent implements OnInit, OnDestroy {
               private storeUserService: StoreUserService,
               private afMessaging: AngularFireMessaging
   ) {
-    if(localStorage.getItem('billet')){
-      this.billet = localStorage.getItem('billet') as string;
-    }
-
-    this.afMessaging.messages.subscribe((message) => {
-      console.log('Received message:', message);
-    });
-
+    if (localStorage.getItem('billet')) this.billet = localStorage.getItem('billet') as string;
+    this.afMessaging.messages.subscribe((message) => console.log('Received message:', message));
   }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event): void {
+    // Votre code de gestion du défilement ici
+    console.log('aaa')
+  }
+
   @Input() user: User;
   form: FormGroup = this.fb.group({
     numero: ['', [Validators.required, Validators.minLength(6)]]
@@ -50,7 +51,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.submit();
-    // console.log(this.billet);
     this.storeUserService.observeUser().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(user => this.user = user);
@@ -72,12 +72,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   submit(event?: Event) {
     const inputElt = event?.target as HTMLInputElement;
-    if(this.billet){
+    if (this.billet) {
       this.inputBillet = this.billet;
-    }else if(inputElt?.value){
-
-    this.inputBillet = inputElt.value;
-    }
+    } else if (inputElt?.value) this.inputBillet = inputElt.value;
     else {
       return
     }
@@ -106,13 +103,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   updateData() {
-    //// console.log('il exist', this.user)
     this.form?.disable();
     this.errorFormulaire = false;
     if (this.user.statusUser === Status.First) {
       this.user.statusUser = Status.Incomplete;
       this.user.selectedCategory = "Adulte";
-      this.userService.createOrUpdate(this.user);
+      this.userService.createOrUpdate(this.user)
+        .then((user) => this.toastr.success(`Bienvenue ${user.username}`, 'Notification'));
     }
     this.storeUserService.saveUser(this.user);
     localStorage.setItem('billet', this.user.id);
@@ -123,44 +120,37 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.user.statusUser = Status.Incomplete;
       this.user.choice = Choice.P;
       this.user.selectedCategory = "Adulte";
-
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);
-      //console.log('show notif')
       this.toastr.success('Nous serons ravis de vous voir et merci de votre présence !', 'Notification');
       this.requestPermission();
-      //// console.log(this.user)
-
     } else {
       this.user.statusUser = Status.Complete;
       this.user.choice = Choice.A;
       delete this.user.menu;
       delete this.user.allergie;
       this.user.accompaniement = [];
-      //// console.log(this.user)
       this.userService.createOrUpdate(this.user);
       this.storeUserService.saveUser(this.user);
       this.toastr.success('C’est dommage mais je sais que le coeur y est !', 'Notification', {
         positionClass: 'toast-top-center',
       });
-
     }
-
     this.showModifChoice = false;
   }
 
   noIncrementDecrementNumber(event: KeyboardEvent) {
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-      event.preventDefault();
-    }
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') event.preventDefault();
   }
 
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  logout(){
+    this.storeUserService.clearUser();
+    this.storeUserService.saveIsLoggedIn(false);
+    this.form?.enable();
+    this.form.reset();
   }
 
-  //   });
+
   requestPermission() {
     this.afMessaging.requestToken
       .subscribe(
@@ -187,5 +177,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   //     }).catch((err) => {
   //     console.log('An error occurred while retrieving token. ', err);
 
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
 }

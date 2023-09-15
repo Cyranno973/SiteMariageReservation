@@ -16,6 +16,15 @@ import {routeAnimations} from "./route-animations";
   animations: [routeAnimations],
 })
 export class AppComponent implements OnInit {
+  scrollPosition: number = 0;
+
+  // Écouteur d'événement pour le défilement sur la fenêtre
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event): void {
+    // Obtenez la position de défilement actuelle
+    this.scrollPosition = window.scrollY;
+    console.log('Position de défilement :', this.scrollPosition);
+  }
 
   secretCode: string = "ArrowLeftArrowLeftArrowRightArrowRightArrowUpArrowUpArrowDownArrowDown"
   user: User;
@@ -31,7 +40,12 @@ export class AppComponent implements OnInit {
     })
     this.admin$ = this.storeUserService.observeIsAdmin().pipe(startWith(false));
   }
+  @HostListener('window:scroll')
+  checkScroll() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
+    console.log('[scroll]', scrollPosition);
+  }
   @HostListener('window:keyup', ['$event']) onKeyUp(e: KeyboardEvent) {
     this.pressedKeys.push(e.code);
     if (this.pressedKeys.length === 8) {
@@ -68,15 +82,4 @@ export class AppComponent implements OnInit {
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
-  logout(){
-    console.log('logout');
-    localStorage.removeItem('billet');
-    console.log(localStorage.getItem('billet'));
-    this.storeUserService.clearUser();
-    this.storeUserService.saveIsLoggedIn(false);
-    this.router.navigate(['/home']);
-    window.location.reload();
-
-  }
 }
-

@@ -15,19 +15,23 @@ body{
 
 .logout{
   position: absolute;
-  right: 30px;
-  top: 10px;
-  fill: white;
-  background-color: $green;
+  right: -40px;
+  top: 0px;
+  fill: $red;
   cursor: pointer;
   z-index: 10;
-  width: 34px;
-  height: 55px;
+  width: 38px;
+  height: 52px;
   border-radius: 5px;
+  transform: scale(0.9);
+  background: rgba(255,255,255,0.5);
   transition: all 0.3s ease-in-out;
   &:active,&:hover{
     fill: $gold;
-    background-color: $white;
+    right: -45px;
+    transform: scale(1);
+    background: rgba(255,255,255,0.7);
+
   }
 }
 
@@ -81,3 +85,38 @@ input:-internal-autofill-selected {
 //.toast-success {
 //  background-color: #d7c43c !important;
 //}
+/* Largeur de la scrollbar */
+//.container-all::-webkit-scrollbar {
+//  width: 10px;
+//}
+//
+///* Couleur de fond de la scrollbar */
+//.container-all::-webkit-scrollbar-track {
+//  background: #115af3;
+//}
+//
+///* Couleur de la poignée (thumb) de la scrollbar */
+//.container-all::-webkit-scrollbar-thumb {
+//  background: #ff0000;
+//}
+//
+///* Au survol de la poignée de la scrollbar */
+//.container-all::-webkit-scrollbar-thumb:hover {
+//  background: #56e824;
+//}
+/* Votre style personnalisé pour la scrollbar */
+.container-all .ss-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.container-all .ss-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.container-all .ss-content::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.container-all .ss-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
