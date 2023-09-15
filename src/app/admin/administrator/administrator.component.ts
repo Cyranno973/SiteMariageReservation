@@ -11,6 +11,8 @@ import {Observable, Subscription} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalComponent} from "../../components/modal/modal.component";
 import {ToastrService} from "ngx-toastr";
+import {LoggingService} from "../../services/logging.service";
+import {getFormattedDate} from "../../utils/date-utils";
 
 @Component({
   selector: 'app-admin',
@@ -29,7 +31,7 @@ export class AdministratorComponent implements OnInit, OnDestroy {
   private userStoreSubscription: Subscription;
   private storeUserSubscription: Subscription;
 
-  constructor(private statistiquesService: StatistiquesService,
+  constructor(private statistiquesService: StatistiquesService, private loggingService: LoggingService,
               private fb: FormBuilder, private storeUserService: StoreUserService,
               private userService: UserService, private dialog: MatDialog, private toastr: ToastrService,) {
 
@@ -88,7 +90,6 @@ export class AdministratorComponent implements OnInit, OnDestroy {
 
       dialogRef.afterClosed().subscribe((result: boolean) => {
         if (result) {
-          console.log(result);
           // console.log('suppression effectué')
           this.userService.delete(e);
         }
@@ -128,20 +129,31 @@ export class AdministratorComponent implements OnInit, OnDestroy {
     try {
       const dataUserJson = JSON.stringify(this.userList);
       const blob = new Blob([dataUserJson], {type: 'text/plain;charset=utf-8'});
-      const currentDate = new Date();
-      const day = String(currentDate.getDate()).padStart(2, '0');
-      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-      const year = String(currentDate.getFullYear());
-      const hour = String(currentDate.getHours()).padStart(2, '0');
-      const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-      const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-      const formattedDate = `${year}${month}${day}-${hour}${minutes}${seconds}`;
-
+      const formattedDate = getFormattedDate(); // Utilisez la fonction importée
       saveAs(blob, `backupListInvite-${formattedDate}.json`);
     } catch (err) {
-      console.error('Erreur lors de la conversion en JSON :', err)
+      console.error('Erreur lors de la conversion en JSON :', err);
     }
   }
+
+  exportLogs(): void {
+    this.loggingService.getAllLogs().subscribe(logs => {
+      try {
+        // Convertir chaque log en une ligne de format simple
+        const dataLogsString = logs.map(log => {
+          return `[${log.timestamp}] ${log.type.toUpperCase()} - ${log.message}`;
+        }).join('\n'); // Joindre chaque ligne avec un saut de ligne
+
+        const blob = new Blob([dataLogsString], {type: 'text/plain;charset=utf-8'});
+        const formattedDate = getFormattedDate(); // Utilisez la fonction importée
+        saveAs(blob, `backupLogs-${formattedDate}.txt`);
+      } catch (err) {
+        console.error('Erreur lors de la conversion en format de ligne simple :', err);
+      }
+    });
+  }
+
+
 
   ngOnDestroy() {
     // Désabonnez tous les observables pour éviter les fuites mémoire

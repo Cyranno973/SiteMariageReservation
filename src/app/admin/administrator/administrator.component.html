@@ -22,6 +22,7 @@
 
   </ul>
   <div (click)="exportUser()" class="backUser">Backup liste Invite</div>
+  <button (click)="exportLogs()">Exporter les logs</button>
   <div *ngIf="showForm" [formGroup]="userForm" class="container-userForm">
     <app-user (userToSave)="saveForm()" (userToUpdate)="updateSave($event)" [updateBtn]="updateBtn" [userForm]="userForm"></app-user>
   </div>

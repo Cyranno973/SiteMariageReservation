@@ -8,6 +8,8 @@ import {Observable, of, switchMap} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {SwUpdate} from "@angular/service-worker";
 import {routeAnimations} from "./route-animations";
+import {VersionService} from "./services/version.service";
+import * as platform from 'platform';
 
 @Component({
   selector: 'app-root',
@@ -33,7 +35,7 @@ export class AppComponent implements OnInit {
   admin$: Observable<boolean>;
   private isAdminMode: boolean = false;
 
-  constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService,
+  constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService, private versionService: VersionService,
               private router: Router) {
     this.swUpdate.versionUpdates.subscribe(version => {
       if (version.type === "VERSION_READY") window.location.reload();
@@ -84,6 +86,9 @@ export class AppComponent implements OnInit {
     )
   }
 
+  showVersion() {
+    alert(`Version actuelle: ${this.versionService.version}, ${platform.description}, ${platform.os}`);
+  }
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }

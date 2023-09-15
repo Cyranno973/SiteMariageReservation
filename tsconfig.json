@@ -17,6 +17,8 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "strictPropertyInitialization": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "ES2022",
     "module": "ES2022",
