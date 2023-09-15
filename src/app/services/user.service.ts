@@ -24,25 +24,37 @@ export class UserService {
     return this.usersRef.doc(id).get();
   }
 
-  createUSerPartial(listUser?: Partial<User>[], user?: Partial<User>) {
-    if (listUser?.length) listUser.map(user => this.creationUser(user,true))
-    else if (user) this.creationUser(user, false)
+  importOrCreateUser(listUser?: Partial<User>[], user?: Partial<User>) {
+    if (listUser?.length) listUser.map(user => this.createObjUser(user))
+    else if (user) this.createObjUser(user)
   }
 
-  createOrUpdate(user: Partial<User>, creation: boolean = false): Promise<User> {
+  createOrUpdateUser(user: Partial<User>): Promise<User> {
     let userClean: User;
-    if (creation) {
-      return this.generatorIdentifiant().then(id => {
+    if (!user.id) {
+      return this.generatorIdentifiant()
+        .then(id => {
          userClean = this.removeEmptyProperties({ ...user, id }) as User;
-        return this.usersRef.doc(userClean.id).set(userClean);
-      }).then(() => userClean)
-        // .catch((err) => console.log(err));
-    } else {
-      const userClean = this.removeEmptyProperties(user) as User;
-      return this.usersRef.doc(userClean.id).set(userClean).then(() => userClean);
-    }
+         this.usersRef.doc(userClean.id).set(userClean);
+        return userClean
+        });
+    } else return this.update(user);
+
   }
 
+  update(user: Partial<User>): Promise<User> {
+    const userClean = this.removeEmptyProperties(user) as User;
+    return this.usersRef.doc(userClean.id).update(userClean).then(user => { return userClean })
+  }
+
+  private createObjUser(user: Partial<User>) {
+    user.statusUser = user.statusUser || Status.First;
+    user.choice = user.choice || Choice.All;
+    user.organisation = user.organisation || false;
+    user.selectedCategory = "Adulte";
+    user.accompaniement =  user.accompaniement || [];
+    return this.createOrUpdateUser(user);
+  }
   updateAllUsersWithNewProperty(): void {
     this.getAll().subscribe(users => {
       const res = users.reduce((acc:number, user:Partial<User>) => user? acc+1: acc+0, 0)
@@ -56,25 +68,6 @@ export class UserService {
     });
   }
 
-  update(user: Partial<User>): any {
-    const userClean = this.removeEmptyProperties(user);
-    return this.usersRef.doc(userClean.id).update(userClean).then(user => {
-      //console.log('user creer')
-    })
-  }
-
-  private creationUser(user: Partial<User>, idInTheList:boolean) {
-    user.statusUser = user.statusUser || Status.First;
-    user.choice = user.choice || Choice.All;
-    user.organisation = user.organisation || false;
-    user.selectedCategory = "Adulte";
-
-    const accompaniement = user.accompaniement || []; // Initialiser accompaniement avec un tableau vide s'il n'est pas fourni
-    user.accompaniement = accompaniement;
-    // console.log(user)
-    return idInTheList ? this.createOrUpdate(user, false): this.createOrUpdate(user, true);
-  }
-
   private generatorIdentifiant(): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const generateId = (): string => {
@@ -82,19 +75,12 @@ export class UserService {
       };
 
       const checkId = (id: string): void => {
-        if (id === '99999' || id === '111111') {
-          return checkId(generateId());
-        }
-
+        if (id === '99999' || id === '111111') { return checkId(generateId());}
         this.getById(id).subscribe(user => {
-          if (user.exists) {
-            checkId(generateId());
-          } else {
-            resolve(id);
-          }
+          if (user.exists) checkId(generateId());
+          else resolve(id);
         }, err => reject(err));
       };
-
       checkId(generateId());
     });
   }

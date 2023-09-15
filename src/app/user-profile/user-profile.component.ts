@@ -60,16 +60,17 @@ export class UserProfileComponent implements OnInit {
       this.user.allergie = this.userForm.value.allergie?.length ? this.userForm.value.allergie : '';
       this.user.statusUser = Status.Complete;
       this.user.accompaniement = this.userForm.value.guests as Personne[];
-      this.userService.createOrUpdate(this.user).then(() => {
-        // Notification après confirmation de Firebase
-        const inviteName = this.user?.accompaniement?.[this.user.accompaniement.length-1]?.username;
-
-        guest? this.toastr.success(`Invité ${inviteName} enregistré avec succès !`): this.toastr.success('Formulaire enregistré avec succès !');
-
-      }).catch(() => {
-        // Notification en cas d'erreur
-        this.toastr.error('Erreur lors de l\'enregistrement du formulaire.');
-      });
+      this.userService.createOrUpdateUser(this.user)
+      //   .then(() => {
+      //   // Notification après confirmation de Firebase
+      //   const inviteName = this.user?.accompaniement?.[this.user.accompaniement.length-1]?.username;
+      //
+      //   guest? this.toastr.success(`Invité ${inviteName} enregistré avec succès !`): this.toastr.success('Formulaire enregistré avec succès !');
+      //
+      // }).catch(() => {
+      //   // Notification en cas d'erreur
+      //   this.toastr.error('Erreur lors de l\'enregistrement du formulaire.');
+      // });
       this.storeUserService.saveUser(this.user);
 
       this.userForm.markAsPristine();//  Cool Marque le formulaire comme non modifié (pristine)
@@ -104,7 +105,8 @@ export class UserProfileComponent implements OnInit {
   removeGuest(i: number) {
     this.guests.removeAt(i);
     this.user.accompaniement = this.user.accompaniement?.filter((x, index) => index !== i);
-    this.userService.createOrUpdate(this.user).then(() => this.toastr.success('Supression enregistré avec succès !'));
+    this.userService.createOrUpdateUser(this.user)
+      // .then(() => this.toastr.success('Supression enregistré avec succès !'));
     this.storeUserService.saveUser(this.user)
   }
 

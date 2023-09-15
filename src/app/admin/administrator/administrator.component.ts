@@ -10,6 +10,7 @@ import {saveAs} from 'file-saver';
 import {Observable, Subscription} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalComponent} from "../../components/modal/modal.component";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-admin',
@@ -30,7 +31,7 @@ export class AdministratorComponent implements OnInit, OnDestroy {
 
   constructor(private statistiquesService: StatistiquesService,
               private fb: FormBuilder, private storeUserService: StoreUserService,
-              private userService: UserService, private dialog: MatDialog) {
+              private userService: UserService, private dialog: MatDialog, private toastr: ToastrService,) {
 
   }
 
@@ -60,7 +61,7 @@ export class AdministratorComponent implements OnInit, OnDestroy {
         try {
           const jsonArray = JSON.parse(text);
           if (Array.isArray(jsonArray)) {
-            this.userService.createUSerPartial(jsonArray);
+            this.userService.importOrCreateUser(jsonArray);
           } else {
             console.error('JSON data is not an array.');
           }
@@ -74,7 +75,8 @@ export class AdministratorComponent implements OnInit, OnDestroy {
 
 
   saveForm() {
-    this.userService.createUSerPartial([], this.userForm.value);
+    console.log("saveForm");
+    this.userService.importOrCreateUser([], this.userForm.value);
     this.userForm.reset()
     this.showForm = !this.showForm
   }
@@ -100,8 +102,10 @@ export class AdministratorComponent implements OnInit, OnDestroy {
   }
 
   updateSave(user: User) {
+    console.log("updateSave");
     user.id = this.user.id;
-    this.userService.update(user);
+    this.userService.update(user)
+      .then((user) => this.toastr.success(`${user.username} ${user.name}`, 'Modification enregistrer',));
   }
 
   toggleForm() {

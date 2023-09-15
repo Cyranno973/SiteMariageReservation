@@ -115,8 +115,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.user.statusUser === Status.First) {
       this.user.statusUser = Status.Incomplete;
       this.user.selectedCategory = "Adulte";
-      this.userService.createOrUpdate(this.user)
-        .then((user) => this.toastr.success(`Bienvenue ${user.username}`, 'Notification'));
+      this.userService.createOrUpdateUser(this.user)
+        // .then((user) => this.toastr.success(`Bienvenue ${user.username}`, 'Notification'));
     }
     this.storeUserService.saveUser(this.user);
     localStorage.setItem('billet', this.user.id);
@@ -127,7 +127,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.user.statusUser = Status.Incomplete;
       this.user.choice = Choice.P;
       this.user.selectedCategory = "Adulte";
-      this.userService.createOrUpdate(this.user);
+      this.userService.createOrUpdateUser(this.user);
       this.storeUserService.saveUser(this.user);
       this.toastr.success('Nous serons ravis de vous voir et merci de votre présence !', 'Notification');
       this.requestPermission();
@@ -137,7 +137,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       delete this.user.menu;
       delete this.user.allergie;
       this.user.accompaniement = [];
-      this.userService.createOrUpdate(this.user);
+      this.userService.createOrUpdateUser(this.user);
       this.storeUserService.saveUser(this.user);
       this.toastr.success('C’est dommage mais je sais que le coeur y est !', 'Notification', {
         positionClass: 'toast-top-center',
