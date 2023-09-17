@@ -141,18 +141,16 @@ export class AdministratorComponent implements OnInit, OnDestroy {
       try {
         // Convertir chaque log en une ligne de format simple
         const dataLogsString = logs.map(log => {
-        const localDate = new Date(log.timestamp).toLocaleString();
-          return `[${ getFormattedDate('log')}] ${log.type.toUpperCase()} - ${log.message}`;
+          return `[${getFormattedDate('log')}] ${log.type.toUpperCase()} - ${log.message}`;
         }).join('\n'); // Joindre chaque ligne avec un saut de ligne
 
         const blob = new Blob([dataLogsString], {type: 'text/plain;charset=utf-8'});
-        saveAs(blob, `backupLogs-${ getFormattedDate()}.txt`);
+        saveAs(blob, `backupLogs-${getFormattedDate()}.txt`);
       } catch (err) {
         console.error('Erreur lors de la conversion en format de ligne simple :', err);
       }
     });
   }
-
 
 
   ngOnDestroy() {

@@ -9,12 +9,12 @@ import {ProgramComponent} from "./program/program.component";
 
 const routes: Routes =
   [
-    {path: 'home', component: HomeComponent, data: { animation: 'home' }},
-    {path: 'program', canActivate: [AuthGard] , component: ProgramComponent, data: { animation: 'program' }},
+    {path: 'home', component: HomeComponent, data: {animation: 'home'}},
+    {path: 'program', canActivate: [AuthGard], component: ProgramComponent, data: {animation: 'program'}},
     // {path: 'acceuil', component: AcceuilComponent},
-    {path: 'activity', canActivate: [AuthGard] , data: { animation: 'activity' }, component: ActivityComponent},
-    {path: 'info', data: {route: 'info', animation: 'info'}, canActivate: [AuthGard],  component: InfoComponent},
-    {path: 'admin', canActivate: [AuthGard] , data: { animation: 'admin' }, component: AdministratorComponent},
+    {path: 'activity', canActivate: [AuthGard], data: {animation: 'activity'}, component: ActivityComponent},
+    {path: 'info', data: {route: 'info', animation: 'info'}, canActivate: [AuthGard], component: InfoComponent},
+    {path: 'admin', canActivate: [AuthGard], data: {animation: 'admin'}, component: AdministratorComponent},
     // {path: 'admin', component: AdministratorComponent},
     {path: '**', redirectTo: '/home'},
     // {path: '**', redirectTo: '/admin'},
@@ -23,7 +23,7 @@ const routes: Routes =
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(routes,{scrollPositionRestoration:"top"})
+    RouterModule.forRoot(routes, {scrollPositionRestoration: "top"})
   ],
   exports: [RouterModule]
 })

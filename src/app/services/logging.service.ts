@@ -28,9 +28,10 @@ export class LoggingService {
 
   getAllLogs(): Observable<any[]> {
     return this.logRef.snapshotChanges().pipe(
-      map(changes => changes.map(c => ({ ...c.payload.doc.data(), id: c.payload.doc.id })))
+      map(changes => changes.map(c => ({...c.payload.doc.data(), id: c.payload.doc.id})))
     );
   }
+
   private async cleanupLogs(): Promise<void> {
     const logsRef = this.db.collection('logs'); // Assurez-vous que 'logs' est le nom correct de votre collection de logs.
     const allLogsSnapshot = await logsRef.get().toPromise();
