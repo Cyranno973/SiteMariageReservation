@@ -142,12 +142,11 @@ export class AdministratorComponent implements OnInit, OnDestroy {
         // Convertir chaque log en une ligne de format simple
         const dataLogsString = logs.map(log => {
         const localDate = new Date(log.timestamp).toLocaleString();
-          return `[${localDate}] ${log.type.toUpperCase()} - ${log.message}`;
+          return `[${ getFormattedDate('log')}] ${log.type.toUpperCase()} - ${log.message}`;
         }).join('\n'); // Joindre chaque ligne avec un saut de ligne
 
         const blob = new Blob([dataLogsString], {type: 'text/plain;charset=utf-8'});
-        const formattedDate = getFormattedDate(); // Utilisez la fonction importée
-        saveAs(blob, `backupLogs-${formattedDate}.txt`);
+        saveAs(blob, `backupLogs-${ getFormattedDate()}.txt`);
       } catch (err) {
         console.error('Erreur lors de la conversion en format de ligne simple :', err);
       }
