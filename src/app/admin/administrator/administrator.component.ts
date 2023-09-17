@@ -7,7 +7,7 @@ import {utils, WorkBook, WorkSheet, writeFile} from 'xlsx';
 import {StatistiquesService} from "../../services/statistiques.service";
 import {AttendanceStatistics} from "../../../model/AttendanceStatistics";
 import {saveAs} from 'file-saver';
-import {Observable, Subscription} from "rxjs";
+import {Observable, Subscription, take} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalComponent} from "../../components/modal/modal.component";
 import {ToastrService} from "ngx-toastr";
@@ -137,11 +137,12 @@ export class AdministratorComponent implements OnInit, OnDestroy {
   }
 
   exportLogs(): void {
-    this.loggingService.getAllLogs().subscribe(logs => {
+    this.loggingService.getAllLogs().pipe(take(1)).subscribe(logs => {
       try {
         // Convertir chaque log en une ligne de format simple
         const dataLogsString = logs.map(log => {
-          return `[${log.timestamp}] ${log.type.toUpperCase()} - ${log.message}`;
+        const localDate = new Date(log.timestamp).toLocaleString();
+          return `[${localDate}] ${log.type.toUpperCase()} - ${log.message}`;
         }).join('\n'); // Joindre chaque ligne avec un saut de ligne
 
         const blob = new Blob([dataLogsString], {type: 'text/plain;charset=utf-8'});

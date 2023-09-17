@@ -18,7 +18,7 @@ export class UserService {
   }
 
   getAll(): Observable<any> {
-    this.loggingService.log('Fetching all users.');
+    // this.loggingService.log('Fetching all users.');
     return this.usersRef.snapshotChanges().pipe(
       map(changes => changes.map(c => ({...c.payload.doc.data(), id: c.payload.doc.id})))
     );
@@ -82,6 +82,7 @@ export class UserService {
     const userClean = this.removeEmptyProperties(user) as User;
     return this.usersRef.doc(userClean.id).update(userClean)
       .then(() => {
+        console.log('user update')
         this.loggingService.log(`User with ID ${userClean.id} updated.`);
         return userClean;
       })
