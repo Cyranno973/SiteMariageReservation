@@ -7,8 +7,6 @@
     "custom:prodBuild": "./build.sh",
     "build": "ng build",
     "serve:external": "ng serve --host 0.0.0.0 --disable-host-check",
-    "serve:externalFast": "ng serve --host 0.0.0.0 --disable-host-check --hmr",
-    "serve:fast": "ng serve --hmr",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

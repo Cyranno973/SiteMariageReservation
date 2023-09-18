@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
           this.storeUserService.saveIsLoggedIn(false);
           localStorage.removeItem('billet');
           this.router.navigate(['/']);
-        }
+        }else  this.router.navigate(['/admin']);
       }
       this.pressedKeys.splice(0, 1);
     }
