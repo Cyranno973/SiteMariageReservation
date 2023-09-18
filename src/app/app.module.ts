@@ -8,8 +8,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
-import {InfoComponent} from './info/info.component';
-import {ActivityComponent} from './activity/activity.component';
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireModule} from "@angular/fire/compat";
 import {UserProfileComponent} from "./user-profile/user-profile.component";
@@ -26,8 +24,6 @@ import {getStorage, provideStorage} from "@angular/fire/storage";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {AppRoutingModule} from "./app-routing.module";
-import {MediaActivityService} from "./services/media-activity-service";
-import {MediaInfoService} from "./services/media-info-service";
 import {ToastrModule} from "ngx-toastr";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {StatsComponent} from './admin/stats/stats.component';
@@ -37,14 +33,14 @@ import {TooltipComponent} from './components/tooltip/tooltip.component';
 import {ProgramComponent} from './program/program.component';
 import {CountdownComponent} from './components/countdown/countdown.component';
 import {ModalComponent} from './components/modal/modal.component';
+import {UserContentInputComponent} from './user-content-input/user-content-input.component';
+import {MediaService} from "./services/MediaService";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    InfoComponent,
-    ActivityComponent,
     UserProfileComponent,
     ListUserComponent,
     UserFormComponent,
@@ -57,6 +53,7 @@ import {ModalComponent} from './components/modal/modal.component';
     ProgramComponent,
     CountdownComponent,
     ModalComponent,
+    UserContentInputComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +84,7 @@ import {ModalComponent} from './components/modal/modal.component';
       // QuillModule.forRoot(),
     })
   ],
-  providers: [MediaActivityService, MediaInfoService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [MediaService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
 
   bootstrap: [AppComponent]
 })
