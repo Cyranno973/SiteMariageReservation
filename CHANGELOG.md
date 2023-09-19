@@ -21,3 +21,8 @@
   - Intégration d'une **fenêtre modale** pour :
     - Ajouter un nouvel utilisateur.
     - Modifier les informations d'un utilisateur existant.
+  - **Navigation améliorée** :
+    - Ajout d'un **nouvel onglet "Urne"** dans le header pour un accès rapide et direct.
+    - Factorisation et consolidation des pages **"Activity"**, **"Info"** et **"Urne"** pour une meilleure cohérence et facilité de maintenance.
+  - **Animations** :
+    - Intégration d'animations fluides lors de la navigation vers la nouvelle route "Urne", offrant une transition visuelle agréable.
