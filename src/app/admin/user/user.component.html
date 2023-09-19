@@ -1,33 +1,21 @@
 <div class="container-form">
   <div class="form">
-    <form [formGroup]="userForm" >
-      <div>
+    <form [formGroup]="userForm">
         <mat-form-field appearance="fill">
           <mat-label>Nom</mat-label>
           <input matInput type="text" placeholder="Entrez votre nom" formControlName="name">
-          <mat-error>Au moins 3 caractere</mat-error>
+          <mat-error>Au moins 3 caractères</mat-error>
         </mat-form-field>
-      </div>
 
-      <div>
         <mat-form-field appearance="fill">
-          <mat-label>Prenom</mat-label>
-          <input matInput type="text" placeholder="Entrez votre prenom" formControlName="username">
-          <mat-error>Au moins 3 caractere</mat-error>
+          <mat-label>Prénom</mat-label>
+          <input formControlName="username" matInput placeholder="Entrez votre prénom" type="text">
+          <mat-error>Au moins 3 caractères</mat-error>
         </mat-form-field>
+      <div class="container-btn">
+        <button (click)="cancel()" color="primary" mat-raised-button type="button">Annuler</button>
+        <button (click)="save()" [disabled]="userForm.invalid" color="accent" mat-raised-button type="button">Valider</button>
       </div>
-      <div>
-        <mat-form-field appearance="fill">
-          <mat-label>Tel</mat-label>
-          <input matInput type="text" placeholder="Entrez votre numero" formControlName="tel">
-        </mat-form-field>
-      </div>
-
-    <div class="container-btn">
-      <button *ngIf="!updateBtn" (click)="save()" mat-raised-button color="primary" [disabled]="userForm.invalid" type="submit">Valider</button>
-      <button *ngIf="updateBtn" (click)="update()" mat-raised-button color="primary" [disabled]="userForm.invalid" type="submit">Modifier</button>
-    </div>
     </form>
   </div>
 </div>
-

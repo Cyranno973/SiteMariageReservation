@@ -1,57 +1,24 @@
-@use './src/sass/utils/mixins';
+@use './src/sass/utils/mixins' as *;
+@use './src/sass/utils/variables' as *;
 
 .container-admin {
-
-}
-
-.containerInputCreate {
-}
-
-.container-userForm {
-}
-
-
-ul {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
-  text-align: center;
-  padding: 20px 25px;
 
-  li {
+  .container-options {
     width: 100%;
-    @include mixins.center-flex();
-  }
+    padding: 20px;
 
-  .excel {
-    &--link {
-      display: flex;
-      width: 100%;
-      padding-top: 10px;
-      //justify-content: flex-end;
-    }
-
-    &--icon {
-      width: 100%;
-      font-size: 40px;
-      height: 100%;
+    .options {
+      background-color: $gold;
+      margin: 0 auto;
+      color: $white !important;
     }
   }
 
+  .container-list-user {
+    width: 90%;
+    margin: auto;
+  }
 }
 
-.container-list-user {
-  width: 90%;
-  margin: auto;
-}
-.backUser{
-  display: inline-block;
-  border-radius: 15px;
-  padding: 10px 15px;
-  text-align: center;
-  margin-left: 25px;
-  background-color: maroon;
-  cursor: pointer;
-}
+

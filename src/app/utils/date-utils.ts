@@ -1,5 +1,5 @@
-export function getFormattedDate(log?: string): string {
-  const currentDate = new Date();
+export function getFormattedDate(timestamp?: number, log?: string): string {
+  const currentDate = new Date(timestamp ?? Date.now());
   const day = String(currentDate.getDate()).padStart(2, '0');
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
   const year = String(currentDate.getFullYear());

@@ -1,29 +1,32 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../model/user";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent {
-  constructor() {
+export class UserComponent implements OnInit {
+  userForm: FormGroup;
+
+  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<UserComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+  user: User;
+
+  ngOnInit() {
+    this.userForm = this.fb.group({
+      name: [this.data?.user.name || '', [Validators.required, Validators.minLength(3)]],
+      username: [this.data?.user.username || '', [Validators.required, Validators.minLength(3)]],
+    });
   }
 
-  @Input() userForm: FormGroup;
-  user: User;
-  @Input() UserToUpdate: User;
-  @Input() updateBtn: boolean;
-
-  @Output() userToSave: EventEmitter<string> = new EventEmitter<string>();
-  @Output() userToUpdate: EventEmitter<User> = new EventEmitter<User>();
+  cancel() {
+    this.dialogRef.close();
+  }
 
   save() {
-    this.userToSave.emit(this.userForm.value.id);
-  }
-
-  update() {
-    this.userToUpdate.emit(this.userForm.value);
+    this.dialogRef.close(this.userForm.value);
   }
 }

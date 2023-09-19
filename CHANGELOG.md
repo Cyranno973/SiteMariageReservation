@@ -1,26 +1,23 @@
-# Changelog
+## Changelog
 
-Toutes les modifications notables de ce projet seront documentées dans ce fichier.
+### Mise à jour de l'interface administrateur
 
-## [Unreleased]
+**Améliorations :**
+- **Interface Responsive** :
+  - **Tableau des statistiques** : Adaptation pour une meilleure expérience utilisateur sur tous les appareils.
+  - **Tableau des utilisateurs** : Rendu responsive pour une meilleure visualisation.
 
-## [0.2.0] - 2023-07-30
+- **Amélioration de la Navigation** :
+  - Nouveau **bouton "Options"** offrant un accès direct aux fonctionnalités d'import, d'export et d'ajout d'utilisateur.
 
-### Added
-- Nouvelle fonctionnalité XYZ.
-- Support pour ABC.
+- **Expérience Utilisateur Améliorée** :
+  - Messages de chargement du tableau optimisés pour une meilleure indication de l'état.
+  - Le header du tableau est maintenant fixe lors du défilement pour une meilleure lisibilité.
 
-### Changed
-- Modification de la fonctionnalité DEF.
+- **Système de Logs** :
+  - Correction d'un bug : les logs montrent désormais la date correcte et ne se limitent plus à la date du jour.
 
-### Fixed
-- Correction du bug #123.
-
-## [0.1.0] - 2023-07-01
-
-### Added
-- Premier lancement de l'application.
-- Fonctionnalité ABC.
-
-### Fixed
-- Correction du bug #100.
+- **Fonctionnalités Ajoutées** :
+  - Intégration d'une **fenêtre modale** pour :
+    - Ajouter un nouvel utilisateur.
+    - Modifier les informations d'un utilisateur existant.

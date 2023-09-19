@@ -13,11 +13,12 @@ import {ModalComponent} from "../../components/modal/modal.component";
 import {ToastrService} from "ngx-toastr";
 import {LoggingService} from "../../services/logging.service";
 import {getFormattedDate} from "../../utils/date-utils";
+import {UserComponent} from "../user/user.component";
 
 @Component({
   selector: 'app-admin',
   templateUrl: './administrator.component.html',
-  styleUrls: ['./administrator.component.scss']
+  styleUrls: ['./administrator.component.scss'],
 })
 export class AdministratorComponent implements OnInit, OnDestroy {
   attendanceStatistics$: Observable<AttendanceStatistics>;
@@ -31,11 +32,17 @@ export class AdministratorComponent implements OnInit, OnDestroy {
   private userStoreSubscription: Subscription;
   private storeUserSubscription: Subscription;
 
-  constructor(private statistiquesService: StatistiquesService, private loggingService: LoggingService,
-              private fb: FormBuilder, private storeUserService: StoreUserService,
-              private userService: UserService, private dialog: MatDialog, private toastr: ToastrService,) {
-
+  constructor(
+    private statistiquesService: StatistiquesService,
+    private loggingService: LoggingService,
+    private fb: FormBuilder,
+    private storeUserService: StoreUserService,
+    private userService: UserService,
+    private toastr: ToastrService,
+    private dialog: MatDialog
+  ) {
   }
+
 
   ngOnInit() {
     this.attendanceStatistics$ = this.statistiquesService.getAttendanceStatistics();
@@ -47,9 +54,7 @@ export class AdministratorComponent implements OnInit, OnDestroy {
     this.userStoreSubscription = this.storeUserService.observeUserList().subscribe(users => this.userList = users);
     this.userSubscription = this.userService.getAll().subscribe(data => {
       this.userList = data;
-      // console.log(data[80]);
-      // console.log(data);
-      this.storeUserService.saveUserList(data)
+      this.storeUserService.saveUserList(data);
     });
   }
 
@@ -86,11 +91,9 @@ export class AdministratorComponent implements OnInit, OnDestroy {
   updateForm(e: User | string) {
     if (typeof e === "string") {
       this.updateBtn = false;
-      const dialogRef = this.dialog.open(ModalComponent, {width: '390px', height: '160px'});
-
+      const dialogRef = this.dialog.open(ModalComponent, {width: '350px', height: '350px'});
       dialogRef.afterClosed().subscribe((result: boolean) => {
         if (result) {
-          // console.log('suppression effectué')
           this.userService.delete(e);
         }
       });
@@ -109,13 +112,19 @@ export class AdministratorComponent implements OnInit, OnDestroy {
       .then((user) => this.toastr.success(`${user.username} ${user.name}`, 'Modification enregistrer',));
   }
 
-  toggleForm() {
-    this.userForm.reset();
-    this.showForm = !this.showForm;
-    this.updateBtn = false;
+  addUser() {
+    const dialogRef = this.dialog.open(UserComponent, {
+      width: '350px', height: '350px'
+    });
+
+    dialogRef.afterClosed().subscribe((user: Partial<User>) => {
+      console.log('Dialog closed', user);
+      if (!user?.id) this.userService.importOrCreateUser([], user);
+      this.userForm.reset();
+    });
   }
 
-  exportexcel() {
+  exportExcel() {
     /* generate worksheet */
     const ws: WorkSheet = utils.json_to_sheet(this.userList);
     /* generate workbook and add the worksheet */
@@ -139,9 +148,10 @@ export class AdministratorComponent implements OnInit, OnDestroy {
   exportLogs(): void {
     this.loggingService.getAllLogs().pipe(take(1)).subscribe(logs => {
       try {
+        const sortedLogs = logs.sort((a, b) => b.timestamp - a.timestamp);
         // Convertir chaque log en une ligne de format simple
-        const dataLogsString = logs.map(log => {
-          return `[${getFormattedDate('log')}] ${log.type.toUpperCase()} - ${log.message}`;
+        const dataLogsString = sortedLogs.map(log => {
+          return `[${getFormattedDate(log.timestamp, 'log')}] ${log.type.toUpperCase()} - ${log.message}`;
         }).join('\n'); // Joindre chaque ligne avec un saut de ligne
 
         const blob = new Blob([dataLogsString], {type: 'text/plain;charset=utf-8'});

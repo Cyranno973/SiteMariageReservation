@@ -1,35 +1,41 @@
 <div class="container-admin">
-
-  <ul>
-    <li class="containerInputCreate">
-      <input #fileInput (change)="readFile($event)" accept=".json" hidden="hidden" type="file">
-      <button (click)="fileInput.click()" color="primary" mat-raised-button> Importer la liste d'invité</button>
-    </li>
-    <li>
-      <div>
-        <button (click)="toggleForm()" color="primary" mat-fab>
-          <mat-icon>
-            <span class="material-symbols-outlined">add</span>
-          </mat-icon>
-        </button>
-      </div>
-    </li>
-    <li class="excel">
-      <a (click)="exportexcel()" class="excel--link" style="cursor: pointer">
-        <mat-icon class="excel--icon" color="primary"> cloud_download</mat-icon>
-      </a>
-    </li>
-
-  </ul>
-  <div (click)="exportUser()" class="backUser">Backup liste Invite</div>
-  <button (click)="exportLogs()">Exporter les logs</button>
-  <div *ngIf="showForm" [formGroup]="userForm" class="container-userForm">
-    <app-user (userToSave)="saveForm()" (userToUpdate)="updateSave($event)" [updateBtn]="updateBtn" [userForm]="userForm"></app-user>
+  <!--  <div class="admin">-->
+  <div class="container-options">
+    <!-- Bouton pour ouvrir le menu déroulant -->
+    <button [matMenuTriggerFor]="menu" class="options" mat-button>Options</button>
   </div>
-  <br>
-  <br>
+
+  <!-- Menu déroulant -->
+  <mat-menu #menu="matMenu">
+    <button (click)="addUser()" mat-menu-item>
+      <mat-icon>add</mat-icon>
+      Ajouter un invité
+    </button>
+
+    <button (click)="fileInput.click()" mat-menu-item>
+      <mat-icon>upload</mat-icon>
+      Importer la liste d'invité
+      <input #fileInput (change)="readFile($event)" accept=".json" hidden="hidden" type="file">
+    </button>
+
+    <button (click)="exportExcel()" mat-menu-item>
+      <mat-icon>cloud_download</mat-icon>
+      Exporter en Excel
+    </button>
+
+    <button (click)="exportUser()" mat-menu-item>
+      <mat-icon>backup</mat-icon>
+      Backup liste Invité
+    </button>
+
+    <button (click)="exportLogs()" mat-menu-item>
+      <mat-icon>note</mat-icon>
+      Exporter les logs
+    </button>
+  </mat-menu>
   <app-stats [statistics$]="attendanceStatistics$"></app-stats>
   <div class="container-list-user">
-    <app-list-user (idUser)="updateForm($event)"></app-list-user>
+    <app-list-user></app-list-user>
   </div>
 </div>
+<!--</div>-->

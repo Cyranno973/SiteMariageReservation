@@ -2,16 +2,15 @@
 @use './src/sass/utils/mixins' as *;
 
 .wrapper {
-  padding: 15px;
+  //padding: 15px;
   display: grid;
-  grid-gap: 10px;
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   align-items: center;
   text-align: center;
-  //background-color: rgba(0,0,0,0.5);
   color: $b1Black;
-  width: 40%;
+  width: 80%;
+  max-width: 500px;
   margin: 0 auto;
   grid-template-areas:
             "a a a"
@@ -27,7 +26,7 @@
 
   div {
     background-color: $white;
-    padding: 10px;
+    padding: 10px 0;
     width: 100%;
     height: 100%;
     border: 1px solid #ccc;
@@ -36,8 +35,8 @@
     h4 {
       text-transform: uppercase;
       font-weight: 700;
-      padding: 10px;
-      font-size: 1.5em;
+      padding: 0 5px;
+      font-size: 1em;
     }
 
     h5 {
@@ -48,7 +47,7 @@
   .a, .i, .f {
     grid-column: 1 / span 3;
     text-align: center;
-    margin: 20px 0;
+    //margin: 20px 0;
     width: 100%;
     background: linear-gradient(to bottom, #FFD700, #FFA500);
   }
@@ -93,5 +92,28 @@
 
   .l {
     background: linear-gradient(to bottom, #FFB6C1, #FF69B4);
+  }
+
+  grid-template-columns: 1fr;
+
+  // Sur les écrans moyens (par exemple les tablettes), on passe à 2 colonnes
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Sur les grands écrans, on utilise votre mise en page à 3 colonnes
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+            "a a a"
+            "b b b"
+            "c c c"
+            "d d d"
+            "e e e"
+            "f f f"
+            "g g g"
+            "h h h"
+            "i i i"
+            "j j j";
   }
 }

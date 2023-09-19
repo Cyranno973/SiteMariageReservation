@@ -11,6 +11,7 @@ import {MatOptionModule} from "@angular/material/core";
 import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from "@angular/material/card";
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatMenuModule} from "@angular/material/menu";
 
 const materialModules = [
   MatToolbarModule,
@@ -24,7 +25,8 @@ const materialModules = [
   MatOptionModule,
   MatIconModule,
   MatCardModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatMenuModule
 ];
 
 @NgModule({

@@ -4,89 +4,99 @@
     <input (keyup)="updateFilter($event)" id="" matInput name="" type="text">
   </mat-form-field>
 </div>
-
-<mat-table matSort [dataSource]="dataSource">
-  <ng-container matColumnDef="id">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Id</mat-header-cell>
-    <mat-cell *matCellDef="let user">
-      {{user.id}} </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="username">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</mat-header-cell>
-    <mat-cell *matCellDef="let user">
-      {{user.username | titlecase}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Nom</mat-header-cell>
-    <mat-cell *matCellDef="let user">
-      {{user.name | titlecase}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="statusUser">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Statut</mat-header-cell>
-    <mat-cell *matCellDef="let user">
-      <ng-container *ngIf="user.statusUser === 'incomplete'"><div>Incomplet</div></ng-container>
-      <ng-container *ngIf="user.statusUser === 'complete'"><div>Compléter</div></ng-container>
-      <ng-container *ngIf="user.statusUser === 'first'"><div>Jamais connecté</div></ng-container>
-    </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="choice">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Participe</mat-header-cell>
-    <mat-cell *matCellDef="let user">
-      <ng-container *ngIf="user.choice === 'all'">N'a pas choisie</ng-container>
-      <ng-container *ngIf="user.choice === 'p'">Présent</ng-container>
-      <ng-container *ngIf="user.choice === 'a'">Absent</ng-container>
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="category">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
-    <mat-cell *matCellDef="let user">
-      {{user?.selectedCategory}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="menu">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Menu</mat-header-cell>
-    <mat-cell *matCellDef="let user">
-      {{user.menu}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="accompaniement">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Inviter</mat-header-cell>
-    <mat-cell *matCellDef="let user">
-      <div class="container-invite">
-        <ng-container *ngFor="let user of user.accompaniement">
-          <div>
-            <span> {{user.name | titlecase}}  {{user.username | titlecase}} </span>
-            <br/>
-            <span>{{user.selectedCategory}}</span>
-            <br>
-            <span>{{user.menu}} <br/> {{user.allergie}}</span>
-          </div>
-          <br/> <!-- Use br if you want to display the roles vertically -->
+<div class="container-table">
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Id</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        {{user.id}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        {{user.username | titlecase}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Nom</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        {{user.name | titlecase}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="statusUser">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Statut</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <ng-container *ngIf="user.statusUser === 'incomplete'">
+          <div>Incomplet</div>
         </ng-container>
-      </div>
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="action">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
-    <mat-cell *matCellDef="let user">
-      <div class="action">
-        <div class="container-btn">
-          <div>
-            <input (click)="toggleOrganization(user)" [checked]="user.organisation" name="" type="checkbox" >
-<!--            <mat-checkbox [checked]="user.organisation"  color="warn" (click)="toggleOrganization(user)"></mat-checkbox>-->
-          </div>
-          <button (click)="onRowClicked(user)" color="primary" mat-raised-button>
-            <mat-icon fontIcon="edit"></mat-icon>
-          </button>
-          <button (click)="onRowClicked(user.id)" color="warn" mat-raised-button>
-            <mat-icon fontIcon="delete"></mat-icon>
-          </button>
-        </div>
-      </div>
-    </mat-cell>
-  </ng-container>
+        <ng-container *ngIf="user.statusUser === 'complete'">
+          <div>Compléter</div>
+        </ng-container>
+        <ng-container *ngIf="user.statusUser === 'first'">
+          <div>Jamais connecté</div>
+        </ng-container>
+      </mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-  <!--  <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked(row)"></mat-row>-->
-</mat-table>
-<div *ngIf="!dataSource.filteredData.length"> Aucun résultat ne corespond à votre recherche</div>
+    <ng-container matColumnDef="choice">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Participe</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <ng-container *ngIf="user.choice === 'all'">N'a pas choisie</ng-container>
+        <ng-container *ngIf="user.choice === 'p'">Présent</ng-container>
+        <ng-container *ngIf="user.choice === 'a'">Absent</ng-container>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="category">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        {{user?.selectedCategory}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="menu">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Menu</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        {{user.menu}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="accompaniement">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Inviter</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <div class="container-invite">
+          <ng-container *ngFor="let user of user.accompaniement">
+            <div>
+              <span> {{user.name | titlecase}}  {{user.username | titlecase}} </span>
+              <br/>
+              <span>{{user.selectedCategory}}</span>
+              <br>
+              <span>{{user.menu}} <br/> {{user.allergie}}</span>
+            </div>
+            <br/> <!-- Use br if you want to display the roles vertically -->
+          </ng-container>
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <div class="action">
+          <div *ngIf="user" class="container-btn">
+            <div class="">
+              <mat-checkbox (click)="toggleOrganization(user)" [checked]="user.organisation" color="warn"></mat-checkbox>
+            </div>
+            <div class="btn-action">
+              <button (click)="updateUser(user)" color="primary" mat-raised-button>
+                <mat-icon fontIcon="edit"></mat-icon>
+              </button>
+            </div>
+            <div class="btn-action">
+              <button (click)="deleteUser(user.id)" color="warn" mat-raised-button>
+                <mat-icon fontIcon="delete"></mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+  <div *ngIf="!dataSource?.filteredData?.length" class="resultat">{{inputValue?.length && !dataSource?.filteredData?.length ? 'Aucun résultat ne corespond à votre recherche': 'Chargement de vos données...'}}</div>
+</div>
+

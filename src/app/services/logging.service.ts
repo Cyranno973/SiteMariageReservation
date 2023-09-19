@@ -17,7 +17,7 @@ export class LoggingService {
     const logEntry = {
       message: message,
       type: type,
-      timestamp: new Date().toISOString()
+      timestamp: Date.now() // Storing the timestamp in milliseconds
     };
 
     return this.logRef.add(logEntry)
@@ -28,15 +28,15 @@ export class LoggingService {
 
   getAllLogs(): Observable<any[]> {
     return this.logRef.snapshotChanges().pipe(
-      map(changes => changes.map(c => ({...c.payload.doc.data(), id: c.payload.doc.id})))
+      map(changes => changes.map(c => ({ ...c.payload.doc.data(), id: c.payload.doc.id })))
     );
   }
 
   private async cleanupLogs(): Promise<void> {
-    const logsRef = this.db.collection('logs'); // Assurez-vous que 'logs' est le nom correct de votre collection de logs.
+    const logsRef = this.db.collection('logs');
+
     const allLogsSnapshot = await logsRef.get().toPromise();
 
-    // Si le nombre total de logs dépasse 200
     if (allLogsSnapshot!.size > 200) {
       const logsToDelete = allLogsSnapshot!.docs.slice(0, allLogsSnapshot!.size - 200);
       for (const log of logsToDelete) {
@@ -44,14 +44,15 @@ export class LoggingService {
       }
     }
 
-    // Supprimer les logs de plus de 30 jours
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const oldLogsSnapshot = await logsRef.ref.where('timestamp', '<', thirtyDaysAgo).get();
+    // Convert the date to a timestamp in milliseconds for comparison
+    const thirtyDaysAgoTimestamp = thirtyDaysAgo.getTime();
+
+    const oldLogsSnapshot = await logsRef.ref.where('timestamp', '<', thirtyDaysAgoTimestamp).get();
     for (const log of oldLogsSnapshot.docs) {
       await log.ref.delete();
     }
   }
-
 }

@@ -17,8 +17,7 @@ export class UserService {
 
   }
 
-  getAll(): Observable<any> {
-    // this.loggingService.log('Fetching all users.');
+  getAll(): Observable<User[]> {
     return this.usersRef.snapshotChanges().pipe(
       map(changes => changes.map(c => ({...c.payload.doc.data(), id: c.payload.doc.id})))
     );
@@ -80,9 +79,17 @@ export class UserService {
 
   update(user: Partial<User>): Promise<User> {
     const userClean = this.removeEmptyProperties(user) as User;
-    return this.usersRef.doc(userClean.id).update(userClean)
+
+    return this.usersRef.doc(userClean.id).get().toPromise().then(docSnapshot => {
+      if (docSnapshot?.exists) {
+        return this.usersRef.doc(userClean.id).update(userClean);
+      } else {
+        this.loggingService.log(`No document with ID ${userClean.id} to update.`, 'error');
+        throw new Error(`No document with ID ${userClean.id} to update.`);
+      }
+    })
       .then(() => {
-        console.log('user update')
+        console.log('user update');
         this.loggingService.log(`User with ID ${userClean.id} updated.`);
         return userClean;
       })
@@ -91,6 +98,7 @@ export class UserService {
         throw error;
       });
   }
+
 
   updateAllUsersWithNewProperty(): void {
     this.loggingService.log('Starting to update all users with new property.');
