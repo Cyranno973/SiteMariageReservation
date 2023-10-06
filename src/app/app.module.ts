@@ -28,13 +28,12 @@ import {ToastrModule} from "ngx-toastr";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {StatsComponent} from './admin/stats/stats.component';
 import {AngularFireMessagingModule} from "@angular/fire/compat/messaging";
-import {FallingPetalsComponent} from './components/falling-petals/falling-petals.component';
 import {TooltipComponent} from './components/tooltip/tooltip.component';
 import {ProgramComponent} from './program/program.component';
 import {CountdownComponent} from './components/countdown/countdown.component';
 import {ModalComponent} from './components/modal/modal.component';
-import {UserContentInputComponent} from './user-content-input/user-content-input.component';
 import {MediaService} from "./services/MediaService";
+import {UserContentInputComponent} from "./user-content-input/user-content-input.component";
 
 @NgModule({
   declarations: [
@@ -48,7 +47,6 @@ import {MediaService} from "./services/MediaService";
     AdministratorComponent,
     UserComponent,
     StatsComponent,
-    FallingPetalsComponent,
     TooltipComponent,
     ProgramComponent,
     CountdownComponent,
