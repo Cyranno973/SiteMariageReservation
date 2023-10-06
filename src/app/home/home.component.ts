@@ -163,12 +163,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   requestPermission() {
     this.afMessaging.requestToken
       .subscribe(
-        (token) => {
-          console.log('Permission granted! Save to the server!', token);
-        },
-        (error) => {
-          console.error('Unable to get permission to notify.', error);
-        }
+        (token) => {console.log('Permission granted! Save to the server!', token)},
+        (error) => {console.error('Unable to get permission to notify.', error);}
       );
   }
 

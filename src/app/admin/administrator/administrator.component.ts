@@ -6,7 +6,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {utils, WorkBook, WorkSheet, writeFile} from 'xlsx';
 import {StatistiquesService} from "../../services/statistiques.service";
 import {AttendanceStatistics} from "../../../model/AttendanceStatistics";
-import {saveAs} from 'file-saver';
 import {Observable, Subscription, take} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalComponent} from "../../components/modal/modal.component";
@@ -14,6 +13,8 @@ import {ToastrService} from "ngx-toastr";
 import {LoggingService} from "../../services/logging.service";
 import {getFormattedDate} from "../../utils/date-utils";
 import {UserComponent} from "../user/user.component";
+import {saveAs} from 'file-saver-es';
+
 
 @Component({
   selector: 'app-admin',

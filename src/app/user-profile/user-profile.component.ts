@@ -5,8 +5,8 @@ import {StoreUserService} from "../services/store-user.service";
 import {UserService} from "../services/user.service";
 
 import {ToastrService} from "ngx-toastr";
-import {debounce} from 'lodash';
 import {menuValidator, noWhitespaceValidator} from "./validators";
+import {debounce} from "lodash-es";
 
 @Component({
   selector: 'app-user-profile',

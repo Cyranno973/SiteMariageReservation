@@ -9,7 +9,9 @@ import {map, startWith} from 'rxjs/operators';
 import {SwUpdate} from "@angular/service-worker";
 import {routeAnimations} from "./route-animations";
 import {VersionService} from "./services/version.service";
-import * as platform from 'platform';
+import platform from 'platform';
+import {AngularFireMessaging} from "@angular/fire/compat/messaging";
+
 
 @Component({
   selector: 'app-root',
@@ -36,18 +38,22 @@ export class AppComponent implements OnInit {
   private isAdminMode: boolean = false;
 
   constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService, private versionService: VersionService,
-              private router: Router) {
+              private router: Router, private afMessaging: AngularFireMessaging) {
     this.swUpdate.versionUpdates.subscribe(version => {
       if (version.type === "VERSION_READY") window.location.reload();
     })
     this.admin$ = this.storeUserService.observeIsAdmin().pipe(startWith(false));
+    this.afMessaging.messages.subscribe((message) => console.log('Received message:', message));
+
   }
+
   @HostListener('window:scroll')
   checkScroll() {
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
     console.log('[scroll]', scrollPosition);
   }
+
   @HostListener('window:keyup', ['$event']) onKeyUp(e: KeyboardEvent) {
     this.pressedKeys.push(e.code);
     if (this.pressedKeys.length === 8) {
@@ -59,7 +65,7 @@ export class AppComponent implements OnInit {
           this.storeUserService.saveIsLoggedIn(false);
           localStorage.removeItem('billet');
           this.router.navigate(['/']);
-        }else  this.router.navigate(['/admin']);
+        } else this.router.navigate(['/admin']);
       }
       this.pressedKeys.splice(0, 1);
     }
@@ -67,8 +73,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.router.events.subscribe(x => {
-      if(x instanceof NavigationEnd)
-      {
+      if (x instanceof NavigationEnd) {
         window.scrollTo(0, 0);
       }
     });
@@ -89,7 +94,26 @@ export class AppComponent implements OnInit {
   showVersion() {
     alert(`Version actuelle: ${this.versionService.version}, ${platform.description}, ${platform.os}`);
   }
+
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
+
+  toggleNotification() {
+    this.requestPermission();
+  }
+
+  requestPermission() {
+    this.afMessaging.requestToken
+      .subscribe({
+          next: (token) => {
+            console.log('Permission granted! Save to the server!', token)
+          },
+          error: (error) => {
+            console.error('Unable to get permission to notify.', error);
+          }
+        }
+      );
+  }
+
 }
