@@ -1,4 +1,4 @@
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
 import {combineLatest, map, Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 import {StoreUserService} from "./store-user.service";
@@ -6,7 +6,7 @@ import {StoreUserService} from "./store-user.service";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGard implements CanActivate {
+export class AuthGard  {
   constructor(private storeUserService: StoreUserService, private router: Router) {
   }
 
