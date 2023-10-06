@@ -1,6 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {Choice, User} from "../model/user";
-import {UserService} from "./services/user.service";
 import {StoreUserService} from "./services/store-user.service";
 import {NavigationEnd, Router, RouterOutlet} from "@angular/router";
 
@@ -37,8 +36,9 @@ export class AppComponent implements OnInit {
   admin$: Observable<boolean>;
   private isAdminMode: boolean = false;
 
-  constructor(private swUpdate: SwUpdate, private userService: UserService, private storeUserService: StoreUserService, private versionService: VersionService,
-              private router: Router, private afMessaging: AngularFireMessaging) {
+  constructor(private swUpdate: SwUpdate, private storeUserService: StoreUserService, private versionService: VersionService,
+              private router: Router, private afMessaging: AngularFireMessaging
+  ) {
     this.swUpdate.versionUpdates.subscribe(version => {
       if (version.type === "VERSION_READY") window.location.reload();
     })
@@ -98,22 +98,4 @@ export class AppComponent implements OnInit {
   prepareRoute(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
-
-  toggleNotification() {
-    this.requestPermission();
-  }
-
-  requestPermission() {
-    this.afMessaging.requestToken
-      .subscribe({
-          next: (token) => {
-            console.log('Permission granted! Save to the server!', token)
-          },
-          error: (error) => {
-            console.error('Unable to get permission to notify.', error);
-          }
-        }
-      );
-  }
-
 }

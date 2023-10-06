@@ -30,6 +30,7 @@ export interface User extends Personne {
   statusUser?: Status,
   choice: Choice,
   organisation: boolean,
-  accompaniement?: Personne[]
+  accompaniement?: Personne[],
+  fcmTokens?: string[]
 }
 

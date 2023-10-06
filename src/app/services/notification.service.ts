@@ -1,28 +1,46 @@
 import {Injectable} from '@angular/core';
-import {SwPush} from "@angular/service-worker";
-import {HttpClient} from "@angular/common/http";
+import {AngularFireMessaging} from "@angular/fire/compat/messaging";
+import {AngularFirestore} from "@angular/fire/compat/firestore";
+import {User} from "../../model/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
-  readonly publicKey = "BHoUJFeCnDNWy4KMPCrRFvFhCC9KAiKqKolUMUBiydQDWxLMyq9kRRuQ_EqGdmT0Z5gePu7QSaha9UjSyEZ-2f0";
-  constructor(private  swPush:SwPush, private http: HttpClient) {
+  constructor(
+    private afMessaging: AngularFireMessaging,
+    private afs: AngularFirestore
+  ) {
+  }
 
+  // Demande la permission et enregistre le token
+  requestPermission(user: User): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.afMessaging.requestToken.subscribe(
+        (token: any) => {
+          console.log('Permission granted! Save to the server!', token);
+          this.saveToken(user, token).then(resolve).catch(reject);
+        },
+        (error: string) => {
+          console.error('Unable to get permission to notify.', error);
+          reject(error);
+        }
+      );
+    });
   }
-  public offerNotification() {
-    this.swPush.requestSubscription({
-      serverPublicKey: this.publicKey
-    }).then( (sub: PushSubscription) =>{
-      console.log({ sub });
-      this.http.post('/api/notifications', sub).subscribe( () => {
-        console.log('sub ok');
-      }, (err) => {
-        console.log('sub fail');
-      });
-    }).catch( () => {
-      console.log('error')
-    })
+
+  // Enregistre le token dans Firestore
+  async saveToken(user: User, token: string): Promise<void> {
+    const currentTokens = user.fcmTokens || [];
+
+    // Vérifie si le token existe déjà pour cet utilisateur
+    if (!currentTokens.includes(token)) {
+      currentTokens.push(token);
+    }
+
+    return this.afs.collection('users').doc(user.id).update({ fcmTokens: currentTokens });
   }
+
 }
+

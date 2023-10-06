@@ -1,4 +1,4 @@
-import {Component, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {Subject, takeUntil} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {AngularFireMessaging} from "@angular/fire/compat/messaging";
+import {NotificationService} from "../services/notification.service";
 
 @Component({
   selector: 'app-home',
@@ -25,18 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   showModifChoice: boolean = false;
   isLoggedIn: boolean = false;
   admin: boolean;
-
-  constructor(private router: Router,
-              private userService: UserService,
-              private toastr: ToastrService,
-              private dialogUser: MatDialog,
-              private fb: FormBuilder,
-              private storeUserService: StoreUserService,
-              private afMessaging: AngularFireMessaging
-  ) {
-    if (localStorage.getItem('billet')) this.billet = localStorage.getItem('billet') as string;
-    this.afMessaging.messages.subscribe((message) => console.log('Received message:', message));
-  }
+  ok: boolean = false;
+  user: User;
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
@@ -44,7 +35,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log('aaa')
   }
 
-  @Input() user: User;
+  constructor(private router: Router,
+              private userService: UserService,
+              private toastr: ToastrService,
+              private dialogUser: MatDialog,
+              private fb: FormBuilder,
+              private storeUserService: StoreUserService,
+              private afMessaging: AngularFireMessaging,
+              private notificationService: NotificationService
+  ) {
+    if (localStorage.getItem('billet')) this.billet = localStorage.getItem('billet') as string;
+    this.afMessaging.messages.subscribe((message) => console.log('Received message:', message));
+  }
   form: FormGroup = this.fb.group({
     numero: ['', [Validators.required, Validators.minLength(6)]]
   })
@@ -168,19 +170,20 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
   }
 
-  // requestPermission() {
-  //   // const messaging = getMessaging();
-  //   getToken(messaging,
-  //     { vapidKey: environment.firebase.vapidKey}).then(
-  //     (currentToken) => {
-  //       if (currentToken) {
-  //         console.log("Hurraaa!!! we got the token.....");
-  //         console.log(currentToken);
-  //       } else {
-  //         console.log('No registration token available. Request permission to generate one.');
-  //       }
-  //     }).catch((err) => {
-  //     console.log('An error occurred while retrieving token. ', err);
+  toggleNotification() {
+
+    console.log('bonjour')
+    if (this.user) {
+    // this.toastr.success(this.user.name, 'Notification');
+      this.notificationService.requestPermission(this.user).then(() => {
+        this.ok = true;
+        this.toastr.success('Vous aurez toute les news !', 'Notification');
+      }).catch((error) => {
+        this.toastr.error(error, 'Notification');
+        console.error('Error saving token', error);
+      });
+    }
+  }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
