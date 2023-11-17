@@ -125,15 +125,75 @@ export class AdministratorComponent implements OnInit, OnDestroy {
     });
   }
 
-  exportExcel() {
+  exportExcel1() {
     /* generate worksheet */
     const ws: WorkSheet = utils.json_to_sheet(this.userList);
+    console.log(this.userList);
     /* generate workbook and add the worksheet */
     const wb: WorkBook = utils.book_new();
     utils.book_append_sheet(wb, ws, 'Sheet1');
     /* save to file */
     writeFile(wb, "Liste d'invités.xlsx");
   }
+  exportExcel() {
+    // Fonction pour aplatir les données, exclure certaines propriétés et réorganiser les colonnes
+    const flattenData = (userList: any[]) => {
+      return userList.map((user: any) => {
+        // Déconstruction pour exclure certaines propriétés et réorganiser
+        const { id, name, username, choice, menu, allergie, selectedCategory, statusUser, accompaniement, fcmTokens, isModifying, organisation, ...rest } = user;
+
+        if (user.accompaniement && user.accompaniement.length > 0) {
+          // Pour les utilisateurs avec accompagnateurs
+          return user.accompaniement.map((accomp: any) => {
+            return {
+              id,
+              name,
+              username,
+              choice,
+              menu,
+              allergie, // Allergie juste après menu
+              selectedCategory,
+              statusUser,
+              accName: accomp.name,
+              accUsername: accomp.username, // Ajout de accUsername
+              accMenu: accomp.menu,
+              accAllergie: accomp.allergie,
+              accCategory: accomp.selectedCategory,
+              ...rest // Reste des propriétés
+            };
+          });
+        } else {
+          // Pour les utilisateurs sans accompagnateurs
+          return [{
+            id,
+            name,
+            username,
+            choice,
+            menu,
+            allergie, // Allergie juste après menu
+            selectedCategory,
+            statusUser,
+            accName: '',
+            accUsername: '', // Ajout de accUsername
+            accMenu: '',
+            accAllergie: '',
+            accCategory: '',
+            ...rest
+          }];
+        }
+      }).flat();
+    };
+
+    // Aplatir la liste d'utilisateurs
+    const flattenedData = flattenData(this.userList);
+
+    // Convertir en feuille de travail Excel
+    const ws: WorkSheet = utils.json_to_sheet(flattenedData);
+    const wb: WorkBook = utils.book_new();
+    utils.book_append_sheet(wb, ws, 'Sheet1');
+    writeFile(wb, "Liste d'invités.xlsx");
+  }
+
 
   exportUser() {
     try {
